@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 启动核心导航节点：包含停车→右转→直线→雷达停车全逻辑 -->
+    <node 
+        pkg="ros_pkg"        
+        type="v_node"  
+        name="v_node"  
+        output="screen"             
+        respawn="false"            
+    />
+</launch>
