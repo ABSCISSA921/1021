@@ -1,0 +1,452 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:100:1:[m[K [01;31m[Kerror: [m[K‘[01m[Ks_[m[K’ does not name a type
+  100 | [01;31m[Ks_[m[K[i].setCommand(0.0);
+      | [01;31m[K^~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:101:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ does not name a type
+  101 |         [01;31m[Kwheel_joints_[m[K[i].setCommand(0.0);
+      |         [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:103:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ does not name a type
+  103 |     [01;31m[Kramped_vel_[m[K = geometry_msgs::Twist();
+      |     [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:104:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+  104 | [01;31m[K}[m[K
+      | [01;31m[K^[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:106:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  106 | void [01;31m[KSentryChassisController[m[K::stopping(const ros::Time& time) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid stopping(const ros::Time&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:108:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_joints_[m[K’ was not declared in this scope
+  108 |         [01;31m[Kpivot_joints_[m[K[i].setCommand(0.0);
+      |         [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:109:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ was not declared in this scope
+  109 |         [01;31m[Kwheel_joints_[m[K[i].setCommand(0.0);
+      |         [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:113:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  113 | void [01;31m[KSentryChassisController[m[K::keyCallback(const std_msgs::String::ConstPtr& msg) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid keyCallback(const ConstPtr&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:114:25:[m[K [01;31m[Kerror: [m[K‘[01m[Kctrl_mode_[m[K’ was not declared in this scope
+  114 |   if (msg->data == "g") [01;31m[Kctrl_mode_[m[K = (ctrl_mode_ == CHASSIS_SPIN) ? CHASSIS_SEPARATE_GIMBAL : CHASSIS_SPIN;
+      |                         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:114:53:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_SPIN[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’?
+  114 |   if (msg->data == "g") ctrl_mode_ = (ctrl_mode_ == [01;31m[KCHASSIS_SPIN[m[K) ? CHASSIS_SEPARATE_GIMBAL : CHASSIS_SPIN;
+      |                                                     [01;31m[K^~~~~~~~~~~~[m[K
+      |                                                     [32m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:25:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’ declared here
+   25 |   [01;36m[KCHASSIS_SPIN[m[K,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:114:69:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_SEPARATE_GIMBAL[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K’?
+  114 |   if (msg->data == "g") ctrl_mode_ = (ctrl_mode_ == CHASSIS_SPIN) ? [01;31m[KCHASSIS_SEPARATE_GIMBAL[m[K : CHASSIS_SPIN;
+      |                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+      |                                                                     [32m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:24:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K’ declared here
+   24 |   [01;36m[KCHASSIS_SEPARATE_GIMBAL[m[K,
+      |   [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:117:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  117 | void [01;31m[KSentryChassisController[m[K::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid cmdVelCallback(const ConstPtr&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:118:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kcmd_vel_[m[K’ was not declared in this scope
+  118 |   [01;31m[Kcmd_vel_[m[K = *msg;
+      |   [01;31m[K^~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:121:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  121 | void [01;31m[KSentryChassisController[m[K::transformVelocity(double& vx, double& vy) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid transformVelocity(double&, double&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:122:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kuse_world_frame_[m[K’ was not declared in this scope
+  122 |   if ([01;31m[Kuse_world_frame_[m[K) {
+      |       [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:125:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_listener_[m[K’ was not declared in this scope
+  125 |       [01;31m[Ktf_listener_[m[K.lookupTransform("base_link", "odom", ros::Time(0), transform);
+      |       [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:136:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  136 | void [01;31m[KSentryChassisController[m[K::snapInput(double& vx, double& vy, double& vw) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:147:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  147 | void [01;31m[KSentryChassisController[m[K::calculateWheelStates(double vx, double vy, double vw) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid calculateWheelStates(double, double, double)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:157:31:[m[K [01;31m[Kerror: [m[K‘[01m[KWHEEL_PERIMETER_[m[K’ was not declared in this scope
+  157 |     double rpm_ratio = 60.0 / [01;31m[KWHEEL_PERIMETER_[m[K; // 无减速比
+      |                               [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:169:38:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_steer_angles_[m[K’ was not declared in this scope
+  169 |             double last_phys_angle = [01;31m[Klast_steer_angles_[m[K[i] - steer_offset_rad_[i];
+      |                                      [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:169:62:[m[K [01;31m[Kerror: [m[K‘[01m[Ksteer_offset_rad_[m[K’ was not declared in this scope
+  169 |             double last_phys_angle = last_steer_angles_[i] - [01;31m[Ksteer_offset_rad_[m[K[i];
+      |                                                              [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:187:13:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  187 |             [01;31m[Ktarget_angles_[m[K[i] = last_phys_angle + diff + steer_offset_rad_[i];
+      |             [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:196:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  196 |             final_speed *= [01;31m[Kwheel_direction_[m[K[i]; // 物理配置
+      |                            [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:201:13:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  201 |             [01;31m[Ktarget_velocities_[m[K[i] = final_speed;
+      |             [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:210:16:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_track_[m[K’ was not declared in this scope
+  210 |     double a = [01;31m[Kwheel_track_[m[K / 2.0;
+      |                [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:211:16:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_base_[m[K’ was not declared in this scope
+  211 |     double b = [01;31m[Kwheel_base_[m[K / 2.0;
+      |                [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:233:13:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  233 |             [01;31m[Ktarget_velocities_[m[K[i] = 0.0;
+      |             [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:237:34:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_steer_angles_[m[K’ was not declared in this scope
+  237 |         double last_phys_angle = [01;31m[Klast_steer_angles_[m[K[i] - steer_offset_rad_[i];
+      |                                  [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:237:58:[m[K [01;31m[Kerror: [m[K‘[01m[Ksteer_offset_rad_[m[K’ was not declared in this scope
+  237 |         double last_phys_angle = last_steer_angles_[i] - [01;31m[Ksteer_offset_rad_[m[K[i];
+      |                                                          [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:252:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  252 |         [01;31m[Ktarget_angles_[m[K[i] = last_phys_angle + diff + steer_offset_rad_[i];
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:260:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  260 |         final_speed *= [01;31m[Kwheel_direction_[m[K[i];
+      |                        [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:265:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  265 |         [01;31m[Ktarget_velocities_[m[K[i] = final_speed;
+      |         [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:268:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  268 | void [01;31m[KSentryChassisController[m[K::keyCallback(const std_msgs::String::ConstPtr& msg) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:268:6:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kvoid keyCallback(const ConstPtr&)[m[K’
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:113:6:[m[K [01;36m[Knote: [m[K‘[01m[Kvoid keyCallback(const ConstPtr&)[m[K’ previously defined here
+  113 | void [01;36m[KSentryChassisController[m[K::keyCallback(const std_msgs::String::ConstPtr& msg) {
+      |      [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid keyCallback(const ConstPtr&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:269:25:[m[K [01;31m[Kerror: [m[K‘[01m[Kctrl_mode_[m[K’ was not declared in this scope
+  269 |   if (msg->data == "g") [01;31m[Kctrl_mode_[m[K = (ctrl_mode_ == CHASSIS_SPIN) ? CHASSIS_SEPARATE_GIMBAL : CHASSIS_SPIN;
+      |                         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:269:53:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_SPIN[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’?
+  269 |   if (msg->data == "g") ctrl_mode_ = (ctrl_mode_ == [01;31m[KCHASSIS_SPIN[m[K) ? CHASSIS_SEPARATE_GIMBAL : CHASSIS_SPIN;
+      |                                                     [01;31m[K^~~~~~~~~~~~[m[K
+      |                                                     [32m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:25:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’ declared here
+   25 |   [01;36m[KCHASSIS_SPIN[m[K,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:269:69:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_SEPARATE_GIMBAL[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K’?
+  269 |   if (msg->data == "g") ctrl_mode_ = (ctrl_mode_ == CHASSIS_SPIN) ? [01;31m[KCHASSIS_SEPARATE_GIMBAL[m[K : CHASSIS_SPIN;
+      |                                                                     [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+      |                                                                     [32m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:24:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_SEPARATE_GIMBAL[m[K’ declared here
+   24 |   [01;36m[KCHASSIS_SEPARATE_GIMBAL[m[K,
+      |   [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:272:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  272 | void [01;31m[KSentryChassisController[m[K::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:272:6:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kvoid cmdVelCallback(const ConstPtr&)[m[K’
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:117:6:[m[K [01;36m[Knote: [m[K‘[01m[Kvoid cmdVelCallback(const ConstPtr&)[m[K’ previously defined here
+  117 | void [01;36m[KSentryChassisController[m[K::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& msg) {
+      |      [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid cmdVelCallback(const ConstPtr&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:273:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kcmd_vel_[m[K’ was not declared in this scope
+  273 |   [01;31m[Kcmd_vel_[m[K = *msg;
+      |   [01;31m[K^~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:276:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  276 | void [01;31m[KSentryChassisController[m[K::transformVelocity(double& vx, double& vy) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:276:6:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kvoid transformVelocity(double&, double&)[m[K’
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:121:6:[m[K [01;36m[Knote: [m[K‘[01m[Kvoid transformVelocity(double&, double&)[m[K’ previously defined here
+  121 | void [01;36m[KSentryChassisController[m[K::transformVelocity(double& vx, double& vy) {
+      |      [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid transformVelocity(double&, double&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:277:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kuse_world_frame_[m[K’ was not declared in this scope
+  277 |   if ([01;31m[Kuse_world_frame_[m[K) {
+      |       [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:280:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_listener_[m[K’ was not declared in this scope
+  280 |       [01;31m[Ktf_listener_[m[K.lookupTransform("base_link", "odom", ros::Time(0), transform);
+      |       [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:291:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  291 | void [01;31m[KSentryChassisController[m[K::snapInput(double& vx, double& vy, double& vw) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:291:6:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kvoid snapInput(double&, double&, double&)[m[K’
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:136:6:[m[K [01;36m[Knote: [m[K‘[01m[Kvoid snapInput(double&, double&, double&)[m[K’ previously defined here
+  136 | void [01;36m[KSentryChassisController[m[K::snapInput(double& vx, double& vy, double& vw) {
+      |      [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:302:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  302 | void [01;31m[KSentryChassisController[m[K::calculateWheelStates(double vx, double vy, double vw) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:302:6:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Kvoid calculateWheelStates(double, double, double)[m[K’
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:147:6:[m[K [01;36m[Knote: [m[K‘[01m[Kvoid calculateWheelStates(double, double, double)[m[K’ previously defined here
+  147 | void [01;36m[KSentryChassisController[m[K::calculateWheelStates(double vx, double vy, double vw) {
+      |      [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid calculateWheelStates(double, double, double)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:309:24:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  309 | for(int i=0; i<4; i++) [01;31m[Ktarget_velocities_[m[K[i] = 0.0;
+      |                        [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:317:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_track_[m[K’ was not declared in this scope
+  317 | double a = [01;31m[Kwheel_track_[m[K / 2.0;
+      |            [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:319:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_base_[m[K’ was not declared in this scope
+  319 | double b = [01;31m[Kwheel_base_[m[K / 2.0;
+      |            [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:321:27:[m[K [01;31m[Kerror: [m[K‘[01m[KWHEEL_PERIMETER_[m[K’ was not declared in this scope
+  321 | double rpm_ratio = 60.0 / [01;31m[KWHEEL_PERIMETER_[m[K; // 去除了减速比
+      |                           [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:363:1:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  363 | [01;31m[Ktarget_velocities_[m[K[i] = 0.0;
+      | [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:371:26:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_steer_angles_[m[K’ was not declared in this scope
+  371 | double last_phys_angle = [01;31m[Klast_steer_angles_[m[K[i] - steer_offset_rad_[i];
+      |                          [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:371:50:[m[K [01;31m[Kerror: [m[K‘[01m[Ksteer_offset_rad_[m[K’ was not declared in this scope
+  371 | double last_phys_angle = last_steer_angles_[i] - [01;31m[Ksteer_offset_rad_[m[K[i];
+      |                                                  [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:410:1:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  410 | [01;31m[Ktarget_angles_[m[K[i] = last_phys_angle + diff + steer_offset_rad_[i];
+      | [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:424:16:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  424 | final_speed *= [01;31m[Kwheel_direction_[m[K[i]; // 物理系数
+      |                [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:436:1:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  436 | [01;31m[Ktarget_velocities_[m[K[i] = final_speed;
+      | [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:443:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  443 | void [01;31m[KSentryChassisController[m[K::Steer_angle_change(double vx, double vy, double vw) { calculateWheelStates(vx, vy, vw); }
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:444:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  444 | void [01;31m[KSentryChassisController[m[K::Steer_Speed_Calculate(double vx, double vy, double vw) {}
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:446:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  446 | void [01;31m[KSentryChassisController[m[K::ChassisSeparateGimbalMode() {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid ChassisSeparateGimbalMode()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:447:15:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ was not declared in this scope
+  447 |   double vx = [01;31m[Kramped_vel_[m[K.linear.x;
+      |               [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:454:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  454 | void [01;31m[KSentryChassisController[m[K::ChassisSpinMode() {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid ChassisSpinMode()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:455:15:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ was not declared in this scope
+  455 |   double vx = [01;31m[Kramped_vel_[m[K.linear.x;
+      |               [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:457:15:[m[K [01;31m[Kerror: [m[K‘[01m[Kspin_vw_[m[K’ was not declared in this scope
+  457 |   double vw = [01;31m[Kspin_vw_[m[K;
+      |               [01;31m[K^~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:463:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  463 | void [01;31m[KSentryChassisController[m[K::rampVelocity(const ros::Duration& period) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid rampVelocity(const ros::Duration&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:466:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ was not declared in this scope
+  466 |     [01;31m[Kramped_vel_[m[K = cmd_vel_;
+      |     [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:466:19:[m[K [01;31m[Kerror: [m[K‘[01m[Kcmd_vel_[m[K’ was not declared in this scope
+  466 |     ramped_vel_ = [01;31m[Kcmd_vel_[m[K;
+      |                   [01;31m[K^~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:469:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  469 | void [01;31m[KSentryChassisController[m[K::update(const ros::Time& time, const ros::Duration& period) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid update(const ros::Time&, const ros::Duration&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:470:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_joints_[m[K’ was not declared in this scope
+  470 |   if ([01;31m[Kpivot_joints_[m[K.empty() || wheel_joints_.empty()) return;
+      |       [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:470:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ was not declared in this scope
+  470 |   if (pivot_joints_.empty() || [01;31m[Kwheel_joints_[m[K.empty()) return;
+      |                                [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:474:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kcmd_vel_[m[K’ was not declared in this scope
+  474 |   if (fabs([01;31m[Kcmd_vel_[m[K.linear.x) < 1e-3 &&
+      |            [01;31m[K^~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:477:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kctrl_mode_[m[K’ was not declared in this scope
+  477 |       [01;31m[Kctrl_mode_[m[K != CHASSIS_SPIN) {
+      |       [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:477:21:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_SPIN[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’?
+  477 |       ctrl_mode_ != [01;31m[KCHASSIS_SPIN[m[K) {
+      |                     [01;31m[K^~~~~~~~~~~~[m[K
+      |                     [32m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:25:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_SPIN[m[K’ declared here
+   25 |   [01;36m[KCHASSIS_SPIN[m[K,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:479:25:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_STOP[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’?
+  479 |       if (ctrl_mode_ != [01;31m[KCHASSIS_STOP[m[K) {
+      |                         [01;31m[K^~~~~~~~~~~~[m[K
+      |                         [32m[Ksentry_chassis_controller::CHASSIS_STOP[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:23:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’ declared here
+   23 |   [01;36m[KCHASSIS_STOP[m[K = 0,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:480:34:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_pid_[m[K’ was not declared in this scope
+  480 |           for(int i=0; i<4; i++) [01;31m[Kwheel_pid_[m[K[i].reset();
+      |                                  [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:482:20:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_STOP[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’?
+  482 |       ctrl_mode_ = [01;31m[KCHASSIS_STOP[m[K;
+      |                    [01;31m[K^~~~~~~~~~~~[m[K
+      |                    [32m[Ksentry_chassis_controller::CHASSIS_STOP[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:23:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’ declared here
+   23 |   [01;36m[KCHASSIS_STOP[m[K = 0,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:484:7:[m[K [01;31m[Kerror: [m[K‘[01m[KChassisStopMode[m[K’ was not declared in this scope; did you mean ‘[01m[KChassisSpinMode[m[K’?
+  484 |       [01;31m[KChassisStopMode[m[K();
+      |       [01;31m[K^~~~~~~~~~~~~~~[m[K
+      |       [32m[KChassisSpinMode[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:485:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ was not declared in this scope
+  485 |       [01;31m[Kramped_vel_[m[K = geometry_msgs::Twist();
+      |       [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:492:3:[m[K [01;31m[Kerror: [m[K‘[01m[KcalculateRoundCnt[m[K’ was not declared in this scope
+  492 |   [01;31m[KcalculateRoundCnt[m[K();
+      |   [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:496:26:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  496 |     double steer_error = [01;31m[Ktarget_angles_[m[K[i] - pivot_joints_[i].getPosition();
+      |                          [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:496:46:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_joints_[m[K’ was not declared in this scope
+  496 |     double steer_error = target_angles_[i] - [01;31m[Kpivot_joints_[m[K[i].getPosition();
+      |                                              [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:497:27:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_pid_[m[K’ was not declared in this scope
+  497 |     double steer_effort = [01;31m[Kpivot_pid_[m[K[i].computeCommand(steer_error, period);
+      |                           [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:501:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ was not declared in this scope
+  501 |     double wheel_vel_fdb = [01;31m[Kwheel_joints_[m[K[i].getVelocity();
+      |                            [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:505:22:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  505 |     wheel_vel_fdb *= [01;31m[Kwheel_direction_[m[K[i];
+      |                      [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:507:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kctrl_mode_[m[K’ was not declared in this scope
+  507 |     if ([01;31m[Kctrl_mode_[m[K == CHASSIS_STOP) {
+      |         [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:507:23:[m[K [01;31m[Kerror: [m[K‘[01m[KCHASSIS_STOP[m[K’ was not declared in this scope; did you mean ‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’?
+  507 |     if (ctrl_mode_ == [01;31m[KCHASSIS_STOP[m[K) {
+      |                       [01;31m[K^~~~~~~~~~~~[m[K
+      |                       [32m[Ksentry_chassis_controller::CHASSIS_STOP[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:23:3:[m[K [01;36m[Knote: [m[K‘[01m[Ksentry_chassis_controller::CHASSIS_STOP[m[K’ declared here
+   23 |   [01;36m[KCHASSIS_STOP[m[K = 0,
+      |   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:512:30:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  512 |         double wheel_error = [01;31m[Ktarget_velocities_[m[K[i] - wheel_vel_fdb;
+      |                              [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:513:31:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_pid_[m[K’ was not declared in this scope
+  513 |         double wheel_effort = [01;31m[Kwheel_pid_[m[K[i].computeCommand(wheel_error, period);
+      |                               [01;31m[K^~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:518:16:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  518 |     msg.data = [01;31m[Ktarget_velocities_[m[K[i];
+      |                [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:519:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kdebug_pub_target_[m[K’ was not declared in this scope
+  519 |     [01;31m[Kdebug_pub_target_[m[K[i].publish(msg);
+      |     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:521:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kdebug_pub_actual_[m[K’ was not declared in this scope
+  521 |     [01;31m[Kdebug_pub_actual_[m[K[i].publish(msg);
+      |     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:524:3:[m[K [01;31m[Kerror: [m[K‘[01m[KcalculateOdom[m[K’ was not declared in this scope
+  524 |   [01;31m[KcalculateOdom[m[K(time);
+      |   [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:527:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  527 | void [01;31m[KSentryChassisController[m[K::calculateOdom(const ros::Time& now) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid calculateOdom(const ros::Time&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:528:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ was not declared in this scope
+  528 |   if ([01;31m[Kwheel_joints_[m[K.empty()) return;
+      |       [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:529:14:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_odom_time_[m[K’ was not declared in this scope
+  529 |   if (now <= [01;31m[Klast_odom_time_[m[K) return;
+      |              [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:530:22:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_odom_time_[m[K’ was not declared in this scope
+  530 |   double dt = (now - [01;31m[Klast_odom_time_[m[K).toSec();
+      |                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:533:25:[m[K [01;31m[Kerror: [m[K‘[01m[KWHEEL_PERIMETER_[m[K’ was not declared in this scope
+  533 |   double wheel_radius = [01;31m[KWHEEL_PERIMETER_[m[K / (2 * M_PI);
+      |                         [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:538:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_joints_[m[K’ was not declared in this scope
+  538 |       double raw_vel = [01;31m[Kwheel_joints_[m[K[i].getVelocity();
+      |                        [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:541:18:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  541 |       raw_vel *= [01;31m[Kwheel_direction_[m[K[i];
+      |                  [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:545:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_joints_[m[K’ was not declared in this scope
+  545 |       double wheel_a = [01;31m[Kpivot_joints_[m[K[i].getPosition();
+      |                        [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:555:15:[m[K [01;31m[Kerror: [m[K‘[01m[Kramped_vel_[m[K’ was not declared in this scope
+  555 |   double wz = [01;31m[Kramped_vel_[m[K.angular.z;
+      |               [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:556:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kyaw_[m[K’ was not declared in this scope
+  556 |   [01;31m[Kyaw_[m[K += wz * dt;
+      |   [01;31m[K^~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:559:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kx_pos_[m[K’ was not declared in this scope
+  559 |   [01;31m[Kx_pos_[m[K += (vx_base * c - vy_base * s) * dt;
+      |   [01;31m[K^~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:559:38:[m[K [01;31m[Kerror: [m[K‘[01m[Ks[m[K’ was not declared in this scope
+  559 |   x_pos_ += (vx_base * c - vy_base * [01;31m[Ks[m[K) * dt;
+      |                                      [01;31m[K^[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:560:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ky_pos_[m[K’ was not declared in this scope
+  560 |   [01;31m[Ky_pos_[m[K += (vx_base * s + vy_base * c) * dt;
+      |   [01;31m[K^~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:562:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kodom_msg_[m[K’ was not declared in this scope
+  562 |   [01;31m[Kodom_msg_[m[K.header.stamp = now;
+      |   [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:569:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kodom_pub_[m[K’ was not declared in this scope
+  569 |   [01;31m[Kodom_pub_[m[K.publish(odom_msg_);
+      |   [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:574:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ktf_broadcaster_[m[K’ was not declared in this scope
+  574 |   [01;31m[Ktf_broadcaster_[m[K.sendTransform(tf::StampedTransform(transform, now, "odom", "base_link"));
+      |   [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:577:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  577 | void [01;31m[KSentryChassisController[m[K::ChassisStopMode() {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid ChassisStopMode()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:588:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  588 |         [01;31m[Ktarget_angles_[m[K[i] = current_target + steer_offset_rad_[i];
+      |         [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:588:46:[m[K [01;31m[Kerror: [m[K‘[01m[Ksteer_offset_rad_[m[K’ was not declared in this scope
+  588 |         target_angles_[i] = current_target + [01;31m[Ksteer_offset_rad_[m[K[i];
+      |                                              [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:589:9:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_steer_angles_[m[K’ was not declared in this scope
+  589 |         [01;31m[Klast_steer_angles_[m[K[i] = target_angles_[i];
+      |         [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:590:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_velocities_[m[K’ was not declared in this scope
+  590 |         [01;31m[Ktarget_velocities_[m[K[i] = 0.0;
+      |         [01;31m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:594:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  594 | void [01;31m[KSentryChassisController[m[K::calculateRoundCnt() {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid calculateRoundCnt()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:597:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kpivot_joints_[m[K’ was not declared in this scope
+  597 |     double now_angle_deg = [01;31m[Kpivot_joints_[m[K[i].getPosition() * 180.0 / M_PI;
+      |                            [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:598:48:[m[K [01;31m[Kerror: [m[K‘[01m[Kmotor_circle_[m[K’ was not declared in this scope
+  598 |     if (now_angle_deg - last_angle[i] > 180.0) [01;31m[Kmotor_circle_[m[K[i]--;
+      |                                                [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:599:54:[m[K [01;31m[Kerror: [m[K‘[01m[Kmotor_circle_[m[K’ was not declared in this scope
+  599 |     else if (now_angle_deg - last_angle[i] < -180.0) [01;31m[Kmotor_circle_[m[K[i]++;
+      |                                                      [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:604:6:[m[K [01;31m[Kerror: [m[K‘[01m[KSentryChassisController[m[K’ has not been declared
+  604 | void [01;31m[KSentryChassisController[m[K::calculateTargetRoundCnt() {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In function ‘[01m[Kvoid calculateTargetRoundCnt()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:607:29:[m[K [01;31m[Kerror: [m[K‘[01m[Ktarget_angles_[m[K’ was not declared in this scope
+  607 |     double now_target_deg = [01;31m[Ktarget_angles_[m[K[i] * 180.0 / M_PI;
+      |                             [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:608:50:[m[K [01;31m[Kerror: [m[K‘[01m[Kmotor_target_circle_[m[K’ was not declared in this scope
+  608 |     if (now_target_deg - last_target[i] > 180.0) [01;31m[Kmotor_target_circle_[m[K[i]--;
+      |                                                  [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:609:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kmotor_target_circle_[m[K’ was not declared in this scope
+  609 |     else if (now_target_deg - last_target[i] < -180.0) [01;31m[Kmotor_target_circle_[m[K[i]++;
+      |                                                        [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:614:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+  614 | [01;31m[K}[m[K
+      | [01;31m[K^[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

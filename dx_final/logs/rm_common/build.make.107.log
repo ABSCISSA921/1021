@@ -1,0 +1,3 @@
+[  0%] Built target rm_msgs_generate_messages_cpp
+[ 77%] Built target rm_common
+[100%] Built target test_kalman

@@ -1,0 +1,15 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvirtual bool sentry_chassis_controller::SentryChassisController::init(hardware_interface::EffortJointInterface*, ros::NodeHandle&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:65:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+   65 |   [01;31m[Kwheel_direction_[m[K.resize(4);
+      |   [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateWheelStates(double, double, double)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:243:60:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  243 |         target_velocities_[i] = target_speed * rpm_ratio * [01;31m[Kwheel_direction_[m[K[i];
+      |                                                            [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateOdom(const ros::Time&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:338:18:[m[K [01;31m[Kerror: [m[K‘[01m[Kwheel_direction_[m[K’ was not declared in this scope
+  338 |       raw_vel *= [01;31m[Kwheel_direction_[m[K[i];
+      |                  [01;31m[K^~~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

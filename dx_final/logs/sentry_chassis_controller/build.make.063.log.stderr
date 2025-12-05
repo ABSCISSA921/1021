@@ -1,0 +1,12 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvirtual void sentry_chassis_controller::SentryChassisController::update(const ros::Time&, const ros::Duration&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:253:9:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_target_velocities_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktarget_velocities_[m[K’?
+  253 |         [01;31m[Klast_target_velocities_[m[K[i] = 0.0;
+      |         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+      |         [32m[Ktarget_velocities_[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:261:54:[m[K [01;31m[Kerror: [m[K‘[01m[Klast_target_velocities_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktarget_velocities_[m[K’?
+  261 |         bool target_jump = std::abs(current_target - [01;31m[Klast_target_velocities_[m[K[i]) > 0.5;
+      |                                                      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+      |                                                      [32m[Ktarget_velocities_[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

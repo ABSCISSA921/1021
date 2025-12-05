@@ -1,0 +1,13 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvirtual bool sentry_chassis_controller::SentryChassisController::init(hardware_interface::EffortJointInterface*, ros::NodeHandle&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:69:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kdebug_pub_effort_[m[K’ was not declared in this scope; did you mean ‘[01m[Kdebug_pub_target_[m[K’?
+   69 |       [01;31m[Kdebug_pub_effort_[m[K[i] = nh.advertise<std_msgs::Float64>("/debug/" + wheel_names[i] + "_wheel/effort", 100);
+      |       [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |       [32m[Kdebug_pub_target_[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvirtual void sentry_chassis_controller::SentryChassisController::update(const ros::Time&, const ros::Duration&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:373:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kdebug_pub_effort_[m[K’ was not declared in this scope; did you mean ‘[01m[Kdebug_pub_target_[m[K’?
+  373 |     [01;31m[Kdebug_pub_effort_[m[K[i].publish(effort_msg);
+      |     [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+      |     [32m[Kdebug_pub_target_[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:216：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

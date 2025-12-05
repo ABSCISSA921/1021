@@ -1,0 +1,20 @@
+sentry_chassis_controller:
+  # 1. 关节状态发布者 
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+
+  # 2. 自定义控制器插件
+  sentry_chassis_plugin:
+    type: sentry_chassis_controller/SentryChassisController
+    
+    # 关节句柄列表
+    joints:
+      - left_front_pivot_joint
+      - right_front_pivot_joint
+      - left_back_pivot_joint
+      - right_back_pivot_joint
+      - left_front_wheel_joint
+      - right_front_wheel_joint
+      - left_back_wheel_joint
+      - right_back_wheel_joint

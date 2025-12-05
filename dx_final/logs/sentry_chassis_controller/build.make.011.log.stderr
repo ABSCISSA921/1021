@@ -1,0 +1,24 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvirtual void sentry_chassis_controller::SentryChassisController::update(const ros::Time&, const ros::Duration&)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:126:17:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Kconst ros::Time[m[K’ to ‘[01m[Kconst ros::Duration&[m[K’
+  126 |   calculateOdom([01;31m[Ktime[m[K);
+      |                 [01;31m[K^~~~[m[K
+      |                 [01;31m[K|[m[K
+      |                 [01;31m[Kconst ros::Time[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:97:43:[m[K [01;36m[Knote: [m[K  initializing argument 1 of ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateOdom(const ros::Duration&)[m[K’
+   97 |   void calculateOdom([01;36m[Kconst ros::Duration& period[m[K);
+      |                      [01;36m[K~~~~~~~~~~~~~~~~~~~~~^~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K At global scope:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:130:6:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateOdom(const ros::Time&)[m[K’
+  130 | void [01;31m[KSentryChassisController[m[K::calculateOdom(const ros::Time& now) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:97:8:[m[K [01;36m[Knote: [m[Kcandidate is: ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateOdom(const ros::Duration&)[m[K’
+   97 |   void [01;36m[KcalculateOdom[m[K(const ros::Duration& period);
+      |        [01;36m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:31:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass sentry_chassis_controller::SentryChassisController[m[K’ defined here
+   31 | class [01;36m[KSentryChassisController[m[K : public controller_interface::Controller<hardware_interface::EffortJointInterface> {
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

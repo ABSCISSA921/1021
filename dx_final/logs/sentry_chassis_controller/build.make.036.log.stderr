@@ -1,0 +1,23 @@
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:129:6:[m[K [01;31m[Kerror: [m[Kno declaration matches ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateWheelStates(double, double, double)[m[K’
+  129 | void [01;31m[KSentryChassisController[m[K::calculateWheelStates(double vx, double vy, double vw) {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:129:6:[m[K [01;36m[Knote: [m[Kno functions named ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateWheelStates(double, double, double)[m[K’
+In file included from [01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:1[m[K:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/include/sentry_chassis_controller/sentry_chassis_controller.h:30:7:[m[K [01;36m[Knote: [m[K‘[01m[Kclass sentry_chassis_controller::SentryChassisController[m[K’ defined here
+   30 | class [01;36m[KSentryChassisController[m[K : public controller_interface::Controller<hardware_interface::EffortJointInterface> {
+      |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::Steer_angle_change(double, double, double)[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:191:5:[m[K [01;31m[Kerror: [m[K‘[01m[KcalculateWheelStates[m[K’ was not declared in this scope
+  191 |     [01;31m[KcalculateWheelStates[m[K(vx, vy, vw);
+      |     [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::ChassisSeparateGimbalMode()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:203:3:[m[K [01;31m[Kerror: [m[K‘[01m[KcalculateWheelStates[m[K’ was not declared in this scope
+  203 |   [01;31m[KcalculateWheelStates[m[K(vx, vy, vw);
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::ChassisSpinMode()[m[K’:
+[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:211:3:[m[K [01;31m[Kerror: [m[K‘[01m[KcalculateWheelStates[m[K’ was not declared in this scope
+  211 |   [01;31m[KcalculateWheelStates[m[K(vx, vy, vw);
+      |   [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

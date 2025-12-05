@@ -1,0 +1,13 @@
+sentry_chassis_controller
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/libsentry_chassis_controller.so /home/abscissa/dx_final/devel/lib/libsentry_chassis_controller.so
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/__init__.py /home/abscissa/dx_final/devel/lib/python3/dist-packages/sentry_chassis_controller/__init__.py
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py /home/abscissa/dx_final/devel/lib/python3/dist-packages/sentry_chassis_controller/cfg/__init__.py
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/python3/dist-packages/sentry_chassis_controller/cfg/ChassisOpsConfig.py /home/abscissa/dx_final/devel/lib/python3/dist-packages/sentry_chassis_controller/cfg/ChassisOpsConfig.py
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/pkgconfig/sentry_chassis_controller.pc /home/abscissa/dx_final/devel/lib/pkgconfig/sentry_chassis_controller.pc
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/keyboard_teleop /home/abscissa/dx_final/devel/lib/sentry_chassis_controller/keyboard_teleop
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig.cmake /home/abscissa/dx_final/devel/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig.cmake
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig-version.cmake /home/abscissa/dx_final/devel/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig-version.cmake
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/docs/ChassisOpsConfig-usage.dox /home/abscissa/dx_final/devel/share/sentry_chassis_controller/docs/ChassisOpsConfig-usage.dox
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/docs/ChassisOpsConfig.dox /home/abscissa/dx_final/devel/share/sentry_chassis_controller/docs/ChassisOpsConfig.dox
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/docs/ChassisOpsConfig.wikidoc /home/abscissa/dx_final/devel/share/sentry_chassis_controller/docs/ChassisOpsConfig.wikidoc
+/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/include/sentry_chassis_controller/ChassisOpsConfig.h /home/abscissa/dx_final/devel/include/sentry_chassis_controller/ChassisOpsConfig.h
