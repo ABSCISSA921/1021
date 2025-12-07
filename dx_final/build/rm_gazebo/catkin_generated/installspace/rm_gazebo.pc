@@ -1,0 +1,8 @@
+prefix=/home/abscissa/dx_final/install
+
+Name: rm_gazebo
+Description: Description of rm_gazebo
+Version: 0.1.20
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lrm_robot_hw_sim -lrm_mimic_joint_plugin
+Requires: roscpp rm_common gazebo_ros gazebo_ros_control

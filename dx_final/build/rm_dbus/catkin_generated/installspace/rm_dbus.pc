@@ -1,0 +1,8 @@
+prefix=/home/abscissa/dx_final/install
+
+Name: rm_dbus
+Description: Description of rm_dbus
+Version: 0.1.20
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rm_common

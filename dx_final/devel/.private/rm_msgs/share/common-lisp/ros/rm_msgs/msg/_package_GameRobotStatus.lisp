@@ -1,0 +1,24 @@
+(cl:in-package rm_msgs-msg)
+(cl:export '(ROBOT_ID-VAL
+          ROBOT_ID
+          ROBOT_LEVEL-VAL
+          ROBOT_LEVEL
+          REMAIN_HP-VAL
+          REMAIN_HP
+          MAX_HP-VAL
+          MAX_HP
+          SHOOTER_COOLING_RATE-VAL
+          SHOOTER_COOLING_RATE
+          SHOOTER_COOLING_LIMIT-VAL
+          SHOOTER_COOLING_LIMIT
+          CHASSIS_POWER_LIMIT-VAL
+          CHASSIS_POWER_LIMIT
+          MAINS_POWER_GIMBAL_OUTPUT-VAL
+          MAINS_POWER_GIMBAL_OUTPUT
+          MAINS_POWER_CHASSIS_OUTPUT-VAL
+          MAINS_POWER_CHASSIS_OUTPUT
+          MAINS_POWER_SHOOTER_OUTPUT-VAL
+          MAINS_POWER_SHOOTER_OUTPUT
+          STAMP-VAL
+          STAMP
+))

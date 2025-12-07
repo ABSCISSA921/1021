@@ -1,0 +1,8 @@
+prefix=/home/abscissa/dx_final/devel/.private/rm_dbus
+
+Name: rm_dbus
+Description: Description of rm_dbus
+Version: 0.1.20
+Cflags: -I/home/abscissa/dx_final/src/rm_control/rm_dbus/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rm_common

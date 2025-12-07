@@ -1,0 +1,8 @@
+prefix=/home/abscissa/dx_final/devel/.private/rm_hw
+
+Name: rm_hw
+Description: Description of rm_hw
+Version: 0.1.20
+Cflags: -I/home/abscissa/dx_final/src/rm_control/rm_hw/include
+Libs: -L${prefix}/lib -lrm_hw_loader_plugins
+Requires: roscpp rm_common rm_msgs hardware_interface controller_interface transmission_interface joint_limits_interface controller_manager urdf realtime_tools

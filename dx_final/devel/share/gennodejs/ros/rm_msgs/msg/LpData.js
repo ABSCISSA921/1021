@@ -1,0 +1,1 @@
+/home/abscissa/dx_final/devel/.private/rm_msgs/share/gennodejs/ros/rm_msgs/msg/LpData.js

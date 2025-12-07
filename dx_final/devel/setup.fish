@@ -1,0 +1,1 @@
+/home/abscissa/dx_final/devel/.private/catkin_tools_prebuild/setup.fish

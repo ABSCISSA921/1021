@@ -1,0 +1,6 @@
+devel_space: /home/abscissa/dx_final/devel
+install: false
+install_space: /home/abscissa/dx_final/install
+profile: default
+source_space: /home/abscissa/dx_final/src
+workspace: /home/abscissa/dx_final

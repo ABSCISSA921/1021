@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sentry_chassis_controller</name>
+  <version>0.1.0</version>
+  <description>Sentry Chassis Controller</description>
+  <maintainer email="user@todo.todo">user</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>control_toolbox</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>rm_description</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>controller_interface</build_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend> <!-- 新增 -->
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>control_toolbox</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>teleop_twist_keyboard</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rm_description</exec_depend>
+  <exec_depend>pluginlib</exec_depend>
+  <exec_depend>controller_interface</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>effort_controllers</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>dynamic_reconfigure</exec_depend> <!-- 新增 -->
+
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <export>
+    <build_type>catkin</build_type>
+    <controller_interface plugin="${prefix}/sentry_chassis_controller_plugin.xml"/>
+  </export>
+</package>

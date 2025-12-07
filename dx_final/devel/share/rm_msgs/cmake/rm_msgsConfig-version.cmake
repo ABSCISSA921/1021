@@ -1,0 +1,1 @@
+/home/abscissa/dx_final/devel/.private/rm_msgs/share/rm_msgs/cmake/rm_msgsConfig-version.cmake

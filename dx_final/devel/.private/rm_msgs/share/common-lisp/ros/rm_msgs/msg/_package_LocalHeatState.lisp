@@ -1,0 +1,12 @@
+(cl:in-package rm_msgs-msg)
+(cl:export '(FRICTION_SPEED-VAL
+          FRICTION_SPEED
+          FRICTION_CHANGE_SPEED-VAL
+          FRICTION_CHANGE_SPEED
+          FRICTION_CHANGE_SPEED_DERIVATIVE-VAL
+          FRICTION_CHANGE_SPEED_DERIVATIVE
+          HAS_SHOOT-VAL
+          HAS_SHOOT
+          STAMP-VAL
+          STAMP
+))

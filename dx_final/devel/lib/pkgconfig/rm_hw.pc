@@ -1,0 +1,1 @@
+/home/abscissa/dx_final/devel/.private/rm_hw/lib/pkgconfig/rm_hw.pc

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/abscissa/dx_final/devel/.private/rm_gazebo/setup.sh

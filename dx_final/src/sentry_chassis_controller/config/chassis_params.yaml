@@ -3,41 +3,41 @@ sentry_chassis_controller:
 
     # 1. 舵机 PID 
 
-    lf_steer_p: 10.0
+    lf_steer_p: 5.0
     lf_steer_i: 0.1
-    lf_steer_d: 1.0
+    lf_steer_d: 0.1
     
-    rf_steer_p: 10.0
+    rf_steer_p: 5.0
     rf_steer_i: 0.1
-    rf_steer_d: 1.0
+    rf_steer_d: 0.1
     
-    lb_steer_p: 10.0
+    lb_steer_p: 5.0
     lb_steer_i: 0.1
-    lb_steer_d: 1.0
+    lb_steer_d: 0.1
     
-    rb_steer_p: 10.0
+    rb_steer_p: 5.0
     rb_steer_i: 0.1
-    rb_steer_d: 1.0
+    rb_steer_d: 0.1
     
  #2.车轮PID
-    lf_wheel_p: 1.0
+    lf_wheel_p: 5.0
     lf_wheel_i: 0.1 # 积分项极小，防止蠕动
-    lf_wheel_d: 0.01  # 阻尼项，帮助刹车
+    lf_wheel_d: 0  # 阻尼项，帮助刹车
     lf_wheel_max: 3.0
     
-    rf_wheel_p: 1.0
+    rf_wheel_p: 5.0
     rf_wheel_i: 0.1
-    rf_wheel_d: 0.01
+    rf_wheel_d: 0
     rf_wheel_max: 3.0
     
-    lb_wheel_p: 1.0
+    lb_wheel_p: 5.0
     lb_wheel_i: 0.1
-    lb_wheel_d: 0.01
+    lb_wheel_d: 0.0
     lb_wheel_max: 3.0
     
-    rb_wheel_p: 1.0
+    rb_wheel_p: 5.0
     rb_wheel_i: 0.1
-    rb_wheel_d: 0.01
+    rb_wheel_d: 0.0
     rb_wheel_max: 3.0
 
 
@@ -53,8 +53,8 @@ sentry_chassis_controller:
     offset_rb: 0.0
     
 
-    spin_vw: 5.0
+    spin_vw: 20.0
     use_world_frame: false
     #加速度限制
-    acc_linear: 3.0   # m/s^2
-    acc_angular: 5.0  # rad/s^2 
+    acc_linear: 0.2   # m/s^2
+    acc_angular: 0.5  # rad/s^2 
