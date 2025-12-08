@@ -1,8 +1,10 @@
 sentry_chassis_controller:
   sentry_chassis_plugin:
 
-    # 1. 舵机 PID 
-
+    # ==============================
+    # 1. 关节 PID 参数
+    # ==============================
+    # 舵向电机 (Pivot)
     lf_steer_p: 5.0
     lf_steer_i: 0.1
     lf_steer_d: 0.1
@@ -19,42 +21,67 @@ sentry_chassis_controller:
     rb_steer_i: 0.1
     rb_steer_d: 0.1
     
- #2.车轮PID
-    lf_wheel_p: 5.0
-    lf_wheel_i: 0.1 # 积分项极小，防止蠕动
-    lf_wheel_d: 0  # 阻尼项，帮助刹车
-    lf_wheel_max: 3.0
+    # 驱动电机 (Wheel)
+    # [注意] max 必须是 3.0，匹配 URDF
+    lf_wheel_p: 2.0
+    lf_wheel_i: 0.1 
+    lf_wheel_d: 0.0 
+    lf_wheel_max: 1.0
     
-    rf_wheel_p: 5.0
+    rf_wheel_p: 2.0
     rf_wheel_i: 0.1
-    rf_wheel_d: 0
-    rf_wheel_max: 3.0
+    rf_wheel_d: 0.0
+    rf_wheel_max: 1.0
     
-    lb_wheel_p: 5.0
+    lb_wheel_p: 2.0
     lb_wheel_i: 0.1
     lb_wheel_d: 0.0
-    lb_wheel_max: 3.0
+    lb_wheel_max: 1.0
     
-    rb_wheel_p: 5.0
+    rb_wheel_p: 2.0
     rb_wheel_i: 0.1
     rb_wheel_d: 0.0
-    rb_wheel_max: 3.0
+    rb_wheel_max: 1.0
 
-
-    # 3. 运动学参数 
+  
+    # 2. 几何与安装误差
   
     wheel_track: 0.362
     wheel_base: 0.362
     
-  
+    # 安装 Offset (URDF 中的 pivot_offset 值)
+    # 之前讨论过，如果你发现轮子是歪的再填，这里先给 0
     offset_lf: 0.0
     offset_rf: 0.0
     offset_lb: 0.0
     offset_rb: 0.0
     
-
+    # ==============================
+    # 3. 运行模式设置
+    # ==============================
     spin_vw: 20.0
     use_world_frame: false
-    #加速度限制
-    acc_linear: 0.2   # m/s^2
-    acc_angular: 0.5  # rad/s^2 
+    
+    # 加速度限制
+    acc_linear: 0.05   # m/s^2 (建议调小一点起步更稳，0.2有点太慢了)
+    acc_angular: 0.3  # rad/s^2 
+
+    # ==============================
+    # 4. [新增] 之前硬编码的参数
+    # ==============================
+    
+    # 里程计校准系数 (10圈法测出来的)
+    # 修改这里，不需要重新编译 C++
+    odom_linear_scale: 1.000
+    odom_angular_scale: 0.998
+
+    # 功率控制参数
+    power_constant_loss: 10.0 # 基础功耗 (W)
+    power_max_input: 50.0     # 最大输入功率 (W)
+
+    # 停车模式参数 (内八字刹车)
+    stop_mode_kp: 10.0        # 刹车力度 (P)
+    stop_mode_max_force: 3.0  # 最大刹车力矩 (Nm)
+
+    # 轮子最大力矩 (Nm)
+    

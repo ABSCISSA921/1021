@@ -69,18 +69,26 @@ class SentryChassisController : public controller_interface::Controller<hardware
   // === 物理参数 ===
   const double WHEEL_PERIMETER_ = 0.3456; // 轮子周长 (用于计算轮速和里程计)
 
-  // === 里程计校准系数 (10圈校准法测得) ===
-  double odom_linear_scale_ = 1.003;   // 线速度修正 (解决距离不准)
-  double odom_angular_scale_ = 1.008; // 角速度修正 (解决旋转后Y轴漂移)
+  // === 里程计校准系数 (从参数服务器加载) ===
+  double odom_linear_scale_ = 1.0;   // 线速度修正
+  double odom_angular_scale_ = 1.0;  // 角速度修正
+
+  double wheel_max_effort_ = 1.5; // 默认值设为 1.5
   
   // === 平滑控制参数 ===
   double acc_linear_limit_ = 1.0;  // 线加速度限制 (m/s^2)
   double acc_angular_limit_ = 1.0; // 角加速度限制 (rad/s^2)
 
-  // === 功率控制相关变量 [新增] ===
-  // 必须在这里声明，否则 .cpp 里用不了
+  // === 功率控制相关变量 ===
   double buffer_energy_ = 60.0; // 虚拟电容能量 (焦耳)
-  double power_limit_ = 50.0;   // 当前功率限制阈值 (动态变化 50W/300W)
+  
+  // [优化] 功率控制参数 (从参数服务器加载)
+  double power_constant_loss_ = 10.0; // 基础电路功耗 (W)
+  double power_max_input_ = 50.0;     // 最大输入功率 (W)
+
+  // [优化] 停车模式参数 (从参数服务器加载)
+  double stop_mode_kp_ = 30.0;        // 停车刹车力度
+  double stop_mode_max_force_ = 3.0;  // 停车最大刹车力矩
 
   // === 几何尺寸 ===
   double wheel_track_ = 0.362; // 轮距 (宽)
@@ -156,7 +164,7 @@ class SentryChassisController : public controller_interface::Controller<hardware
   void transformVelocity(double& vx, double& vy); // 世界坐标系转换
   void rampVelocity(const ros::Duration& period); // 梯形加减速
   
-  // [新增] 功率限制函数声明
+  // 功率限制函数
   void limitPower(double period_dt);
 };
 
