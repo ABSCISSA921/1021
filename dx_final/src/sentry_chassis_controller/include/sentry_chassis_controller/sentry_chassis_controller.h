@@ -1,7 +1,7 @@
 #ifndef SENTRY_CHASSIS_CONTROLLER_SENTRY_CHASSIS_CONTROLLER_H
 #define SENTRY_CHASSIS_CONTROLLER_SENTRY_CHASSIS_CONTROLLER_H
 
-// === ROS 标准头文件 ===
+
 #include <controller_interface/controller.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <ros/ros.h>
@@ -12,15 +12,13 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <tf2/LinearMath/Quaternion.h>
-
-// === 工具库 ===
-#include <control_toolbox/pid.h> // ROS自带的PID工具箱
+#include <control_toolbox/pid.h> 
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h> 
 #include <cmath>
 #include <vector>
 
-// === 动态调参 (Dynamic Reconfigure) ===
+//动态调参
 #include <dynamic_reconfigure/server.h>
 #include <sentry_chassis_controller/ChassisOpsConfig.h>
 
@@ -41,7 +39,7 @@ class SentryChassisController : public controller_interface::Controller<hardware
   SentryChassisController() ;
   ~SentryChassisController() override = default;
 
-  // === 标准 Controller 生命周期函数 ===
+  // 标准 Controller 生命周期函数
   bool init(hardware_interface::EffortJointInterface* hw, ros::NodeHandle& nh) override; // 初始化
   void starting(const ros::Time& time) override; // 控制器启动时执行一次
   void update(const ros::Time& time, const ros::Duration& period) override; // 主循环 (1kHz)
@@ -60,6 +58,8 @@ class SentryChassisController : public controller_interface::Controller<hardware
   // === PID 控制器 ===
   control_toolbox::Pid pivot_pid_[4]; // 4个舵向PID
   control_toolbox::Pid wheel_pid_[4]; // 4个轮速PID
+  control_toolbox::Pid yaw_pid_; // 专门修航向
+  double yaw_correction_ = 0.0;  // 存储计算出来的修正值
 
   // 动态调参服务指针
   std::shared_ptr<dynamic_reconfigure::Server<sentry_chassis_controller::ChassisOpsConfig>> dr_server_;
@@ -73,11 +73,12 @@ class SentryChassisController : public controller_interface::Controller<hardware
   double odom_linear_scale_ = 1.0;   // 线速度修正
   double odom_angular_scale_ = 1.0;  // 角速度修正
 
-  double wheel_max_effort_ = 1.5; // 默认值设为 1.5
+  double wheel_max_effort_ = 1.0; // 默认值设为 1.0
   
   // === 平滑控制参数 ===
   double acc_linear_limit_ = 1.0;  // 线加速度限制 (m/s^2)
   double acc_angular_limit_ = 1.0; // 角加速度限制 (rad/s^2)
+  double sync_kp_ = 0.0;          // 轮子交叉耦合增益 (动态调参加载)
 
   // === 功率控制相关变量 ===
   double buffer_energy_ = 60.0; // 虚拟电容能量 (焦耳)
@@ -102,18 +103,18 @@ class SentryChassisController : public controller_interface::Controller<hardware
   std::vector<double> wheel_direction_;
 
   // === 运行状态变量 ===
-  double spin_vw_ = 2.0;         // 小陀螺预设转速
+  double spin_vw_ = 10.0;         // 小陀螺预设转速
   bool use_world_frame_ = false; // 是否开启世界坐标系控制
   
   ChassisCtrlMode ctrl_mode_ = CHASSIS_STOP; // 当前控制模式
   geometry_msgs::Twist cmd_vel_;      // 原始指令 (键盘/导航发来的)
-  geometry_msgs::Twist ramped_vel_;   // 平滑后的指令 (经过梯形加减速处理的)
+  geometry_msgs::Twist ramped_vel_;   // 平滑后的指令 (经过加减速处理的)
 
   // === 期望与中间变量 ===
   double target_angles_[4] = {0.0};     // 期望舵角
   double target_velocities_[4] = {0.0}; // 期望轮速
   double last_steer_angles_[4] = {0.0}; // 上一帧舵角 (用于就近转角计算)
-  double last_target_velocities_[4] = {0.0}; 
+  double last_target_velocities_[4] = {0.0}; // 上一帧轮速
   
   // 圈数记录 (处理舵机无限旋转 0-2PI 问题)
   double motor_circle_[4] = {0.0};

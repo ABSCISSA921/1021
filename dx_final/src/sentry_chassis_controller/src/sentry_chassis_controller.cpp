@@ -2,13 +2,13 @@
  * @file sentry_chassis_controller.cpp
  * @brief 哨兵机器人全向底盘控制器实现文件
  * @details 基于ROS Control框架的Effort（力矩）接口，实现全向底盘的核心控制逻辑：
- *          1. 动态参数配置（PID、几何尺寸、零偏等）
- *          2. 坐标系转换（世界帧→车体帧）
- *          3. 逆运动学解算（速度指令→轮速/舵角目标）
- *          4. PID闭环控制（舵向/驱动电机）
- *          5. 功率限制与电容能量模拟
- *          6. 正运动学解算（里程计发布）
- *          7. 多模式切换（普通全向/自旋/停止）
+ * 1. 动态参数配置（PID、几何尺寸、零偏等）
+ * 2. 坐标系转换（世界帧→车体帧）
+ * 3. 逆运动学解算（速度指令→轮速/舵角目标）
+ * 4. PID闭环控制（舵向/驱动电机）
+ * 5. 功率限制与电容能量模拟
+ * 6. 正运动学解算（里程计发布）
+ * 7. 多模式切换（普通全向/自旋/停止）
  */
 #include "sentry_chassis_controller/sentry_chassis_controller.h"
 #include <algorithm>
@@ -35,7 +35,7 @@ SentryChassisController::SentryChassisController() : tf_listener_(tf_buffer_) {}
 /**
  * @brief 计算底盘运动学核心参数
  * @details 根据轮距(wheel_track)和轴距(wheel_base)计算底盘旋转半径R，
- *          公式：R = √[(轮距/2)² + (轴距/2)²]，用于逆运动学解算轮速/舵角
+ * 公式：R = √[(轮距/2)² + (轴距/2)²]，用于逆运动学解算轮速/舵角
  */
 void SentryChassisController::calculateKinematicsParams() {
   radius_ = std::sqrt(std::pow(wheel_track_ / 2.0, 2) + std::pow(wheel_base_ / 2.0, 2));
@@ -46,10 +46,10 @@ void SentryChassisController::calculateKinematicsParams() {
  * @param config 动态配置参数结构体（由.cfg文件生成）
  * @param level 参数更新级别（未使用）
  * @details 运行时通过rqt_reconfigure修改参数，无需重启节点：
- *          1. 更新舵向/驱动电机PID参数（含积分限幅、输出限幅）
- *          2. 更新底盘几何参数（轮距、轴距）
- *          3. 更新舵机安装零偏、自旋速度、坐标系模式等
- *          4. 重新计算运动学参数
+ * 1. 更新舵向/驱动电机PID参数（含积分限幅、输出限幅）
+ * 2. 更新底盘几何参数（轮距、轴距）
+ * 3. 更新舵机安装零偏、自旋速度、坐标系模式等
+ * 4. 重新计算运动学参数
  */
 void SentryChassisController::reconfigCallback(sentry_chassis_controller::ChassisOpsConfig& config, uint32_t level) {
   // 驱动电机积分限幅设为最大力矩（防止积分饱和）
@@ -69,6 +69,10 @@ void SentryChassisController::reconfigCallback(sentry_chassis_controller::Chassi
   wheel_pid_[2].setGains(config.lb_wheel_p, config.lb_wheel_i, config.lb_wheel_d, wheel_i_limit, -wheel_i_limit, config.lb_wheel_max); // 左后驱动
   wheel_pid_[3].setGains(config.rb_wheel_p, config.rb_wheel_i, config.rb_wheel_d, wheel_i_limit, -wheel_i_limit, config.rb_wheel_max); // 右后驱动
 
+
+  //yaw_pid_.setGains(config.yaw_p, config.yaw_i, config.yaw_d, 1.0, -1.0, 5.0);
+
+
   // 3. 底盘几何参数更新
   wheel_track_ = config.wheel_track;  // 轮距（左右轮间距，m）
   wheel_base_ = config.wheel_base;    // 轴距（前后轮间距，m）
@@ -86,6 +90,11 @@ void SentryChassisController::reconfigCallback(sentry_chassis_controller::Chassi
   // 6. 加减速限制参数
   acc_linear_limit_ = config.acc_linear;   // 线加速度限制（m/s²）
   acc_angular_limit_ = config.acc_angular; // 角加速度限制（rad/s²）
+  sync_kp_ = config.sync_kp;               // 轮子同步交叉耦合增益
+
+
+  //yaw_pid_.setGains(2.0, 0.0, 0.1, 1.0, -1.0);
+
   
   // 参数更新后重新计算运动学常数
   calculateKinematicsParams();
@@ -97,40 +106,50 @@ void SentryChassisController::reconfigCallback(sentry_chassis_controller::Chassi
  * @param nh 节点句柄（用于读取参数、创建订阅/发布器）
  * @return 初始化成功返回true，失败返回false
  * @details 初始化流程：
- *          1. 读取参数服务器配置（里程计缩放、功率参数、关节名）
- *          2. 获取关节句柄（舵向/驱动关节）
- *          3. 初始化动态参数服务器
- *          4. 创建订阅器（速度指令、键盘指令）、发布器（里程计、调试数据）
- *          5. 初始化里程计消息、轮子方向修正
+ * 1. 读取参数服务器配置（里程计缩放、功率参数、关节名）
+ * 2. 获取关节句柄（舵向/驱动关节）
+ * 3. 初始化动态参数服务器
+ * 4. 创建订阅器（速度指令、键盘指令）、发布器（里程计、调试数据）
+ * 5. 初始化里程计消息、轮子方向修正
  */
 bool SentryChassisController::init(hardware_interface::EffortJointInterface* hw, ros::NodeHandle& nh) {
   this->nh_ = nh;
-  buffer_energy_ = 60.0; // 电容初始能量（J）
+  //buffer_energy_ = 60.0;
 
-  // 从参数服务器读取配置（带默认值）
-  nh_.param("odom_linear_scale", odom_linear_scale_, 1.0);    // 里程计线速度缩放因子
-  nh_.param("odom_angular_scale", odom_angular_scale_, 1.0);  // 里程计角速度缩放因子
-  nh_.param("power_constant_loss", power_constant_loss_, 10.0); // 功率静态损耗（覆盖常量）
-  nh_.param("power_max_input", power_max_input_, 50.0);       // 最大输入功率（覆盖常量）
-  nh_.param("stop_mode_kp", stop_mode_kp_, 30.0);             // 停止模式KP（覆盖常量）
-  nh_.param("stop_mode_max_force", stop_mode_max_force_, 3.0);// 停止模式最大制动力（覆盖常量）
-
-  ROS_INFO("!!! Sentry Controller Initialized !!!");
+  // 从参数服务器读取配置
+  nh_.param("odom_linear_scale", odom_linear_scale_, 1.0);    // 里程计线速度缩放
+  nh_.param("odom_angular_scale", odom_angular_scale_, 1.0);  // 里程计角速度缩放
+  nh_.param("power_constant_loss", power_constant_loss_, 10.0); // 功率静态损耗
+  nh_.param("power_max_input", power_max_input_, 50.0);       // 最大输入功率
+  nh_.param("stop_mode_kp", stop_mode_kp_, 20.0);             // 停止模式KP
+  nh_.param("stop_mode_max_force", stop_mode_max_force_, 3.0);// 停止模式最大制动力
+  nh_.param("sync_kp", sync_kp_, 5.0);                             // 轮子同步交叉耦合增益
+  // === [已注释 - 保留痕迹] 读取航向 PID 默认参数 ===
+  /*
+  double yaw_p, yaw_i, yaw_d;
+  nh_.param("yaw_p", yaw_p, 2.0); // 如果没读到，默认给 2.0
+  nh_.param("yaw_i", yaw_i, 0.0);
+  nh_.param("yaw_d", yaw_d, 0.1);
   
-  // 读取关节名称列表（从参数服务器）
+  // 先把初始值塞进去，防止一开始 PID 是空的
+  yaw_pid_.setGains(yaw_p, yaw_i, yaw_d, 1.0, -1.0, 5.0);
+  */
+  ROS_INFO("Sentry Controller Initialized");
+  
+  // 读取关节名称列表
   std::vector<std::string> joint_names;
   if (!nh_.getParam("joints", joint_names)) {
       ROS_ERROR("Failed to get joint names from param server!");
       return false;
   }
   
-  // 获取关节句柄（带异常捕获，防止关节名错误崩溃）
+  // 获取关节，握手
   try {
       for (const auto& name : joint_names) {
         if (name.find("pivot") != std::string::npos) {
-            pivot_joints_.push_back(hw->getHandle(name)); // 舵向关节（pivot）
+            pivot_joints_.push_back(hw->getHandle(name)); // 找到后舵向关节（pivot）握手
         } else if (name.find("wheel") != std::string::npos) {
-            wheel_joints_.push_back(hw->getHandle(name)); // 驱动关节（wheel）
+            wheel_joints_.push_back(hw->getHandle(name)); // 驱动关节（wheel）握手
         }
       }
   } catch (const hardware_interface::HardwareInterfaceException& e) {
@@ -138,7 +157,7 @@ bool SentryChassisController::init(hardware_interface::EffortJointInterface* hw,
       return false;
   }
   
-  // 检查关节数量（必须4个舵向+4个驱动）
+  // 检查关节数量
   if (pivot_joints_.size() != 4 || wheel_joints_.size() != 4) {
       ROS_ERROR("Pivot joints count: %lu, Wheel joints count: %lu (need 4+4)", 
                 pivot_joints_.size(), wheel_joints_.size());
@@ -198,6 +217,8 @@ void SentryChassisController::starting(const ros::Time& time) {
         last_target_velocities_[i] = 0.0;
     }
     ramped_vel_ = geometry_msgs::Twist(); // 初始化平滑速度
+    // === [已注释 - 保留痕迹] 航向PID重置 ===
+    // yaw_pid_.reset(); 
 }
 
 /**
@@ -216,13 +237,14 @@ void SentryChassisController::stopping(const ros::Time& time) {
  * @brief 键盘指令回调函数
  * @param msg 键盘按键消息（std_msgs::String）
  * @details 处理键盘指令：
- *          - 'g'：切换自旋模式/普通模式
- *          - 'h'：切换世界坐标系/车体坐标系控制
+ * - 'g'：切换自旋模式/普通模式
+ * - 'h'：切换世界坐标系/车体坐标系控制
  */
 void SentryChassisController::keyCallback(const std_msgs::String::ConstPtr& msg) {
   if (msg->data == "g") {
       if (ctrl_mode_ == CHASSIS_SPIN) {
           ctrl_mode_ = CHASSIS_SEPARATE_GIMBAL; 
+          cmd_vel_.angular.z = 0.0;
           ROS_INFO("Switch to NORMAL Mode");
       } else {
           ctrl_mode_ = CHASSIS_SPIN; 
@@ -232,6 +254,7 @@ void SentryChassisController::keyCallback(const std_msgs::String::ConstPtr& msg)
   else if (msg->data == "h") {
       use_world_frame_ = !use_world_frame_;
       ROS_INFO("World Frame: %s", use_world_frame_ ? "ON" : "OFF");
+      cmd_vel_.angular.z = spin_vw_;
   }
 }
 
@@ -249,7 +272,7 @@ void SentryChassisController::cmdVelCallback(const geometry_msgs::Twist::ConstPt
  * @param vx 输入/输出：x方向速度（世界帧→车体帧）
  * @param vy 输入/输出：y方向速度（世界帧→车体帧）
  * @details 当启用世界坐标系控制时，将odom帧的速度转换为base_link帧，
- *          使用非阻塞TF查询（超时0），避免控制循环卡顿；转换失败则速度清零
+ * 使用非阻塞TF查询（超时0），避免控制循环卡顿；转换失败则速度清零
  */
 void SentryChassisController::transformVelocity(double& vx, double& vy) {
   if (use_world_frame_) {
@@ -287,24 +310,24 @@ void SentryChassisController::transformVelocity(double& vx, double& vy) {
  * @details 过滤微小速度指令（绝对值<0.001），设为0，防止电机微小抖动
  */
 void SentryChassisController::snapInput(double& vx, double& vy, double& vw) {
-    if (std::abs(vx) < 0.001) vx = 0.0;
-    if (std::abs(vy) < 0.001) vy = 0.0;
-    if (std::abs(vw) < 0.001) vw = 0.0;
+    if (std::abs(vx) < 0.0001) vx = 0.0;
+    if (std::abs(vy) < 0.0001) vy = 0.0;
+    if (std::abs(vw) < 0.0001) vw = 0.0;
 }
 
 /**
  * @brief 梯形加减速（速度斜坡）
  * @param period 控制周期（ros::Duration）
  * @details 限制速度变化率，防止加速度过大导致底盘冲击：
- *          1. 计算周期内最大允许速度增量（加速度限制 × 周期）
- *          2. 若目标速度与当前平滑速度的误差超过增量，按增量逼近；否则直接赋值
+ * 1. 计算周期内最大允许速度增量（加速度限制 × 周期）
+ * 2. 若目标速度与当前平滑速度的误差超过增量，按增量逼近；否则直接赋值
  */
 void SentryChassisController::rampVelocity(const ros::Duration& period) {
     double dt = period.toSec(); // 周期时间（s）
     double max_lin_inc = acc_linear_limit_ * dt;  // 线速度最大增量（m/s）
     double max_ang_inc = acc_angular_limit_ * dt; // 角速度最大增量（rad/s）
-
-    // X轴速度平滑
+    
+    // X轴速度
     double error_x = cmd_vel_.linear.x - ramped_vel_.linear.x;
     if (std::abs(error_x) > max_lin_inc) {
         ramped_vel_.linear.x += (error_x > 0 ? 1.0 : -1.0) * max_lin_inc;
@@ -333,9 +356,9 @@ void SentryChassisController::rampVelocity(const ros::Duration& period) {
  * @brief 功率限制与电容能量模拟
  * @param period_dt 控制周期（s）
  * @details 核心逻辑：
- *          1. 计算当前总预测功率（驱动轮功率+静态损耗）
- *          2. 模拟电容能量变化（输入功率-消耗功率）× 周期
- *          3. 电容能量低于阈值时，限制总功率输出，防止过载
+ * 1. 计算当前总预测功率（驱动轮功率+静态损耗）
+ * 2. 模拟电容能量变化（输入功率-消耗功率）× 周期
+ * 3. 电容能量低于阈值时，限制总功率输出，防止过载
  */
 void SentryChassisController::limitPower(double period_dt) {
     double total_predicted_power = 0.0;
@@ -385,13 +408,13 @@ void SentryChassisController::limitPower(double period_dt) {
  * @param vy 车体帧y方向速度（m/s）
  * @param vw 车体帧角速度（rad/s）
  * @details 核心逻辑：
- *          1. 死区过滤微小速度，直接设为0
- *          2. 分3种场景解算轮速/舵角：
- *             - 纯平移：所有轮子速度=合速度，舵角=平移方向角
- *             - 纯旋转：舵角指向旋转中心，轮速=半径×角速度
- *             - 混合运动：结合平移+旋转解算每个轮子的速度/舵角
- *          3. 就近转角优化：舵角变化不超过90°，超过则反转轮子方向
- *          4. 防抖处理：微小速度/角度变化时锁定舵角，防止抖动
+ * 1. 死区过滤微小速度，直接设为0
+ * 2. 分3种场景解算轮速/舵角：
+ * - 纯平移：所有轮子速度=合速度，舵角=平移方向角
+ * - 纯旋转：舵角指向旋转中心，轮速=半径×角速度
+ * - 混合运动：结合平移+旋转解算每个轮子的速度/舵角
+ * 3. 就近转角优化：舵角变化不超过90°，超过则反转轮子方向
+ * 4. 防抖处理：微小速度/角度变化时锁定舵角，防止抖动
  */
 void SentryChassisController::calculateWheelStates(double vx, double vy, double vw) {
     snapInput(vx, vy, vw); // 死区过滤
@@ -465,13 +488,13 @@ void SentryChassisController::calculateWheelStates(double vx, double vy, double 
         }
 
         // 防抖死区处理
-        if (std::abs(raw_speeds[i]) < 0.05) {
+        if (std::abs(raw_speeds[i]) < 0.001) {
              // 速度极小：锁定舵角，轮速设0
              diff = 0.0; 
              target_velocities_[i] = 0.0;
              target_angles_[i] = last_steer_angles_[i]; 
         }
-        else if (std::abs(diff) < 0.05) { 
+        else if (std::abs(diff) < 0.01) { 
              // 角度变化极小：锁定舵角
              diff = 0.0;
              target_angles_[i] = last_steer_angles_[i];
@@ -492,7 +515,7 @@ void SentryChassisController::calculateWheelStates(double vx, double vy, double 
         final_speed *= wheel_direction_[i]; // 轮子方向修正
         
         // 大角度偏差保护：舵角未对齐时，轮速设0
-        if (std::abs(diff) > 0.3) final_speed = 0.0; 
+        if (std::abs(diff) > 0.8) final_speed = 0.0; 
 
         // 保存目标轮速
         target_velocities_[i] = final_speed;
@@ -502,13 +525,19 @@ void SentryChassisController::calculateWheelStates(double vx, double vy, double 
 /**
  * @brief 普通全向模式处理
  * @details 1. 读取平滑后的速度指令
- *          2. 转换坐标系（世界帧→车体帧）
- *          3. 逆运动学解算轮速/舵角目标
+ * 2. 转换坐标系（世界帧→车体帧）
+ * 3. 逆运动学解算轮速/舵角目标
  */
 void SentryChassisController::ChassisSeparateGimbalMode() {
   double vx = ramped_vel_.linear.x; 
   double vy = ramped_vel_.linear.y;
+  
+  // === [已注释 - 保留痕迹] 航向修正叠加 ===
+  // double vw = ramped_vel_.angular.z + yaw_correction_;
+  
+  // === [回退] 使用不含修正的原始角速度 ===
   double vw = ramped_vel_.angular.z;
+
   transformVelocity(vx, vy); // 坐标系转换
   calculateWheelStates(vx, vy, vw); // 逆运动学解算
 }
@@ -516,14 +545,16 @@ void SentryChassisController::ChassisSeparateGimbalMode() {
 /**
  * @brief 自旋模式处理（小陀螺模式）
  * @details 1. 平移速度仍转换坐标系
- *          2. 角速度固定为自旋速度（spin_vw_）
- *          3. 逆运动学解算轮速/舵角目标
+ * 2. 角速度固定为自旋速度（spin_vw_）
+ * 3. 逆运动学解算轮速/舵角目标
  */
 void SentryChassisController::ChassisSpinMode() {
   double vx = ramped_vel_.linear.x;
   double vy = ramped_vel_.linear.y;
+
+  double vw = ramped_vel_.angular.z;
   transformVelocity(vx, vy); // 平移速度坐标系转换
-  double vw = spin_vw_;      // 固定自旋角速度
+  
   calculateWheelStates(vx, vy, vw); // 逆运动学解算
 }
 
@@ -532,88 +563,186 @@ void SentryChassisController::ChassisSpinMode() {
  * @param time 当前时间戳
  * @param period 控制周期
  * @details 核心控制流程：
- *          1. 全局舵向对齐检查（所有舵角是否到达目标）
- *          2. 智能平滑速度（仅对齐/停车时更新）
- *          3. 模式切换（停止/普通/自旋）
- *          4. PID闭环控制（舵向/驱动电机）
- *          5. 功率限制
- *          6. 里程计解算
+ * 1. 全局舵向对齐检查（所有舵角是否到达目标）
+ * 2. 智能平滑速度（仅对齐/停车时更新）
+ * 3. 模式切换（停止/普通/自旋）
+ * 4. PID闭环控制（舵向/驱动电机）
+ * 5. 功率限制
+ * 6. 里程计解算
  */
 void SentryChassisController::update(const ros::Time& time, const ros::Duration& period) {
   // 空关节保护：无关节句柄时直接返回
-  if (pivot_joints_.empty() || wheel_joints_.empty()) return;
+  if (pivot_joints_.empty() || wheel_joints_.empty()) {
+    return;
+    }
+
+  //判断机器人当前是否处于运动状态，四个轮转速均大于3rad/s视为运动中
+  bool is_moving = false;
+  for(int i=0; i<4; i++) {
+      if(std::abs(wheel_joints_[i].getVelocity()) < 1.0) {
+          break;
+      }
+      if(i == 3) {
+          is_moving = true;
+      }
+  }
+ 
+
+  // 静态起步：必须精确到 0.01 (0.6度)，防止受力不均导致零漂
+  // 动态运行：放宽到 0.1 (6度)，容忍自转时的物理抖动，防止卡顿
+  double align_threshold = is_moving ? 0.1 : 0.05;
 
   // 1. 全局舵向对齐检查（误差<0.05rad视为对齐）
-  bool all_wheels_aligned = true;
+  bool all_wheels_aligned = true;//标记对齐与否
   for (int i = 0; i < 4; i++) {
       double steer_error = target_angles_[i] - pivot_joints_[i].getPosition();
-      if (std::abs(steer_error) > 0.05) { 
+      if (std::abs(steer_error) > align_threshold) { 
           all_wheels_aligned = false;
           break; 
       }
   }
 
-  // 2. 智能计算平滑速度：仅对齐/停车时更新，防止舵角未对齐时速度突变
+  //小陀螺补丁
+  if (ctrl_mode_ == CHASSIS_SPIN) {
+    cmd_vel_.angular.z = spin_vw_;//小陀螺模式直接赋值
+  }
+
   bool want_to_stop = (std::abs(cmd_vel_.linear.x) < 0.01 && std::abs(cmd_vel_.linear.y) < 0.01 && std::abs(cmd_vel_.angular.z) < 0.01);
+  
+  // 计算平滑速度：对齐/停车时更新，防止舵角未对齐时速度突变
   if (all_wheels_aligned || want_to_stop) {
       rampVelocity(period);
   }
 
-  // 3. 模式判断与切换
-  // 速度指令是否为0（死区）
+  // 模式判断与切换
+  // 速度指令是否为0
   bool cmd_is_zero = (fabs(cmd_vel_.linear.x) < 1e-3 && fabs(cmd_vel_.linear.y) < 1e-3 && fabs(cmd_vel_.angular.z) < 1e-3);
-  // 平滑速度是否为0（死区）
+  // 平滑速度是否为0
   bool ramp_is_zero = (fabs(ramped_vel_.linear.x) < 1e-3 && fabs(ramped_vel_.linear.y) < 1e-3 && fabs(ramped_vel_.angular.z) < 1e-3);
 
   // 停止模式：指令+平滑速度全为0，且非自旋模式
   if (cmd_is_zero && ramp_is_zero && ctrl_mode_ != CHASSIS_SPIN) { 
       if (ctrl_mode_ != CHASSIS_STOP) {
-          for(int i=0; i<4; i++) wheel_pid_[i].reset(); // 重置驱动PID
-      }
+          for(int i=0; i<4; i++) {
+            wheel_pid_[i].reset();
+           } // 重置驱动PID
+       }
       ctrl_mode_ = CHASSIS_STOP;
       ChassisStopMode(); // 进入停止模式（舵角归位，轮速为0）
-      for(int i=0; i<4; i++) last_target_velocities_[i] = 0.0;
+      for(int i=0; i<4; i++) {
+        last_target_velocities_[i] = 0.0;
+       }
   }
   // 普通/自旋模式
   else {
-      if (ctrl_mode_ == CHASSIS_STOP) ctrl_mode_ = CHASSIS_SEPARATE_GIMBAL; // 退出停止模式
+      if (ctrl_mode_ == CHASSIS_STOP) ctrl_mode_ = CHASSIS_SEPARATE_GIMBAL; // 退出停止模式，继续运动
       if (ctrl_mode_ == CHASSIS_SPIN) ChassisSpinMode();                   // 自旋模式
-      else ChassisSeparateGimbalMode();                                    // 普通模式
+      else ChassisSeparateGimbalMode();                                   // 普通模式
   }
 
   // 计算舵机圈数（防角度溢出）
   calculateRoundCnt();
   calculateTargetRoundCnt(); 
 
+  //航向闭环修正逻辑
+  /*
+  double target_vw = cmd_vel_.angular.z; 
+  double actual_vw = odom_msg_.twist.twist.angular.z; 
+
+  bool need_correction = (std::abs(target_vw) < 0.001) && 
+                         (std::abs(actual_vw) > 0.01) && 
+                         is_moving;
+
+  if (need_correction) {
+      double yaw_error = 0.0 - actual_vw;
+      double raw_correction = yaw_pid_.computeCommand(yaw_error, period);
+      
+      double limit = 0.2; 
+      if (raw_correction > limit) raw_correction = limit;
+      if (raw_correction < -limit) raw_correction = -limit;
+      
+      yaw_correction_ = raw_correction;
+  }
+  else {
+      yaw_correction_ = 0.0;
+      yaw_pid_.reset();
+  }
+  */
+  yaw_correction_ = 0.0;
+
+
   // 舵角未对齐：重新解算模式，更新舵角目标（用于纠偏）
   if (!all_wheels_aligned) {
-      if (ctrl_mode_ == CHASSIS_SPIN) ChassisSpinMode();
-      else ChassisSeparateGimbalMode();
+      if (ctrl_mode_ == CHASSIS_SPIN) {
+        ChassisSpinMode();
+    }
+      else {ChassisSeparateGimbalMode();
+    }
+  }
+
+  // [新增] 交叉耦合控制：计算所有轮子的平均实际转速
+  // ==========================================
+  double avg_abs_velocity = 0.0;
+  bool is_pure_translation = (std::abs(ramped_vel_.angular.z) < 0.02); // 只有纯平移才启用
+
+  if (is_pure_translation) {
+      double sum_vel = 0.0;
+      for(int k=0; k<4; k++) {
+          // 获取绝对速度（不关心方向，只关心转得快慢）
+          sum_vel += std::abs(wheel_joints_[k].getVelocity());
+      }
+      avg_abs_velocity = sum_vel / 4.0;
   }
 
   // 4. PID控制循环（4个轮子）
   for (int i = 0; i < 4; i++) {
-    // A. 舵向PID控制
+    // 舵向PID控制
     double steer_error = target_angles_[i] - pivot_joints_[i].getPosition(); // 舵角误差
     double steer_effort = pivot_pid_[i].computeCommand(steer_error, period); // PID输出力矩
     pivot_joints_[i].setCommand(steer_effort); // 下发舵向指令
 
-    // B. 驱动PID控制
+    // 驱动PID控制
     double wheel_vel_fdb = wheel_joints_[i].getVelocity(); // 轮子实际角速度
     wheel_vel_fdb *= -1.0;                                 // 电机方向修正
     wheel_vel_fdb *= wheel_direction_[i];                  // 轮子方向修正
     
     double current_target = target_velocities_[i]; // 轮子目标角速度
 
-    // 舵向未对齐保护：保持上一周期速度，静止起步时重置PID（防弹射）
+    // 舵向未对齐保护 (优化版：余弦降速 - 修正Bug)
     if (!all_wheels_aligned) {
-        current_target = last_target_velocities_[i]; // 保持速度
-        if (std::abs(current_target) < 0.01) {
-             wheel_pid_[i].reset(); // 静止起步：重置积分
+        // 1. 算出当前舵角误差 (直接用目标 - 实际，不修改原始变量)
+        // 既然 cos 是周期函数，这里不需要手动归一化 +/- PI，直接算就行
+        double raw_steer_error = target_angles_[i] - pivot_joints_[i].getPosition();
+        
+        // 2. 计算降速系数 (Scale)
+        // 使用 cos 计算投影分量。
+        // 误差 0度 -> cos(0)=1.0 (全速)
+        // 误差 90度 -> cos(PI/2)=0.0 (停车)
+        // 误差 360度 -> cos(2PI)=1.0 (全速，逻辑正确)
+        double scale = std::cos(raw_steer_error);
+        
+        // 3. 负数保护：如果误差 > 90度，cos会变成负数
+        // 我们只负责减速到0，绝不负责反转轮子（反转是 IK 解算的责任）
+        if (scale < 0.0) scale = 0.0;
+
+        // 4. 应用系数
+        if (std::abs(wheel_vel_fdb) > 0.5) {
+            // [建议] 这里使用 target_velocities_[i] (当前解算值) 乘以系数
+            // 这样能实时响应摇杆变化，同时被 scale 压制住
+            current_target = target_velocities_[i] * scale; 
+        } 
+        else {
+            // 静止起步时：必须等到对齐得差不多了 (scale > 0.9) 才给油
+            // 否则直接切断动力，防止原地磨胎
+            current_target = (scale > 0.9) ? target_velocities_[i] * scale : 0.0;
+            
+            // 积分重置：如果被强制停车，清空PID积分，防止突然弹射
+            if (current_target == 0.0) wheel_pid_[i].reset();
         }
     }
 
-    last_target_velocities_[i] = current_target; // 保存当前目标速度
+
+    last_target_velocities_[i] = current_target; // 保存当前目标速度，没对齐就一直套娃
 
     // 驱动PID计算
     double wheel_error = current_target - wheel_vel_fdb; // 速度误差
@@ -629,39 +758,126 @@ void SentryChassisController::update(const ros::Time& time, const ros::Duration&
             brake_effort = std::max(-max_force, std::min(max_force, brake_effort)); // 限幅
             final_effort = brake_effort;
         } 
-        else {
-            final_effort = 0.0; // 速度低于阈值：无制动
-        }
     } 
-    // 普通/自旋模式：驱动PID
-    else {
-        double wheel_effort = wheel_pid_[i].computeCommand(wheel_error, period); // PID输出
-        double safe_limit = wheel_max_effort_;                                   // 力矩限幅
-        wheel_effort = std::max(-safe_limit, std::min(safe_limit, wheel_effort));// 限幅
-        final_effort = wheel_effort; // 最终力矩
+    else if(!all_wheels_aligned && std::abs(current_target) < 0.01){
+        final_effort = 0.0;
+        wheel_pid_[i].reset();//起步重置积分并发布0力矩
+    }
+    else {// 普通/自旋模式：驱动PID
+        // 前馈力矩计算 
+        double ff_effort = 0.0;
+        
+        // 通用前馈:静态摩擦补偿 (解决平移起步PID过冲)
+        // 只要目标不为0，先给 0.05 Nm
+        double kv_linear = 0.039;
+        if (std::abs(current_target) > 0.0001) {
+            double static_friction = 0.05; // 来自 URDF friction="0.05"
+            ff_effort += (current_target > 0 ? 1.0 : -1.0) * static_friction;// 补偿静态摩擦
+        }
+
+        ff_effort += current_target * kv_linear;
+
+        // 条件前馈:侧向阻力补偿 (解决自转震荡)
+        // 判断：平滑后的角速度指令是否 > 0.1 (按Q键或小陀螺时触发)
+        bool is_rotating_heavy_load = std::abs(ramped_vel_.angular.z) > 0.01;
+
+        if (is_rotating_heavy_load) {
+            // 速度前馈系数 KV
+            // 物理推导：0.5 Nm / 4.65 rad/s ≈ 0.11
+            double kv_spin = 0.13; 
+            ff_effort += current_target * kv_spin;
+        }
+        // 如果只是平移 (W/A/S/D)，is_rotating_heavy_load 为 false，ff_effort 保持 0.05
+
+        // 计算 PID 输出
+        double pid_effort = wheel_pid_[i].computeCommand(wheel_error, period);
+
+        // [防暴冲] 动态积分削弱
+    // ==========================================
+    // 如果 目标速度很低 (起步) 且 实际速度几乎为0 (卡住了)
+    if (std::abs(current_target) < 1.0 && std::abs(wheel_vel_fdb) < 0.1) {
+        // 此时如果 PID 输出很大，说明 I 项积攒了过多能量 (Windup)
+        // 我们强行把 PID 输出限制住，不让它弹射
+        // 依靠 前馈(ff_effort) 去打破静摩擦
+        double clamp_limit = 0.2; 
+        if (pid_effort > clamp_limit) {
+            pid_effort = clamp_limit;
+            wheel_pid_[i].reset(); // 顺便清空炸弹，防止下一帧继续炸
+        } else if (pid_effort < -clamp_limit) {
+            pid_effort = -clamp_limit;
+            wheel_pid_[i].reset();
+        }
+    }
+    // ==========================================
+        
+        // 最终合成
+        double total_effort = pid_effort + ff_effort;
+
+        // [新增] 交叉耦合控制：施加同步补偿
+    // ==========================================
+    if (is_pure_translation && std::abs(current_target) > 0.001) {
+        // 1. 获取我的实际绝对速度
+        double my_abs_vel = std::abs(wheel_vel_fdb);
+        
+        // 2. 计算同步误差：平均值 - 我的值
+        // 正数说明我比大家慢，需要补油；负数说明我太快了，需要收油
+        double sync_error = avg_abs_velocity - my_abs_vel;
+
+        // 4. 计算补偿力矩
+        // 注意符号：如果我想加速(sync_error>0)，力矩符号应该和current_target一致
+        double sync_effort = sync_error * sync_kp_;
+        
+        // 叠加到总力矩上 (注意方向：如果current_target是负的，加速意味着力矩更负)
+        double sign = (current_target > 0) ? 1.0 : -1.0;
+        total_effort += sync_effort * sign;
+    }
+    // ==========================================
+
+        // 限幅
+        double safe_limit = wheel_max_effort_;
+        final_effort = std::max(-safe_limit, std::min(safe_limit, total_effort));
     }
 
     // 下发驱动指令
     wheel_joints_[i].setCommand(final_effort);
 
-    // C. 发布调试数据（目标速度/实际速度/输出力矩）
+  }
+  // 功率限制
+  limitPower(period.toSec());
+
+  // 重新遍历发布调试数据
+  for(int i=0; i<4; i++){
+    
+    // 获取真实下发力矩
+    double real_effort = wheel_joints_[i].getCommand(); 
+
+    // 获取当前目标速度，已经把 current_target 保存到了成员变量 last_target_velocities_[i] 中
+    // 所以这里直接读成员变量即可
+    double debug_target = last_target_velocities_[i];
+
+    // 3. 获取【实际反馈速度】
+    // 必须重新从硬件接口读取，并且记得乘上方向修正系数！
+    double debug_actual = wheel_joints_[i].getVelocity();
+    debug_actual *= -1.0 * wheel_direction_[i]; 
+
+    // 开始发布 
+    
+    // 发布目标速度
     std_msgs::Float64 msg;
-    msg.data = current_target; 
+    msg.data = debug_target; 
     debug_pub_target_[i].publish(msg);
     
-    double debug_actual = wheel_vel_fdb;
+    // 发布实际速度
     msg.data = debug_actual;
     debug_pub_actual_[i].publish(msg);
     
+    // 发布最终力矩 (经过功率限制后的)
     std_msgs::Float64 effort_msg;
-    effort_msg.data = final_effort;
+    effort_msg.data = real_effort; // 注意这里发的是 real_effort
     debug_pub_effort_[i].publish(effort_msg);
   }
 
-  // 5. 功率限制
-  limitPower(period.toSec());
-
-  // 6. 里程计解算与发布
+  // 里程计解算与发布
   calculateOdom(time);
 }
 
@@ -669,9 +885,9 @@ void SentryChassisController::update(const ros::Time& time, const ros::Duration&
  * @brief 正运动学解算（里程计发布）
  * @param now 当前时间戳
  * @details 核心逻辑：
- *          1. 基于4个轮子的实际速度/舵角，解算车体的线速度/角速度
- *          2. 积分计算车体位置（x/y）和偏航角（yaw）
- *          3. 发布nav_msgs/Odometry话题和tf变换（odom→base_link）
+ * 1. 基于4个轮子的实际速度/舵角，解算车体的线速度/角速度
+ * 2. 积分计算车体位置（x/y）和偏航角（yaw）
+ * 3. 发布nav_msgs/Odometry话题和tf变换（odom→base_link）
  */
 void SentryChassisController::calculateOdom(const ros::Time& now) {
   // 空关节/时间戳异常保护
@@ -819,5 +1035,5 @@ void SentryChassisController::calculateTargetRoundCnt() {
 
 } 
 
-// 注册为ROS Control插件（必须）
+// 注册为ROS Control插件
 PLUGINLIB_EXPORT_CLASS(sentry_chassis_controller::SentryChassisController, controller_interface::ControllerBase)

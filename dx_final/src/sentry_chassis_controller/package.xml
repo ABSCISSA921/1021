@@ -19,7 +19,7 @@
   <build_depend>pluginlib</build_depend>
   <build_depend>controller_interface</build_depend>
   <build_depend>hardware_interface</build_depend>
-  <build_depend>dynamic_reconfigure</build_depend> <!-- 新增 -->
+  <build_depend>dynamic_reconfigure</build_depend> 
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
@@ -43,6 +43,7 @@
   <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>std_msgs</exec_depend>
 
+  <!--在 package.xml 中声明：“我这个包里有一个 controller_interface 类型的插件，它的描述文件在哪里。” 文件：package.xml -->
   <export>
     <build_type>catkin</build_type>
     <controller_interface plugin="${prefix}/sentry_chassis_controller_plugin.xml"/>

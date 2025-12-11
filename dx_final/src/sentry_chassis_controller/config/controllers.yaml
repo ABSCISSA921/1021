@@ -4,7 +4,8 @@ sentry_chassis_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 100
 
-  # 2. 自定义控制器插件
+  # 2. 自定义控制器插件//Instance Name: sentry_chassis_plugin 是你给这个运行实例起的名字。
+  #Type: sentry_chassis_controller/SentryChassisController 对应了你在 XML 里注册的名字。
   sentry_chassis_plugin:
     type: sentry_chassis_controller/SentryChassisController
     

@@ -140,8 +140,7 @@ int main(int argc, char**argv) {
             
             if (dirty) {
                 // 打印当前合成的目标速度，方便调试
-                ROS_INFO("Current Target -> X: %.1f, Y: %.1f, W: %.1f", 
-                         twist.linear.x, twist.linear.y, twist.angular.z);
+                ROS_INFO("Current Target -> X: %.1f, Y: %.1f, W: %.1f", twist.linear.x, twist.linear.y, twist.angular.z);
             }
         }
 
