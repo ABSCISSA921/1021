@@ -2,19 +2,19 @@ sentry_chassis_controller:
   sentry_chassis_plugin:
 
     # 舵向电机 (Pivot)
-    lf_steer_p: 5.0
+    lf_steer_p: 8.0
     lf_steer_i: 0.1
     lf_steer_d: 0.1
     
-    rf_steer_p: 5.0
+    rf_steer_p: 8.0
     rf_steer_i: 0.1
     rf_steer_d: 0.1
     
-    lb_steer_p: 5.0
+    lb_steer_p: 8.0
     lb_steer_i: 0.1
     lb_steer_d: 0.1
     
-    rb_steer_p: 5.0
+    rb_steer_p: 8.0
     rb_steer_i: 0.1
     rb_steer_d: 0.1
     
@@ -57,11 +57,11 @@ sentry_chassis_controller:
     offset_rb: 0.0
     
     #小陀螺参数
-    spin_vw: 10.0
+    spin_vw: 13.0
     use_world_frame: false
     
     # 加速度限制
-    acc_linear: 0.1   # m/s^2 
+    acc_linear: 0.08   # m/s^2 
     acc_angular: 0.8  # rad/s^2 
     
     # 里程计校准系数

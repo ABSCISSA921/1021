@@ -10,12 +10,11 @@
 int kfd = 0;
 struct termios cooked, raw;
 
-// === [修改] 定义步长 ===
+// 定义步长
 double speed_step = 0.5;        // 每次按键增加/减少的线速度 (m/s)
 double angular_step = 0.5;      // 每次按键增加/减少的角速度 (rad/s)
-double max_speed = 3.0;         // 安全限幅，防止按多了飞出去
 
-geometry_msgs::Twist twist;     // 全局变量，存储当前速度状态
+geometry_msgs::Twist twist;  
 
 void restoreTerminalSettings() {
     tcsetattr(kfd, TCSANOW, &cooked);
@@ -55,13 +54,6 @@ void printHelp() {
     ROS_INFO("==================================");
 }
 
-// 辅助函数：限制速度在安全范围内
-double clamp(double val, double max_val) {
-    if (val > max_val) return max_val;
-    if (val < -max_val) return -max_val;
-    return val;
-}
-
 int main(int argc, char**argv) {
     ros::init(argc, argv, "keyboard_teleop");
     ros::NodeHandle nh;
@@ -87,7 +79,6 @@ int main(int argc, char**argv) {
 
         if (c != 0) {
             switch (c) {
-                // === X轴 (前后) ===
                 case 'w': case 'W': 
                     twist.linear.x += speed_step; 
                     dirty = true; 
@@ -96,9 +87,6 @@ int main(int argc, char**argv) {
                     twist.linear.x -= speed_step; 
                     dirty = true; 
                     break;
-
-                // === Y轴 (左右平移 - 哨兵专用) ===
-                // 注意：这里定义 A 为向左(+Y)，D 为向右(-Y)，符合右手坐标系
                 case 'a': case 'A': 
                     twist.linear.y += speed_step; 
                     dirty = true; 
@@ -107,8 +95,6 @@ int main(int argc, char**argv) {
                     twist.linear.y -= speed_step; 
                     dirty = true; 
                     break;
-
-                // === Z轴 (原地旋转) ===
                 case 'q': case 'Q': 
                     twist.angular.z += angular_step; 
                     dirty = true; 
@@ -117,21 +103,21 @@ int main(int argc, char**argv) {
                     twist.angular.z -= angular_step; 
                     dirty = true; 
                     break;
-
-                // === 急停 / 重置 (空格键) ===
                 case ' ':           
-                    twist = geometry_msgs::Twist(); // 瞬间清零
+                    twist = geometry_msgs::Twist(); 
                     ROS_INFO("!!! STOP !!!");
                     dirty = true; 
                     break;
 
                 // === 功能键 ===
                 case 'g': case 'G': 
-                    key_msg.data = "g"; key_pub.publish(key_msg); 
+                    key_msg.data = "g"; 
+                    key_pub.publish(key_msg); 
                     ROS_INFO("Toggle Spin Mode");
                     break;
                 case 'h': case 'H': 
-                    key_msg.data = "h"; key_pub.publish(key_msg); 
+                    key_msg.data = "h"; 
+                    key_pub.publish(key_msg); 
                     ROS_INFO("Toggle World Frame");
                     break;
 
@@ -139,11 +125,9 @@ int main(int argc, char**argv) {
             }
             
             if (dirty) {
-                // 打印当前合成的目标速度，方便调试
                 ROS_INFO("Current Target -> X: %.1f, Y: %.1f, W: %.1f", twist.linear.x, twist.linear.y, twist.angular.z);
             }
         }
-
         cmd_vel_pub.publish(twist);
         ros::spinOnce();
         loop_rate.sleep();
