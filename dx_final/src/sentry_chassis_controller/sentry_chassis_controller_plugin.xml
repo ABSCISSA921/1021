@@ -3,7 +3,7 @@
          type="sentry_chassis_controller::SentryChassisController"
          base_class_type="controller_interface::ControllerBase">
     <description>
-      ROS Control 插件：集成了运动学逆解、8个PID控制、里程计和tf变换的四舵轮底盘控制器。
+      ROS Control 插件：集成了运动学逆解、8个PID控制、里程计和tf变换的四舵轮底盘控制器
     </description>
   </class>
 </library>

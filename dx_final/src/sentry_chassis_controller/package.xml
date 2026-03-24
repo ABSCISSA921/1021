@@ -37,13 +37,12 @@
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>effort_controllers</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
-  <exec_depend>dynamic_reconfigure</exec_depend> <!-- 新增 -->
+  <exec_depend>dynamic_reconfigure</exec_depend> 
 
   <build_depend>std_msgs</build_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>std_msgs</exec_depend>
 
-  <!--在 package.xml 中声明：“我这个包里有一个 controller_interface 类型的插件，它的描述文件在哪里。” 文件：package.xml -->
   <export>
     <build_type>catkin</build_type>
     <controller_interface plugin="${prefix}/sentry_chassis_controller_plugin.xml"/>

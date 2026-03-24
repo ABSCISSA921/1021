@@ -1,7 +1,0 @@
-[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:[m[K In member function ‘[01m[Kvoid sentry_chassis_controller::SentryChassisController::calculateOdom(const ros::Time&)[m[K’:
-[01m[K/home/abscissa/dx_final/src/sentry_chassis_controller/src/sentry_chassis_controller.cpp:246:61:[m[K [01;31m[Kerror: [m[Kinvalid type argument of unary ‘[01m[K*[m[K’ (have ‘[01m[Kdouble[m[K’)
-  246 |       double wheel_linear_vel = raw_vel * wheel_radius / * -[01;31m[K1.0[m[K;
-      |                                                             [01;31m[K^~~[m[K
-make[2]: *** [CMakeFiles/sentry_chassis_controller.dir/build.make:63：CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o] 错误 1
-make[1]: *** [CMakeFiles/Makefile2:214：CMakeFiles/sentry_chassis_controller.dir/all] 错误 2
-make: *** [Makefile:141：all] 错误 2

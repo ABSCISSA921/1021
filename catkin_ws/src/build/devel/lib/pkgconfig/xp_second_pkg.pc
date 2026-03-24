@@ -1,0 +1,8 @@
+prefix=/home/abscissa/catkin_ws/src/build/devel
+
+Name: xp_second_pkg
+Description: Description of xp_second_pkg
+Version: 0.0.0
+Cflags: -I/home/abscissa/catkin_ws/src/xp_second_pkg/include
+Libs: -L${prefix}/lib -lxp_second_pkg
+Requires: geometry_msgs roscpp rosparam tf2 tf2_geometry_msgs tf2_ros tf

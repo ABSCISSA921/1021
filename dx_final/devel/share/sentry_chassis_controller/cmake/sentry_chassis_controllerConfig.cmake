@@ -1,1 +1,0 @@
-/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/share/sentry_chassis_controller/cmake/sentry_chassis_controllerConfig.cmake

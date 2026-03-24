@@ -109,7 +109,7 @@ int main(int argc, char**argv) {
                     dirty = true; 
                     break;
 
-                // === 功能键 ===
+                // 特殊按键处理
                 case 'g': case 'G': 
                     key_msg.data = "g"; 
                     key_pub.publish(key_msg); 
@@ -121,7 +121,7 @@ int main(int argc, char**argv) {
                     ROS_INFO("Toggle World Frame");
                     break;
 
-                case 27: return 0; // ESC
+                case 27: return 0; 
             }
             
             if (dirty) {

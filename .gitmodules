@@ -1,0 +1,15 @@
+[submodule "catkin_ws/src/DynamixelSDK"]
+	path = catkin_ws/src/DynamixelSDK
+	url = https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+[submodule "catkin_ws/src/turtlebot3"]
+	path = catkin_ws/src/turtlebot3
+	url = https://github.com/ROBOTIS-GIT/turtlebot3.git
+[submodule "catkin_ws/src/turtlebot3_msgs"]
+	path = catkin_ws/src/turtlebot3_msgs
+	url = https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+[submodule "catkin_ws/src/turtlebot3_simulations"]
+	path = catkin_ws/src/turtlebot3_simulations
+	url = https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+[submodule "catkin_ws/src/wpr_simulation"]
+	path = catkin_ws/src/wpr_simulation
+	url = https://github.com/6-robot/wpr_simulation.git

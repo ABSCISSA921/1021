@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   controller_interface
   hardware_interface
   rm_description
-  dynamic_reconfigure # <--- 必须包含
+  dynamic_reconfigure 
 )
 
 # 生成动态配置头文件
@@ -34,7 +34,7 @@ include_directories(
 )
 
 # 1. 声明库 (add_library)
-# 将你的源文件编译成一个名为 "sentry_chassis_controller" 的库文件
+# 将源文件编译成一个名为 "sentry_chassis_controller" 的库文件
 add_library(${PROJECT_NAME}
   src/sentry_chassis_controller.cpp
 )
@@ -48,7 +48,7 @@ add_executable(keyboard_teleop src/keyboard_teleop.cpp)
 target_link_libraries(keyboard_teleop ${catkin_LIBRARIES})
 
 # 2. 链接库 (target_link_libraries)
-# 告诉编译器这个库依赖哪些 ROS 基础库 (如 roscpp, pluginlib 等)
+# 告诉编译器这个库依赖哪些 ROS 基础库
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )

@@ -6,8 +6,6 @@
     <arg name="load_chassis" value="true"/>
     <arg name="paused" value="false"/>
     <arg name="roller_type" value="realistic"/>
-
-    <!--<arg name="use_simulation" value="true"/>-->
   </include>
 
 

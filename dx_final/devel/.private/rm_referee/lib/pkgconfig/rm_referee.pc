@@ -1,8 +1,0 @@
-prefix=/home/abscissa/dx_final/devel/.private/rm_referee
-
-Name: rm_referee
-Description: Description of rm_referee
-Version: 0.1.20
-Cflags: -I/home/abscissa/dx_final/src/rm_control/rm_referee/include
-Libs: -L${prefix}/lib 
-Requires: roscpp sensor_msgs rm_msgs rm_common tf2_geometry_msgs std_msgs actionlib nav_msgs

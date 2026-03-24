@@ -1,1 +1,0 @@
-/home/abscissa/dx_final/devel/.private/rm_msgs/share/common-lisp/ros/rm_msgs/msg/_package_VTReceiverControlData.lisp

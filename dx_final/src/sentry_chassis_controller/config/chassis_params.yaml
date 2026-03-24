@@ -44,6 +44,7 @@ sentry_chassis_controller:
     yaw_d: 0.0
 
     sync_kp: 5.0 # 交叉耦合增益
+    kv_spin: 0.13
 
   
     # URDF几何与安装误差
@@ -57,7 +58,7 @@ sentry_chassis_controller:
     offset_rb: 0.0
     
     #小陀螺参数
-    spin_vw: 13.0
+    spin_vw: 10.0
     use_world_frame: false
     
     # 加速度限制

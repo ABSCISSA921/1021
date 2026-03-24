@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Attach to Gazebo",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "/usr/bin/gzserver",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "description": "调试插件核心逻辑时用这个"
+        },
+        {
+            "name": "(gdb) Launch Keyboard",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/devel/lib/sentry_chassis_controller/keyboard_teleop",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "description": "调试键盘控制节点时用这个"
+        }
+    ]
+}

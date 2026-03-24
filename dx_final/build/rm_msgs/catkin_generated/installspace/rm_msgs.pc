@@ -1,8 +1,0 @@
-prefix=/home/abscissa/dx_final/install
-
-Name: rm_msgs
-Description: Description of rm_msgs
-Version: 0.1.20
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime std_msgs geometry_msgs actionlib actionlib_msgs

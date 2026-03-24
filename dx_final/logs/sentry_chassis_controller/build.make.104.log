@@ -1,9 +1,0 @@
-[ 20%] Built target sentry_chassis_controller_gencfg
-[35m[1mScanning dependencies of target keyboard_teleop[0m
-[35m[1mScanning dependencies of target sentry_chassis_controller[0m
-[ 40%] [32mBuilding CXX object CMakeFiles/keyboard_teleop.dir/src/keyboard_teleop.cpp.o[0m
-[ 60%] [32mBuilding CXX object CMakeFiles/sentry_chassis_controller.dir/src/sentry_chassis_controller.cpp.o[0m
-[ 80%] [32m[1mLinking CXX executable /home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/sentry_chassis_controller/keyboard_teleop[0m
-[ 80%] Built target keyboard_teleop
-[100%] [32m[1mLinking CXX shared library /home/abscissa/dx_final/devel/.private/sentry_chassis_controller/lib/libsentry_chassis_controller.so[0m
-[100%] Built target sentry_chassis_controller

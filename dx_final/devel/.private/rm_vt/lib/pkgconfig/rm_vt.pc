@@ -1,8 +1,0 @@
-prefix=/home/abscissa/dx_final/devel/.private/rm_vt
-
-Name: rm_vt
-Description: Description of rm_vt
-Version: 0.0.0
-Cflags: -I/home/abscissa/dx_final/src/rm_control/rm_vt/include
-Libs: -L${prefix}/lib 
-Requires: roscpp sensor_msgs rm_msgs rm_common tf2_geometry_msgs std_msgs actionlib nav_msgs

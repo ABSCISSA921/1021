@@ -1,8 +1,0 @@
-prefix=/home/abscissa/dx_final/devel/.private/sentry_chassis_controller
-
-Name: sentry_chassis_controller
-Description: Description of sentry_chassis_controller
-Version: 0.1.0
-Cflags: -I/home/abscissa/dx_final/devel/.private/sentry_chassis_controller/include -I/home/abscissa/dx_final/src/sentry_chassis_controller/include
-Libs: -L${prefix}/lib -lsentry_chassis_controller
-Requires: roscpp geometry_msgs sensor_msgs nav_msgs tf control_toolbox pluginlib controller_interface hardware_interface rm_description dynamic_reconfigure

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: diffbot_sim
+Description: Description of diffbot_sim
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

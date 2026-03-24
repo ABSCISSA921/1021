@@ -1,0 +1,21 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+  </include>
+
+  <param name="robot_description"
+         command="$(find xacro)/xacro --inorder '$(find diffbot_sim)/urdf/diffbot.urdf.xacro'"/>
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model diffbot -param robot_description"/>
+
+  <rosparam file="$(find diffbot_sim)/config/diffbot_control.yaml" command="load"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller diffbot_controller turret_controller"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+  </node>
+</launch>
