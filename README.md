@@ -24,7 +24,7 @@
 * **`DynamixelSDK`**：用于驱动数字舵机的通信协议库。
 
 ### 编译与使用
-```bash
+bash
 cd catkin_ws
 catkin_make
 source devel/setup.bash
@@ -46,7 +46,7 @@ source devel/setup.bash
 * `rm_gazebo`, `rm_hw`, `rm_msgs`, `rm_referee`, `rm_vt`
 
 ### 编译说明
-```bash
+bash
 cd dx_final
 catkin build
 source devel/setup.bash
