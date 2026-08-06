@@ -5,7 +5,7 @@
 **/logs/
 **/.catkin_tools/
 **/.catkin_workspace
-**/src/CMakeLists.txt
+/src/CMakeLists.txt
 
 # Local IDE state and downloaded extensions
 .idea/
