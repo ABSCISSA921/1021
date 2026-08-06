@@ -1,6 +1,6 @@
-# ROS 1 学习与 RoboMaster 哨兵控制工作区
+# ROS 1 学习与 RoboMaster 舵轮控制工作区
 
-本仓库面向 ROS 1 Noetic 学习、Gazebo 仿真和 RoboMaster 哨兵底盘控制。两个工作空间相互独立，生成的构建目录不会提交到 Git。
+本仓库面向 ROS 1 Noetic 学习、Gazebo 仿真和 RoboMaster 舵轮底盘控制。两个工作空间相互独立，生成的构建目录不会提交到 Git。
 
 ## 工作空间
 
