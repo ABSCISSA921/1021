@@ -1,6 +1,0 @@
-rm_control/rm_hw
-/home/abscissa/dx_final/devel/.private/rm_hw/lib/librm_hw_loader_plugins.so /home/abscissa/dx_final/devel/lib/librm_hw_loader_plugins.so
-/home/abscissa/dx_final/devel/.private/rm_hw/lib/rm_hw/rm_hw /home/abscissa/dx_final/devel/lib/rm_hw/rm_hw
-/home/abscissa/dx_final/devel/.private/rm_hw/lib/pkgconfig/rm_hw.pc /home/abscissa/dx_final/devel/lib/pkgconfig/rm_hw.pc
-/home/abscissa/dx_final/devel/.private/rm_hw/share/rm_hw/cmake/rm_hwConfig-version.cmake /home/abscissa/dx_final/devel/share/rm_hw/cmake/rm_hwConfig-version.cmake
-/home/abscissa/dx_final/devel/.private/rm_hw/share/rm_hw/cmake/rm_hwConfig.cmake /home/abscissa/dx_final/devel/share/rm_hw/cmake/rm_hwConfig.cmake

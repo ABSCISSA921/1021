@@ -1,4 +1,6 @@
-# Sentry Chassis Controller (哨兵底盘控制器)
+# Sentry Chassis Controller（哨兵底盘控制器）
+
+工作空间级安装、构建和启动说明见 [`dx_final/README.md`](../../../README.md)；本文件聚焦控制器实现和数据流。
 
 ## 项目简介
 
@@ -34,7 +36,9 @@
 
 控制器作为一个 `controller_interface` 插件运行在 ROS Control 循环中 (1kHz)。
 
-### 控制数据流 
+### 控制数据流
+
+```mermaid
 graph TD
     User[用户/导航] -->|cmd_vel| Topic(/cmd_vel)
     Topic -->|Input| Update
@@ -54,3 +58,4 @@ graph TD
     end
     HW -->|Encoder| Odom[里程计解算]
     Odom -->|/odom & /tf| User
+```

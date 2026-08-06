@@ -1,5 +1,0 @@
-rm_control/rm_gazebo
-/home/abscissa/dx_final/devel/.private/rm_gazebo/lib/librm_robot_hw_sim.so /home/abscissa/dx_final/devel/lib/librm_robot_hw_sim.so
-/home/abscissa/dx_final/devel/.private/rm_gazebo/lib/pkgconfig/rm_gazebo.pc /home/abscissa/dx_final/devel/lib/pkgconfig/rm_gazebo.pc
-/home/abscissa/dx_final/devel/.private/rm_gazebo/share/rm_gazebo/cmake/rm_gazeboConfig.cmake /home/abscissa/dx_final/devel/share/rm_gazebo/cmake/rm_gazeboConfig.cmake
-/home/abscissa/dx_final/devel/.private/rm_gazebo/share/rm_gazebo/cmake/rm_gazeboConfig-version.cmake /home/abscissa/dx_final/devel/share/rm_gazebo/cmake/rm_gazeboConfig-version.cmake

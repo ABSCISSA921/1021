@@ -1,5 +1,0 @@
-rm_control/rm_referee
-/home/abscissa/dx_final/devel/.private/rm_referee/lib/rm_referee/rm_referee /home/abscissa/dx_final/devel/lib/rm_referee/rm_referee
-/home/abscissa/dx_final/devel/.private/rm_referee/lib/pkgconfig/rm_referee.pc /home/abscissa/dx_final/devel/lib/pkgconfig/rm_referee.pc
-/home/abscissa/dx_final/devel/.private/rm_referee/share/rm_referee/cmake/rm_refereeConfig.cmake /home/abscissa/dx_final/devel/share/rm_referee/cmake/rm_refereeConfig.cmake
-/home/abscissa/dx_final/devel/.private/rm_referee/share/rm_referee/cmake/rm_refereeConfig-version.cmake /home/abscissa/dx_final/devel/share/rm_referee/cmake/rm_refereeConfig-version.cmake

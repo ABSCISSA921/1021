@@ -1,47 +1,46 @@
 <launch>
+  <arg name="load_chassis" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="roller_type" default="realistic"/>
+  <arg name="gui" default="false"/>
+  <arg name="keyboard" default="false"/>
+  <arg name="tools" default="false"/>
+  <arg name="keyboard_prefix" default="xterm -e"/>
 
   <param name="/use_sim_time" value="true"/>
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find rm_description)/urdf/sentry/sentry.urdf.xacro
+                  load_chassis:=$(arg load_chassis)
+                  use_simulation:=true
+                  roller_type:=$(arg roller_type)"/>
 
-  <include file="$(find rm_description)/launch/sentry.launch">
-    <arg name="load_chassis" value="true"/>
-    <arg name="paused" value="false"/>
-    <arg name="roller_type" value="realistic"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
   </include>
 
-
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        clear_params="true" args="-z 0.5 -param robot_description -urdf -model sentry"
+        output="screen"/>
   <rosparam file="$(find sentry_chassis_controller)/config/controllers.yaml" command="load"/>
   <rosparam file="$(find sentry_chassis_controller)/config/chassis_params.yaml" command="load"/>
-
-  
-  <node name="controller_manager_spawner" 
-        pkg="controller_manager" 
-        type="spawner" 
-        respawn="false"
-        output="screen"
-        args="sentry_chassis_controller/joint_state_controller 
+  <node name="controller_manager_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen"
+        args="sentry_chassis_controller/joint_state_controller
               sentry_chassis_controller/sentry_chassis_plugin"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+        type="robot_state_publisher" output="screen"/>
 
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <group if="$(arg keyboard)">
+    <node name="keyboard_teleop" pkg="sentry_chassis_controller" type="keyboard_teleop"
+          output="screen" launch-prefix="$(arg keyboard_prefix)"/>
+  </group>
 
-  <node name="keyboard_teleop" 
-        pkg="sentry_chassis_controller" 
-        type="keyboard_teleop" 
-        output="screen" 
-        launch-prefix="xterm -e"
-  />
-
-  <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" output="screen"/>
-  
-  <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot" 
-        args="/debug/lf_wheel/target/data /debug/lf_wheel/actual/data" 
-        output="screen"/>
-
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sentry_chassis_controller)/config/default.rviz" output="screen"/>
-
-   <node name="plotjuggler" 
-        pkg="plotjuggler" 
-        type="plotjuggler" 
-        output="screen"
-   >  
-  </node>
+  <group if="$(arg tools)">
+    <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" output="screen"/>
+    <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot"
+          args="/debug/lf_wheel/target/data /debug/lf_wheel/actual/data" output="screen"/>
+    <node name="rviz" pkg="rviz" type="rviz" output="screen"/>
+    <node name="plotjuggler" pkg="plotjuggler" type="plotjuggler" output="screen"/>
+  </group>
 </launch>

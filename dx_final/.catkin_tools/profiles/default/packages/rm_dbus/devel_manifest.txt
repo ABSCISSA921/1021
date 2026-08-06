@@ -1,5 +1,0 @@
-rm_control/rm_dbus
-/home/abscissa/dx_final/devel/.private/rm_dbus/lib/rm_dbus/rm_dbus /home/abscissa/dx_final/devel/lib/rm_dbus/rm_dbus
-/home/abscissa/dx_final/devel/.private/rm_dbus/lib/pkgconfig/rm_dbus.pc /home/abscissa/dx_final/devel/lib/pkgconfig/rm_dbus.pc
-/home/abscissa/dx_final/devel/.private/rm_dbus/share/rm_dbus/cmake/rm_dbusConfig.cmake /home/abscissa/dx_final/devel/share/rm_dbus/cmake/rm_dbusConfig.cmake
-/home/abscissa/dx_final/devel/.private/rm_dbus/share/rm_dbus/cmake/rm_dbusConfig-version.cmake /home/abscissa/dx_final/devel/share/rm_dbus/cmake/rm_dbusConfig-version.cmake

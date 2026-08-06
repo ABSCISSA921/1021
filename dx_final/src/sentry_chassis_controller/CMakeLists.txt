@@ -15,6 +15,10 @@ find_package(catkin REQUIRED COMPONENTS
   hardware_interface
   rm_description
   dynamic_reconfigure 
+  std_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
 )
 
 # 生成动态配置头文件
@@ -25,7 +29,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS roscpp geometry_msgs sensor_msgs nav_msgs tf control_toolbox pluginlib controller_interface hardware_interface rm_description dynamic_reconfigure
+  CATKIN_DEPENDS roscpp geometry_msgs sensor_msgs nav_msgs tf control_toolbox pluginlib controller_interface hardware_interface rm_description dynamic_reconfigure std_msgs tf2 tf2_ros tf2_geometry_msgs
 )
 
 include_directories(
@@ -44,6 +48,8 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_gencfg)
 
 add_executable(keyboard_teleop src/keyboard_teleop.cpp)
 
+add_dependencies(keyboard_teleop ${catkin_EXPORTED_TARGETS})
+
 # 链接库 (通常只需要 catkin_LIBRARIES)
 target_link_libraries(keyboard_teleop ${catkin_LIBRARIES})
 
@@ -51,6 +57,12 @@ target_link_libraries(keyboard_teleop ${catkin_LIBRARIES})
 # 告诉编译器这个库依赖哪些 ROS 基础库
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
+)
+
+install(TARGETS ${PROJECT_NAME} keyboard_teleop
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(FILES sentry_chassis_controller_plugin.xml

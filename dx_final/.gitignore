@@ -1,0 +1,17 @@
+# ROS / catkin generated output
+**/build/
+**/devel/
+**/install/
+**/logs/
+**/.catkin_tools/
+**/.catkin_workspace
+**/src/CMakeLists.txt
+
+# Local IDE state and downloaded extensions
+.idea/
+.vscode/
+*.vsix
+
+# Local ROS runtime files
+.ros/
+*.bag

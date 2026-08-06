@@ -1,52 +1,56 @@
-#2026/03/25
-# 1021 Repository
+# ROS 1 学习与 RoboMaster 哨兵控制工作区
 
-本仓库包含了两个主要的 ROS 项目空间：一个是用于 ROS 基础算法测试与移动机器人仿真的工作空间 `catkin_ws`，另一个是基于 RoboMaster 框架的哨兵机器人底盘控制开发项目 `dx_final`
----
-## 1. `catkin_ws`: 基础仿真与跟随算法工作空间
+本仓库面向 ROS 1 Noetic 学习、Gazebo 仿真和 RoboMaster 哨兵底盘控制。两个工作空间相互独立，生成的构建目录不会提交到 Git。
 
-这是一个使用标准 `catkin_make` 编译的工作空间，主要包含了多款机器人的仿真环境搭建以及自定义的跟随控制算法。
+## 工作空间
 
-### 主要自定义功能包
-* **`diffbot_sim`**
-    * **功能**：自定义差速机器人的仿真包。
-    * **核心内容**：包含了机器人的 URDF 模型（`diffbot.urdf.xacro`）以及一个用于实现底盘跟随的 Gazebo 插件（`chassis_follower_plugin.cpp`）。
-* **`xp_second_pkg`**
-    * **功能**：跟随节点与多机协同测试包。
-    * **核心内容**：包含核心的跟随算法逻辑节点（`follower_node.cpp`）以及用于拉起多个 Turtlebot3 的启动文件（`multi_turtlebot3.launch`）。
-* **`ros_pkg`**
-    * 包含用于基础测试的节点（如 `v_node.cpp`）。
+| 工作空间 | 内容 | 说明 |
+| --- | --- | --- |
+| [`ros1_learning_ws`](ros1_learning_ws/README.md) | DiffBot、TurtleBot3、Waterplus、跟随算法 | ROS 基础、Gazebo 和多机器人实验 |
+| [`dx_final`](dx_final/README.md) | Sentry 描述、RoboMaster 控制框架、四舵轮控制器 | `catkin build` 工作流和 ros_control 插件 |
 
-### 第三方开源依赖包（Submodules）
-空间内还集成了多个用于学习和测试的开源包源码：
-* **`turtlebot3` 及其相关组件**：标准的 Turtlebot3 描述、消息与仿真环境。
-* **`wpr_simulation`**：Waterplus 机器人的综合仿真包，包含大量视觉与雷达的基础 Demo（如 `demo_cv_follow`，`demo_lidar_behavior` 等）
-* **`DynamixelSDK`**：用于驱动数字舵机的通信协议库。
+## 环境
 
-### 编译与使用
-bash
-cd catkin_ws
-catkin_make
-source devel/setup.bash
+- Ubuntu 20.04
+- ROS 1 Noetic
+- Gazebo Classic 11
+- Python 3、`catkin-tools`、`rosdep`
 
+Gazebo Classic 已进入维护结束阶段；本仓库仍以 ROS Noetic 的 Gazebo 11 环境为目标，不在本次整理中迁移到 ROS 2 或新 Gazebo。
 
-## 2. dx_final 工作空间
+## 获取源码
 
-该空间基于 RoboMaster 开源框架开发，用于哨兵机器人 (Sentry) 的底盘控制。项目中集成了完整的 `rm_control` 元级包架构，因此**必须使用 `catkin build` 进行编译**。
+首次获取时使用递归子模块：
 
-### 核心自定义包：`sentry_chassis_controller`
-基于 `ros_control` 框架实现的自定义底盘控制器。
-* **`src/`**: 包含底盘控制器的核心计算逻辑（`sentry_chassis_controller.cpp`）与用于测试的键盘遥控节点（`keyboard_teleop.cpp`）。
-* **`config/` & `cfg/`**: 包含静态参数配置（`chassis_params.yaml`, `controllers.yaml`）以及支持 `dynamic_reconfigure` 的动态参数配置（`ChassisOps.cfg`）。
-* **`launch/`**: 包含主启动文件 `sentry_chassis_control.launch`，用于一键加载参数和启动控制器。
+```bash
+git clone --recurse-submodules <repository-url>
+cd <repository-directory>
+git submodule status --recursive
+```
 
-### 框架依赖包 (rm_control 系列)
-工作空间内包含了 RoboMaster 官方框架的相关组件，用于提供底层的硬件接口、消息定义和基础控制器支撑：
-* `rm_common`, `rm_control`, `rm_dbus`, `rm_description`
-* `rm_gazebo`, `rm_hw`, `rm_msgs`, `rm_referee`, `rm_vt`
+已有副本可恢复子模块：
 
-### 编译说明
-bash
-cd dx_final
-catkin build
-source devel/setup.bash
+```bash
+git submodule sync --recursive
+git submodule update --init --recursive
+```
+
+子模块使用固定提交以保证复现；看到 detached HEAD 是正常现象。`dx_final/src/rm_description_for_task` 的仓库目录名与其 ROS 包名 `rm_description` 不同，这是有意保留的。
+
+## 安装依赖
+
+```bash
+source /opt/ros/noetic/setup.bash
+sudo apt install python3-catkin-tools python3-rosdep
+rosdep install --from-paths ros1_learning_ws/src dx_final/src --ignore-src -r -y
+```
+
+如果这是系统第一次使用 rosdep，还需要先执行 `sudo rosdep init` 和 `rosdep update`。构建时请始终在工作空间根目录运行 `catkin build`，不要在 `src` 目录中直接运行 CMake。
+
+## 学习顺序
+
+1. 阅读 [`ros1_learning_ws/README.md`](ros1_learning_ws/README.md)，先运行基础 Gazebo 和 TurtleBot3 示例。
+2. 阅读 [`dx_final/README.md`](dx_final/README.md)，构建 Sentry 工作空间并检查 URDF、控制器参数和 launch 参数。
+3. 最后阅读 `sentry_chassis_controller/README.md`，结合源码理解运动学、PID、功率限制和 ros_control 插件接口。
+
+构建、启动和常见故障排查均写在对应工作空间文档中。

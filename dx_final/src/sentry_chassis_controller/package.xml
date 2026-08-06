@@ -20,6 +20,13 @@
   <build_depend>controller_interface</build_depend>
   <build_depend>hardware_interface</build_depend>
   <build_depend>dynamic_reconfigure</build_depend> 
+  <build_depend>std_msgs</build_depend>
+  <build_depend>tf2</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>xacro</build_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
@@ -38,8 +45,17 @@
   <exec_depend>effort_controllers</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
   <exec_depend>dynamic_reconfigure</exec_depend> 
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rqt_reconfigure</exec_depend>
+  <exec_depend>rqt_plot</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>plotjuggler</exec_depend>
+  <exec_depend>xterm</exec_depend>
 
-  <build_depend>std_msgs</build_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>std_msgs</exec_depend>
 
