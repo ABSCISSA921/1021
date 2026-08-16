@@ -72,9 +72,8 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 | 步骤 | 内容 | 位置 |
 | --- | --- | --- |
 | 12 | 考核需求与评分细则 | [docs/requirements.md](docs/requirements.md) |
-| 13 | 构建并运行 Sentry 仿真 | [dx_final/README.md](dx_final/README.md) |
+| 13 | 构建并运行底盘仿真 | [dx_final/README.md](dx_final/README.md) |
 | 14 | 控制器代码导读(逆运动学/PID/功率限制) | [dx_final/src/sentry_chassis_controller](dx_final/src/sentry_chassis_controller/README.md) |
-| 15 | 历史实验代码(仅查阅) | `dx_final/legacy/` |
 
 推荐顺序:**路线一 → 路线二 → 路线三**。路线二的 tf2、URDF、ros_control 是读懂舵轮控制器的直接前置知识。
 

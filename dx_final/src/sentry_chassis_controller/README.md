@@ -215,5 +215,3 @@ sentry_chassis_controller/
     ├── sentry_chassis_controller.cpp      # 控制器实现(约 800 行)
     └── keyboard_teleop.cpp                # 键盘遥控节点
 ```
-
-历史实验代码(不参与构建)见 `dx_final/legacy/sentry_chassis_controller/`。

@@ -12,7 +12,6 @@ dx_final/
 │   ├── sentry_chassis_controller/   # 本仓库的控制器插件 + 键盘节点(核心作业)
 │   ├── rm_control/                  # rm-controls 官方仓库(子模块)
 │   └── rm_description_for_task/     # DynamicX 描述仓库(子模块,ROS 包名 rm_description)
-├── legacy/                          # 整理前的历史实验代码,不参与构建,仅查阅
 └── README.md
 ```
 
