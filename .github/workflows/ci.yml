@@ -1,0 +1,65 @@
+# ROS 1 Noetic 冒烟测试:在官方 ros:noetic 容器中分别构建三个工作区
+# 验证克隆(--recurse-submodules)+ rosdep 安装 + catkin build 全链路可复现
+name: ROS Noetic Build CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ros:noetic-ros-base-focal
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ros1_learning_ws
+            path: ros1_learning_ws/src
+            # turtlebot3/wpr_simulation 的 gazebo 依赖由 rosdep 解析
+            extra_apt: ""
+          - name: ros1_advanced_ws
+            path: ros1_advanced_ws/src
+            # MoveIt 与 turtlesim 体积大,单独列出保证 rosdep 失败时也能装上
+            extra_apt: "ros-noetic-moveit ros-noetic-turtlesim libopencv-dev"
+          - name: dx_final
+            path: dx_final/src
+            extra_apt: ""
+
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Install build tools
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            git python3-pip python3-rosdep python3-osrf-pycommon
+          # Noetic 用 pip 装 catkin-tools 最稳妥(focal 无对应 apt 包)
+          pip3 install catkin-tools
+
+      - name: Init rosdep
+        run: |
+          rosdep init || true   # 官方镜像通常已初始化
+          rosdep update
+
+      - name: Install ROS dependencies
+        run: |
+          source /opt/ros/noetic/setup.bash
+          # -r:个别无法解析的 key 不中断,由下面的 extra_apt 兜底
+          rosdep install --from-paths ${{ matrix.path }} --ignore-src -r -y || true
+          if [ -n "${{ matrix.extra_apt }}" ]; then
+            DEBIAN_FRONTEND=noninteractive apt-get install -y ${{ matrix.extra_apt }} || true
+          fi
+
+      - name: Build workspace
+        run: |
+          source /opt/ros/noetic/setup.bash
+          cd ${{ matrix.name }}
+          catkin init || true   # 已初始化时跳过
+          catkin config --extend /opt/ros/noetic
+          catkin build --no-status --summarize
