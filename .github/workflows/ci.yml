@@ -11,6 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: ros:noetic-ros-base-focal
+    # 容器作业的 run: 步骤默认使用 sh(dash),而 ROS 的 setup.bash 需要
+    # bash 的 source;强制指定 bash,否则会报 "source: not found"(exit 127)
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -48,6 +53,7 @@ jobs:
             python3-pip python3-rosdep python3-osrf-pycommon
           # Noetic 用 pip 装 catkin-tools 最稳妥(focal 无对应 apt 包)
           pip3 install catkin-tools
+          catkin --version
 
       - name: Init rosdep
         run: |
