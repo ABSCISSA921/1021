@@ -42,6 +42,7 @@
 │   ├── 01-ROS核心概念.md         #   节点/话题/服务/参数/TF 速查手册
 │   ├── 02-工具与调试.md          #   rqt/rosbag/PlotJuggler/IDE/调试技巧
 │   ├── 03-常见问题.md            #   按工作区分组的 FAQ
+│   ├── 04-常用命令速查.md         #   rostopic/rqt/catkin 一页纸速查
 │   ├── requirements.md          #   舵轮底盘控制器考核原始需求(归档)
 │   ├── assets/                  #   参考资料(控制理论中文笔记 PDF 等)
 │   └── tutorials/               #   六篇进阶教程(对应 ros1_advanced_ws)
@@ -182,6 +183,7 @@ roslaunch sentry_chassis_controller sentry_chassis_control.launch gui:=true keyb
 | [01-ROS核心概念](docs/01-ROS核心概念.md) | 计算图、话题、服务、参数、TF、launch | 概念卡壳随时查 |
 | [02-工具与调试](docs/02-工具与调试.md) | rqt/rosbag/PlotJuggler/CLion/Gazebo 调试 | 跑起来了想调参调试 |
 | [03-常见问题](docs/03-常见问题.md) | 按工作区分组的高频问题 | 报错先来这里 |
+| [04-常用命令速查](docs/04-常用命令速查.md) | rostopic/rqt/catkin/rosbag 一页纸 | 命令忘了随手查 |
 | [requirements](docs/requirements.md) | 舵轮考核原始需求与评分细则 | 考核队员必读 |
 | [tutorials/](docs/tutorials/) | 六篇进阶教程(含经典开源项目) | 路线二 |
 
