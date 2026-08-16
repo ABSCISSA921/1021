@@ -1,6 +1,6 @@
-# dx_final · RoboMaster 哨兵底盘控制(考核项目)
+# dx_final · RoboMaster 舵轮底盘控制(考核项目)
 
-基于 ROS 1 Noetic 与 `catkin build` 的哨兵四舵轮底盘学习/考核工作区,覆盖 URDF 建模、Gazebo 仿真、ros_control 插件与动态参数配置。考核原始需求与评分细则见 [docs/requirements.md](../docs/requirements.md)。
+基于 ROS 1 Noetic 与 `catkin build` 的四舵轮底盘学习/考核工作区,覆盖 URDF 建模、Gazebo 仿真、ros_control 插件与动态参数配置。考核原始需求与评分细则见 [docs/requirements.md](../docs/requirements.md)。
 
 > 建议先完成 [ros1_learning_ws](../ros1_learning_ws/README.md) 的三个示例,并过一遍进阶教程里的 [tf2](../docs/tutorials/01-tf2坐标变换.md)、[URDF](../docs/tutorials/02-URDF建模.md)、[ros_control](../docs/tutorials/04-ros_control进阶.md),再进入本项目。
 
@@ -43,7 +43,7 @@ source devel/setup.bash
 rosdep install --from-paths dx_final/src --ignore-src -r -y
 ```
 
-## 启动 Sentry 仿真
+## 启动底盘仿真
 
 默认无头模式(只启动 Gazebo server、URDF、控制器、状态发布器),适合服务器/容器:
 

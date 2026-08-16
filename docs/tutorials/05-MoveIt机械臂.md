@@ -105,14 +105,22 @@ SRDF 里的 `<group name="panda_arm">` 决定了代码里 `MoveGroupInterface("p
 2. 用代码给 `panda_arm` 设置多个关节目标(顺序执行 3 个位姿);
 3. 把 `fake_controllers.yaml` 换成 ros_control 的 `joint_trajectory_controller`,在 Gazebo 里执行(进阶,参考 [ros_control 教程](04-ros_control进阶.md))。
 
-## 与哨兵项目的关联
+## 与舵轮项目的关联
 
-- 哨兵底盘用不上 MoveIt,但**云台/发射机构**的轨迹控制思路相通:规划层(算法)与执行层(ros_control)分离;
+- 舵轮底盘用不上 MoveIt,但**云台/发射机构**的轨迹控制思路相通:规划层(算法)与执行层(ros_control)分离;
 - `FollowJointTrajectory` action 是机械臂生态的标准接口,读懂它对理解 `rm_control` 里的轨迹控制有帮助;
-- 若后续做哨兵云台自动瞄准,「目标跟踪 + 运动学 + 控制器」的组合与 MoveIt 流水线同构。
+- 若后续做云台自动瞄准,「目标跟踪 + 运动学 + 控制器」的组合与 MoveIt 流水线同构。
 
 ## 延伸阅读
 
 - [MoveIt 官方文档](https://moveit.picknik.ai/)
 - [moveit_tutorials 仓库](https://github.com/ros-planning/moveit_tutorials)(更系统的教程,构建较慢)
 - [OMPL 规划器](https://ompl.kavrakilab.org/)(规划算法原理)
+
+## 经典开源项目
+
+- [moveit/moveit](https://github.com/moveit/moveit):MoveIt 本体;
+- [ros-planning/moveit_tutorials](https://github.com/ros-planning/moveit_tutorials):官方教程仓库(代码 + 文档,构建较慢);
+- [ros-planning/panda_moveit_config](https://github.com/ros-planning/panda_moveit_config):本教程子模块源,Panda 的标准配置;
+- [ompl/ompl](https://github.com/ompl/ompl):MoveIt 默认规划算法库 OMPL 的本体;
+- [frankaemika/franka_ros](https://github.com/frankaemika/franka_ros):Panda 官方驱动,真机执行端参考。

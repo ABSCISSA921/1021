@@ -108,13 +108,22 @@ rosrun dynamic_reconfigure dynparam set /slam_gmapping particles 80       # 粒�
 2. 把建图结果喂给 `turtlebot3_navigation` 的 move_base,实现「给目标点自动导航」(需要 apt 装 `ros-noetic-turtlebot3-navigation`,属于下一阶段内容);
 3. 录制建图过程的 bag,离线用 `rosbag play` 重放给 gmapping,验证可复现性。
 
-## 与哨兵项目的关联
+## 与舵轮项目的关联
 
-- 哨兵比赛场地常用激光雷达 + 里程计定位,`map → odom → base_link` 链条与 gmapping 完全一致;
-- 哨兵控制器的 `/odom` 发布与 `odom → base_link` TF 广播,正是下游 SLAM/定位模块依赖的标准接口——接口规范比算法本身更重要。
+- 舵轮底盘在比赛场地常用激光雷达 + 里程计定位,`map → odom → base_link` 链条与 gmapping 完全一致;
+- 舵轮控制器的 `/odom` 发布与 `odom → base_link` TF 广播,正是下游 SLAM/定位模块依赖的标准接口——接口规范比算法本身更重要。
 
 ## 延伸阅读
 
 - [gmapping wiki](http://wiki.ros.org/gmapping)
 - [GMapping 原始论文(OpenSLAM)](https://openslam-org.github.io/gmapping.html)
 - [REP 105 坐标系约定](https://www.ros.org/reps/rep-0105.html)
+
+## 经典开源项目
+
+- [ros-perception/slam_gmapping](https://github.com/ros-perception/slam_gmapping):本教程子模块源,2D 激光粒子滤波建图;
+- [cartographer-project/cartographer_ros](https://github.com/cartographer-project/cartographer_ros):Google 出品,图优化 2D/3D SLAM,精度高、资源占用大;
+- [tu-darmstadt-ros-pkg/hector_slam](https://github.com/tu-darmstadt-ros-pkg/hector_slam):无需里程计即可建图,适合手持/无人机雷达;
+- [introlab/rtabmap](https://github.com/introlab/rtabmap):RGB-D 视觉 SLAM,带回环检测与稠密建图;
+- [UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3):视觉特征 SLAM 的学术经典;
+- [hku-mars/FAST_LIO](https://github.com/hku-mars/FAST_LIO):激光-惯性紧耦合,高速运动下的主流方案。

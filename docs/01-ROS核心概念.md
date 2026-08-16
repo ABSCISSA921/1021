@@ -51,7 +51,7 @@ rostopic pub -r 10 /cmd_vel geometry_msgs/Twist \
 | `/odom` | `nav_msgs/Odometry` | 里程计(位姿+速度) |
 | `/scan` | `sensor_msgs/LaserScan` | 激光雷达数据 |
 | `/joint_states` | `sensor_msgs/JointState` | 关节状态(位置/速度/力矩) |
-| `/debug/lf_wheel/target` | `std_msgs/Float64` | 哨兵控制器调试话题(左前轮目标转速) |
+| `/debug/lf_wheel/target` | `std_msgs/Float64` | 舵轮控制器调试话题(左前轮目标转速) |
 
 ## 4. 服务 (Service) 与动作 (Action)
 
@@ -74,7 +74,7 @@ rosparam set <name> <value>            # 临时改参数(重启节点后失效)
 rosparam dump params.yaml              # 导出全部参数
 ```
 
-**dynamic_reconfigure** 是对参数服务器的增强:运行时改参数会触发节点回调,立即生效(哨兵控制器的 PID、轮距等都在线可调)。用 `rqt_reconfigure` 图形化操作。
+**dynamic_reconfigure** 是对参数服务器的增强:运行时改参数会触发节点回调,立即生效(舵轮控制器的 PID、轮距等都在线可调)。用 `rqt_reconfigure` 图形化操作。
 
 ## 6. 消息 (Message) 与 TF
 
@@ -86,7 +86,7 @@ rosrun tf2_ros tf2_echo map base_link       # 查看两坐标系变换
 rosrun tf2_tools view_frames.py             # 生成 frames.pdf 查看整棵 TF 树
 ```
 
-哨兵控制器的「世界坐标系控制」就是先把 `odom` 系下的速度指令用 TF 变换到 `base_link` 系再执行,见 [tf2 教程](tutorials/01-tf2坐标变换.md)。
+舵轮控制器的「世界坐标系控制」就是先把 `odom` 系下的速度指令用 TF 变换到 `base_link` 系再执行,见 [tf2 教程](tutorials/01-tf2坐标变换.md)。
 
 ## 7. launch 文件
 

@@ -1,6 +1,8 @@
-# Sentry Chassis Controller(哨兵底盘控制器)
+# Sentry Chassis Controller(舵轮底盘控制器)
 
-为 **RoboMaster 哨兵机器人 (Sentry)** 开发的**四舵轮 (Swerve Drive) 全向底盘控制器**,以 `ros_control` 插件形式运行在 1kHz 控制循环中。集成逆运动学、8 个 PID、前馈 + 软启动、交叉耦合、虚拟电容功率限制、里程计与 tf。
+为 RoboMaster 机器人底盘(仿真模型名 `sentry`)开发的**四舵轮 (Swerve Drive) 全向底盘控制器**,以 `ros_control` 插件形式运行在 1kHz 控制循环中。集成逆运动学、8 个 PID、前馈 + 软启动、交叉耦合、虚拟电容功率限制、里程计与 tf。
+
+> 关于命名:包名 `sentry_chassis_controller` 沿用 Gazebo 仿真里的机器人模型名 `sentry`(来自 `rm_description`);本工作区的主题是**四舵轮底盘控制器**,两者指同一个项目。
 
 工作区级安装、构建、启动说明见 [dx_final/README.md](../../README.md);本文件聚焦**控制器实现与数据流**,是读代码的向导。
 
@@ -153,7 +155,7 @@ graph TD
 超限时:k_scale = 限值/预测功率,等比例缩放四轮力矩
 ```
 
-模拟哨兵电容的「攒能量 → 爆发 → 回充」规则,是考核「功率控制」加分项的实现。
+模拟机器人电容的「攒能量 → 爆发 → 回充」规则,是考核「功率控制」加分项的实现。
 
 ### 6. 里程计(正运动学,`calculateOdom`)
 

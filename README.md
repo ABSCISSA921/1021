@@ -1,6 +1,6 @@
 # ROS 1 学习与 RoboMaster 舵轮控制工作区
 
-面向 **ROS 1 Noetic + Gazebo Classic 11** 的团队学习仓库:从 ROS 零基础,到 Gazebo 仿真、tf2、SLAM、ros_control,最终完成 RoboMaster 哨兵四舵轮底盘控制器。所有第三方依赖以子模块固定提交管理,克隆即可复现。
+面向 **ROS 1 Noetic + Gazebo Classic 11** 的团队学习仓库:从 ROS 零基础,到 Gazebo 仿真、tf2、SLAM、ros_control,最终完成 RoboMaster 四舵轮底盘控制器。所有第三方依赖以子模块固定提交管理,克隆即可复现。
 
 > Gazebo Classic 已进入维护结束阶段;本仓库仍以 ROS Noetic 的 Gazebo 11 环境为目标,暂不迁移 ROS 2 / 新 Gazebo。
 
@@ -13,12 +13,12 @@
 │   ├── 01-ROS核心概念.md
 │   ├── 02-工具与调试.md
 │   ├── 03-常见问题.md
-│   ├── requirements.md     # 哨兵考核原始需求与评分细则
+│   ├── requirements.md     # 舵轮考核原始需求与评分细则
 │   ├── assets/             # 参考资料(控制理论笔记等)
 │   └── tutorials/          # 进阶教程(对应 ros1_advanced_ws)
 ├── ros1_learning_ws/       # 基础学习工作区(任务 1、任务 2)
 ├── ros1_advanced_ws/       # 进阶教程工作区(tf2/URDF/SLAM/ros_control/MoveIt/视觉)
-└── dx_final/               # 哨兵项目工作区(考核作业)
+└── dx_final/               # 舵轮项目工作区(考核作业)
 ```
 
 ## 快速开始
@@ -67,7 +67,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 | 10 | MoveIt 机械臂运动规划 | [docs/tutorials/05-MoveIt机械臂.md](docs/tutorials/05-MoveIt机械臂.md) |
 | 11 | usb_cam + cv_bridge + OpenCV | [docs/tutorials/06-视觉处理.md](docs/tutorials/06-视觉处理.md) |
 
-### 路线三:哨兵考核项目
+### 路线三:舵轮考核项目
 
 | 步骤 | 内容 | 位置 |
 | --- | --- | --- |
@@ -76,7 +76,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 | 14 | 控制器代码导读(逆运动学/PID/功率限制) | [dx_final/src/sentry_chassis_controller](dx_final/src/sentry_chassis_controller/README.md) |
 | 15 | 历史实验代码(仅查阅) | `dx_final/legacy/` |
 
-推荐顺序:**路线一 → 路线二 → 路线三**。路线二的 tf2、URDF、ros_control 是读懂哨兵控制器的直接前置知识。
+推荐顺序:**路线一 → 路线二 → 路线三**。路线二的 tf2、URDF、ros_control 是读懂舵轮控制器的直接前置知识。
 
 ## 三个工作区
 
@@ -84,7 +84,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 | --- | --- | --- |
 | [`ros1_learning_ws`](ros1_learning_ws/README.md) | 基础入门 | 自定义包:ros_pkg(任务1)、xp_second_pkg(任务2)、diffbot_sim;子模块:DynamixelSDK、turtlebot3 系列、wpr_simulation |
 | [`ros1_advanced_ws`](ros1_advanced_ws/README.md) | 进阶专题 | 子模块:geometry_tutorials、urdf_tutorial、slam_gmapping、ros_controllers、control_toolbox、panda_moveit_config、usb_cam;自定义包:vision_demo |
-| [`dx_final`](dx_final/README.md) | 哨兵考核 | 子模块:rm_control、rm_description_for_task;自定义包:sentry_chassis_controller |
+| [`dx_final`](dx_final/README.md) | 舵轮考核 | 子模块:rm_control、rm_description_for_task;自定义包:sentry_chassis_controller |
 
 三个工作区**相互独立**,分别 `catkin build`。构建目录均被 `.gitignore` 忽略,不会提交。
 
@@ -100,7 +100,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 
 本仓库使用 GitHub Actions 冒烟测试(见 [.github/workflows/ci.yml](.github/workflows/ci.yml)):每次推送都会在 `ros:noetic` 容器中分别构建三个工作区。
 
-提交规范:合理的 commit 粒度与清晰的 message(参考哨兵考核「完善的版本管理」一项,见 [docs/requirements.md](docs/requirements.md))。文档有错或示例跑不通,欢迎提 Issue / PR。
+提交规范:合理的 commit 粒度与清晰的 message(参考舵轮考核「完善的版本管理」一项,见 [docs/requirements.md](docs/requirements.md))。文档有错或示例跑不通,欢迎提 Issue / PR。
 
 ## 参考链接
 

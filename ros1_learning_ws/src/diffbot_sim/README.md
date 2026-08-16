@@ -1,6 +1,6 @@
 # diffbot_sim · 差速小车 + 云台跟随 Gazebo 插件
 
-综合示例包:一台带云台的差速小车,内含一个自定义 **Gazebo Model 插件**,演示「云台自稳 + 底盘跟随」的闭环思路——这是理解哨兵「底盘-云台分离控制」的简化版。
+综合示例包:一台带云台的差速小车,内含一个自定义 **Gazebo Model 插件**,演示「云台自稳 + 底盘跟随」的闭环思路——这是理解舵轮底盘「底盘-云台分离控制」思路的简化版。
 
 ## 运行
 
@@ -59,9 +59,9 @@ diffbot_sim/
 2. 在 URDF 中给云台加一个 pitch 关节,模仿 roll/pitch 稳定;
 3. 用 `rqt_plot` 对比 `/turret_controller/command` 与底盘实际角速度,验证公式 1 的自稳效果。
 
-## 与哨兵项目的关系
+## 与舵轮项目的关系
 
-哨兵控制器把这里的「云台自稳 + 底盘跟随」换成了「**世界坐标系速度控制**(tf2 变换)+ 四舵轮逆运动学」,ros_control 配置、Gazebo 插件挂载方式完全一致。学完本包可对照 [sentry_chassis_controller](../../../dx_final/src/sentry_chassis_controller/README.md) 找异同。
+舵轮控制器把这里的「云台自稳 + 底盘跟随」换成了「**世界坐标系速度控制**(tf2 变换)+ 四舵轮逆运动学」,ros_control 配置、Gazebo 插件挂载方式完全一致。学完本包可对照 [sentry_chassis_controller](../../../dx_final/src/sentry_chassis_controller/README.md) 找异同。
 
 ## 相关教程
 

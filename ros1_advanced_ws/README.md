@@ -69,7 +69,7 @@ catkin build geometry_tutorials
 
 ## 学习顺序建议
 
-**tf2 → URDF → ros_control** 是与哨兵项目强相关的必修项;SLAM、MoveIt、视觉按兴趣选学。每篇教程都包含:运行步骤 → 原理要点 → 代码导读 → 练习任务 → 与哨兵项目的关联。
+**tf2 → URDF → ros_control** 是与舵轮项目强相关的必修项;SLAM、MoveIt、视觉按兴趣选学。每篇教程都包含:运行步骤 → 原理要点 → 代码导读 → 练习任务 → 与舵轮项目的关联。
 
 ## 常见问题
 
