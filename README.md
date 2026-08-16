@@ -97,7 +97,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 
 ## 贡献与 CI
 
-本仓库使用 GitHub Actions 冒烟测试(见 [.github/workflows/ci.yml](.github/workflows/ci.yml)):每次推送都会在 `ros:noetic` 容器中分别构建三个工作区。
+本仓库使用 GitHub Actions 冒烟测试(见 [.github/workflows/ci.yml](.github/workflows/ci.yml)):推送到工作区源码、子模块或 CI 配置时,会在 `ros:noetic` 容器中分别构建三个工作区(纯文档改动不触发)。
 
 提交规范:合理的 commit 粒度与清晰的 message(参考舵轮考核「完善的版本管理」一项,见 [docs/requirements.md](docs/requirements.md))。文档有错或示例跑不通,欢迎提 Issue / PR。
 
