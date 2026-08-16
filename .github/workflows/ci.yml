@@ -22,8 +22,9 @@ jobs:
         include:
           - name: ros1_learning_ws
             path: ros1_learning_ws/src
-            # turtlebot3/wpr_simulation 的 gazebo 依赖由 rosdep 解析
-            extra_apt: ""
+            # wpr_simulation 的 CMakeLists find_package(image_transport),
+            # 但其 package.xml 漏声明该依赖,rosdep 不会安装,这里显式补上
+            extra_apt: "ros-noetic-image-transport"
           - name: ros1_advanced_ws
             path: ros1_advanced_ws/src
             # MoveIt 与 turtlesim 体积大,单独列出保证 rosdep 失败时也能装上
