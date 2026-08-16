@@ -28,17 +28,24 @@ jobs:
             extra_apt: ""
 
     steps:
+      # container 作业中 actions/* 也运行在容器内,而 ros:noetic 镜像不含 git;
+      # 必须先装 git(>=2.18),否则 actions/checkout 会退化为 REST 下载,
+      # 不支持 submodules 参数。此步骤必须先于 checkout 执行。
+      - name: Install git (required by actions/checkout in container)
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+
       - name: Checkout with submodules
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: recursive
           fetch-depth: 1
 
       - name: Install build tools
         run: |
-          apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            git python3-pip python3-rosdep python3-osrf-pycommon
+            python3-pip python3-rosdep python3-osrf-pycommon
           # Noetic 用 pip 装 catkin-tools 最稳妥(focal 无对应 apt 包)
           pip3 install catkin-tools
 
