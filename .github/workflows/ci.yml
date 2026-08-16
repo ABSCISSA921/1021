@@ -51,6 +51,9 @@ jobs:
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
             python3-pip python3-rosdep python3-osrf-pycommon
+          # 镜像自带的 rosdep 太旧且默认跳过 EOL 发行版,升级到新版
+          pip3 install -U rosdep
+          rosdep --version
           # Noetic 用 pip 装 catkin-tools 最稳妥(focal 无对应 apt 包)
           pip3 install catkin-tools
           catkin --version
@@ -58,13 +61,16 @@ jobs:
       - name: Init rosdep
         run: |
           rosdep init || true   # 官方镜像通常已初始化
-          rosdep update
+          # noetic 已 EOL,新版 rosdep 默认跳过 EOL 发行版,
+          # 不加 --include-eol-distros 会导致 tf/xacro 等 ROS 包键
+          # 全部无法解析(Cannot locate rosdep definition)
+          rosdep update --include-eol-distros --rosdistro noetic
 
       - name: Install ROS dependencies
         run: |
           source /opt/ros/noetic/setup.bash
           # -r:个别无法解析的 key 不中断,由下面的 extra_apt 兜底
-          rosdep install --from-paths ${{ matrix.path }} --ignore-src -r -y || true
+          rosdep install --from-paths ${{ matrix.path }} --ignore-src -r -y
           if [ -n "${{ matrix.extra_apt }}" ]; then
             DEBIAN_FRONTEND=noninteractive apt-get install -y ${{ matrix.extra_apt }} || true
           fi
