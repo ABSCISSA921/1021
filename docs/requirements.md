@@ -1,4 +1,6 @@
-# requirement
+# requirement · 哨兵考核原始需求
+
+> 本文档是哨兵底盘控制器考核的**原始需求与评分细则**(原 `dx_final/requirement.md`,整理时移入 `docs/` 归档,内容未改动)。实现对照见 [dx_final/src/sentry_chassis_controller/README.md](../dx_final/src/sentry_chassis_controller/README.md) 的「与考核要求的对应」一节。
 
 ## 考核规则及评分细则
 

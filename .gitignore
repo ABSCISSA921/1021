@@ -6,6 +6,7 @@
 **/.catkin_tools/
 **/.catkin_workspace
 /ros1_learning_ws/src/CMakeLists.txt
+/ros1_advanced_ws/src/CMakeLists.txt
 /dx_final/src/CMakeLists.txt
 
 # Local IDE state and downloaded extensions
