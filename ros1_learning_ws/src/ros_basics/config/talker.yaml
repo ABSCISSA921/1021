@@ -1,0 +1,3 @@
+# Private node parameters, loaded inside the talker node in topics.launch.
+rate: 2.0
+label: hello_ros

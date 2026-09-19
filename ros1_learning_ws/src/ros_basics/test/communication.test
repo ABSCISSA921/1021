@@ -1,0 +1,15 @@
+<launch>
+  <include file="$(find ros_basics)/launch/topics.launch">
+    <arg name="namespace" value="lesson_test"/>
+    <arg name="topic" value="renamed"/>
+    <arg name="label" value="configured_label"/>
+    <arg name="rate" value="10.0"/>
+  </include>
+  <include file="$(find ros_basics)/launch/services.launch">
+    <arg name="namespace" value="lesson_test"/>
+  </include>
+  <include file="$(find ros_basics)/launch/actions.launch">
+    <arg name="namespace" value="lesson_test"/>
+  </include>
+  <test test-name="communication" pkg="ros_basics" type="test_communication.py" time-limit="35"/>
+</launch>

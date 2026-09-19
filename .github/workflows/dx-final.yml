@@ -1,0 +1,50 @@
+# This project has its own dependency checkout and build, with no learning overlay.
+name: dx_final Independent Project
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dx_final/**'
+      - '.gitmodules'
+      - '.github/workflows/dx-final.yml'
+  pull_request:
+    paths:
+      - 'dx_final/**'
+      - '.gitmodules'
+      - '.github/workflows/dx-final.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ros:noetic-ros-base-focal
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Install git and build tools
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git python3-pip python3-rosdep python3-osrf-pycommon
+          pip3 install -U rosdep catkin-tools
+      - uses: actions/checkout@v5
+        with:
+          submodules: false
+      - name: Initialize project dependencies
+        run: git submodule update --init --recursive -- dx_final/src/rm_control dx_final/src/rm_description_for_task
+      - name: Install project dependencies
+        run: |
+          source /opt/ros/noetic/setup.bash
+          if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+            rosdep init
+          fi
+          rosdep update --include-eol-distros --rosdistro noetic
+          rosdep install --from-paths dx_final/src --ignore-src --rosdistro noetic -y
+      - name: Build project
+        run: |
+          source /opt/ros/noetic/setup.bash
+          cd dx_final
+          catkin init
+          catkin config --extend /opt/ros/noetic
+          catkin build --no-status --summarize

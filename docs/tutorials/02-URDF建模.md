@@ -2,14 +2,14 @@
 
 > 对应工作区:`ros1_advanced_ws`,子模块 `urdf_tutorial`(ros/urdf_tutorial,master,固定提交 `21a6ecd`)。
 
-URDF 是 ROS 描述机器人**几何、关节、运动学链**的标准格式;xacro 是其宏扩展版,支持变量、数学表达式与模块复用。舵轮底盘的 `rm_description`、本仓库的 `diffbot.urdf.xacro` 都是 xacro。
+URDF 是 ROS 描述机器人**几何、关节、运动学链**的标准格式;xacro 是其宏扩展版,支持变量、数学表达式与模块复用。本仓库的 `diffbot.urdf.xacro` 是可阅读的例子。
 
 ## 学习目标
 
 1. 读懂 link / joint / transmission / gazebo 标签;
 2. 会用 RViz 可视化 URDF 并排查模型问题;
 3. 掌握 xacro 变量、宏(macro)与文件 include;
-4. 能对照读懂 `rm_description` 的舵轮底盘模型。
+4. 能对照读懂 `diffbot_sim` 的底盘与云台模型。
 
 ## 前置依赖
 
@@ -72,7 +72,7 @@ roslaunch urdf_tutorial display.launch model:=urdf/08-macroed.urdf.xacro
 <xacro:include filename="$(find pkg)/urdf/common.xacro"/>
 ```
 
-- 变量集中定义,改一处全局生效(`rm_description` 里整车尺寸就是一堆 property);
+- 变量集中定义,改一处全局生效(例如轮距、轮径等几何参数);
 - macro 让「四个轮子」只写一遍;
 - `$(find pkg)` 在 xacro 中解析为包路径,配合 include 实现模块拆分。
 
@@ -89,7 +89,7 @@ roslaunch urdf_tutorial display.launch model:=urdf/08-macroed.urdf.xacro
 </gazebo>
 ```
 
-`diffbot_sim` 的云台插件、`rm_gazebo` 的舵轮底盘插件都是这样挂进模型的。
+`diffbot_sim` 的云台插件就是这样挂进模型的。
 
 ## 检查与排错工具
 
@@ -115,13 +115,7 @@ rosrun xacro xacro model.urdf.xacro   # 展开为纯 URDF,排查宏问题
 
 1. 用 xacro 宏把 `urdf/05-visual.urdf` 的单轮模型改成 4 轮车(左右各二);
 2. 给轮子加 `<transmission>` 和 `<gazebo>` 标签,让 `diff_drive_controller` 能驱动它(参考 `diffbot_sim`);
-3. 阅读 `dx_final/src/rm_description_for_task/urdf/sentry/sentry.urdf.xacro`:找出底盘 8 个关节(pivot/wheel)的 transmission 定义,对照 [sentry_chassis_controller README](../../dx_final/src/sentry_chassis_controller/README.md) 的关节名清单。
-
-## 与舵轮项目的关联
-
-- 控制器的 `wheel_track`/`wheel_base` 必须与 URDF 几何一致,否则逆运动学解算错误;
-- launch 里 `robot_description` 参数由 `xacro` 命令生成,`load_chassis`、`roller_type` 等参数传入 xacro 决定模型形态;
-- 新增/删除关节时,要同步改 URDF、`controllers.yaml` 的 joints 列表与控制器代码的握手逻辑。
+3. 阅读 `diffbot_sim/urdf/diffbot.urdf.xacro`，将轮子与云台的 transmission、硬件接口和 YAML 中的关节名逐项对照。
 
 ## 延伸阅读
 
@@ -134,4 +128,3 @@ rosrun xacro xacro model.urdf.xacro   # 展开为纯 URDF,排查宏问题
 - [ros/xacro](https://github.com/ros/xacro):xacro 官方实现,本教程宏语法的主要来源;
 - [ros/urdfdom](https://github.com/ros/urdfdom):URDF 底层解析库(C++),想深入格式细节可以读它;
 - [frankaemika/franka_ros](https://github.com/frankaemika/franka_ros):Franka Panda 官方描述与驱动,复杂 URDF/xacro 的优秀范本;
-- [rm-controls/rm_control](https://github.com/rm-controls/rm_control):RoboMaster 开源控制器工程(本仓库 `dx_final` 的子模块),其配套 `rm_description` 与本仓库的舵轮底盘模型同源。

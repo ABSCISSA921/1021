@@ -1,31 +1,37 @@
-# ROS 1 Noetic 冒烟测试:在官方 ros:noetic 容器中分别构建三个工作区
-# 验证克隆(--recurse-submodules)+ rosdep 安装 + catkin build 全链路可复现
-name: ROS Noetic Build CI
+name: ROS 1 Learning
 
-# 只在工作区源码、子模块或本文件变动时触发;纯文档改动(docs/、README 等)不触发
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - 'ros1_learning_ws/**'
       - 'ros1_advanced_ws/**'
-      - 'dx_final/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'scripts/**'
       - '.gitmodules'
       - '.github/workflows/ci.yml'
   pull_request:
     paths:
       - 'ros1_learning_ws/**'
       - 'ros1_advanced_ws/**'
-      - 'dx_final/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'scripts/**'
       - '.gitmodules'
       - '.github/workflows/ci.yml'
 
 jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 scripts/check_repo.py
+
   build:
     runs-on: ubuntu-latest
     container: ros:noetic-ros-base-focal
-    # 容器作业的 run: 步骤默认使用 sh(dash),而 ROS 的 setup.bash 需要
-    # bash 的 source;强制指定 bash,否则会报 "source: not found"(exit 127)
     defaults:
       run:
         shell: bash
@@ -33,66 +39,48 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: ros1_learning_ws
-            path: ros1_learning_ws/src
-            # wpr_simulation 的 CMakeLists find_package(image_transport),
-            # 但其 package.xml 漏声明该依赖,rosdep 不会安装,这里显式补上
-            extra_apt: "ros-noetic-image-transport"
-          - name: ros1_advanced_ws
-            path: ros1_advanced_ws/src
-            # MoveIt 与 turtlesim 体积大,单独列出保证 rosdep 失败时也能装上
-            extra_apt: "ros-noetic-moveit ros-noetic-turtlesim libopencv-dev"
-          - name: dx_final
-            path: dx_final/src
+          - target: basics
+            workspace: ros1_learning_ws
+            sources: ros1_learning_ws/src/ros_basics
             extra_apt: ""
-
+          - target: simulation
+            workspace: ros1_learning_ws
+            sources: ros1_learning_ws/src
+            extra_apt: "ros-noetic-image-transport"
+          - target: advanced
+            workspace: ros1_advanced_ws
+            sources: ros1_advanced_ws/src
+            extra_apt: "ros-noetic-moveit ros-noetic-turtlesim libopencv-dev"
     steps:
-      # container 作业中 actions/* 也运行在容器内,而 ros:noetic 镜像不含 git;
-      # 必须先装 git(>=2.18),否则 actions/checkout 会退化为 REST 下载,
-      # 不支持 submodules 参数。此步骤必须先于 checkout 执行。
-      - name: Install git (required by actions/checkout in container)
+      # Container checkout needs git installed first.
+      - name: Install git and build tools
         run: |
           apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
-
-      - name: Checkout with submodules
-        uses: actions/checkout@v5
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git python3-pip python3-rosdep python3-osrf-pycommon
+          pip3 install -U rosdep catkin-tools
+      - uses: actions/checkout@v5
         with:
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Install build tools
-        run: |
-          DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            python3-pip python3-rosdep python3-osrf-pycommon
-          # 镜像自带的 rosdep 太旧且默认跳过 EOL 发行版,升级到新版
-          pip3 install -U rosdep
-          rosdep --version
-          # Noetic 用 pip 装 catkin-tools 最稳妥(focal 无对应 apt 包)
-          pip3 install catkin-tools
-          catkin --version
-
-      - name: Init rosdep
-        run: |
-          rosdep init || true   # 官方镜像通常已初始化
-          # noetic 已 EOL,新版 rosdep 默认跳过 EOL 发行版,
-          # 不加 --include-eol-distros 会导致 tf/xacro 等 ROS 包键
-          # 全部无法解析(Cannot locate rosdep definition)
-          rosdep update --include-eol-distros --rosdistro noetic
-
+          submodules: false
+      - name: Initialize selected learning dependencies
+        if: matrix.target != 'basics'
+        run: git submodule update --init --recursive -- ${{ matrix.workspace }}/src
       - name: Install ROS dependencies
         run: |
           source /opt/ros/noetic/setup.bash
-          # -r:个别无法解析的 key 不中断,由下面的 extra_apt 兜底
-          rosdep install --from-paths ${{ matrix.path }} --ignore-src -r -y
-          if [ -n "${{ matrix.extra_apt }}" ]; then
-            DEBIAN_FRONTEND=noninteractive apt-get install -y ${{ matrix.extra_apt }} || true
+          if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+            rosdep init
           fi
-
-      - name: Build workspace
+          rosdep update --include-eol-distros --rosdistro noetic
+          rosdep install --from-paths ${{ matrix.sources }} --ignore-src --rosdistro noetic -y
+          if [ -n "${{ matrix.extra_apt }}" ]; then
+            DEBIAN_FRONTEND=noninteractive apt-get install -y ${{ matrix.extra_apt }}
+          fi
+      - name: Build selected learning workspace
+        run: bash scripts/build_learning.sh ${{ matrix.target }}
+      - name: Test communication lessons
+        if: matrix.target == 'basics'
         run: |
-          source /opt/ros/noetic/setup.bash
-          cd ${{ matrix.name }}
-          catkin init || true   # 已初始化时跳过
-          catkin config --extend /opt/ros/noetic
-          catkin build --no-status --summarize
+          source ros1_learning_ws/devel/setup.bash
+          cd ros1_learning_ws
+          catkin run_tests ros_basics --no-deps --no-status
+          catkin_test_results build/ros_basics

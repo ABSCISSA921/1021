@@ -10,11 +10,11 @@
 
 ## 运行
 
-需要环境中已有发布 `/odom` 与 `/scan` 的机器人仿真(本仓库可用 diffbot_sim 或 TurtleBot3 仿真):
+需要提供 /odom、/scan 并订阅 /cmd_vel 的仿真，例如 WPR 或 TurtleBot3。现有 DiffBot 没有激光雷达，不能直接用于此练习。节点内目标点为固定坐标，需核对场景初始位姿。
 
 ```bash
 # 终端 1:启动仿真(二选一)
-roslaunch diffbot_sim diffbot_gazebo.launch
+roslaunch wpr_simulation wpb_simple.launch
 # 或
 export TURTLEBOT3_MODEL=burger
 roslaunch turtlebot3_gazebo turtlebot3_world.launch

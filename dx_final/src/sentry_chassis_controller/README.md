@@ -198,7 +198,7 @@ graph TD
 | tf 世界坐标速度控制 | `transformVelocity` + `use_world_frame` |
 | 键盘操控 / 加速度配置 / 小陀螺 / 功率控制 / 自锁 | `keyboard_teleop` / `rampVelocity` / `ChassisSpinMode` / `limitPower` / `ChassisStopMode` |
 
-考核原始需求见 [docs/requirements.md](../../../docs/requirements.md)。
+考核原始需求见 [docs/requirements.md](../../docs/requirements.md)。
 
 ## 目录
 

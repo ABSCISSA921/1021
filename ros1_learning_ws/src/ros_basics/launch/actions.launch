@@ -1,0 +1,6 @@
+<launch>
+  <arg name="namespace" default="basics"/>
+  <group ns="$(arg namespace)">
+    <node pkg="ros_basics" type="countdown_server.py" name="countdown_server" output="screen"/>
+  </group>
+</launch>

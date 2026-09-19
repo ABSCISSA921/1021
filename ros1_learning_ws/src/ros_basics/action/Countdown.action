@@ -1,0 +1,6 @@
+# Accepted range: 0..60. Each count takes one wall-clock second.
+int32 start
+---
+bool completed
+---
+int32 remaining

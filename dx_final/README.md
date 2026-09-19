@@ -1,8 +1,10 @@
 # dx_final · RoboMaster 舵轮底盘控制(考核项目)
 
-基于 ROS 1 Noetic 与 `catkin build` 的**四舵轮底盘控制器**学习/考核工作区,覆盖 URDF 建模、Gazebo 仿真、ros_control 插件与动态参数配置。考核原始需求与评分细则见 [docs/requirements.md](../docs/requirements.md)。
+基于 ROS 1 Noetic 与 `catkin build` 的**四舵轮底盘控制器**独立项目工作区,覆盖 URDF 建模、Gazebo 仿真、ros_control 插件与动态参数配置。考核原始需求与评分细则见 [docs/requirements.md](docs/requirements.md)。
 
-> 建议先完成 [ros1_learning_ws](../ros1_learning_ws/README.md) 的三个示例,并过一遍进阶教程里的 [tf2](../docs/tutorials/01-tf2坐标变换.md)、[URDF](../docs/tutorials/02-URDF建模.md)、[ros_control](../docs/tutorials/04-ros_control进阶.md),再进入本项目。
+> 本项目独立维护源码、需求、依赖和构建，只扩展 `/opt/ros/noetic`。不需要构建或 source 学习工作区；请使用新终端。基础知识要求：ROS 通信、tf2、URDF 和 ros_control。
+>
+> 当前保持同一个 Git 仓库，第三方版本仍由根目录 .gitmodules 和 gitlink 管理；运行和构建相互独立。项目 CI 见[独立工作流](../.github/workflows/dx-final.yml)。
 
 ## 这个工作区是什么
 
@@ -15,12 +17,13 @@
 
 ## 考核背景速览
 
-考核要求编写舵轮底盘的控制器并在 Gazebo 中控制机器人底盘。必做项:运行 `rm_description_for_task`、理解并运行 simple_chassis_controller(全程 CLion + catkin-tools);选做项:创建包与版本管理、PID 调速、逆运动学、正运动学里程计、tf 世界坐标系控制、特色功能(键盘/加速度/小陀螺/功率控制/自锁)。完整细则与对应实现见 [docs/requirements.md](../docs/requirements.md) 与控制器 README 的「与考核要求的对应」。
+考核要求编写舵轮底盘的控制器并在 Gazebo 中控制机器人底盘。必做项:运行 `rm_description_for_task`、理解并运行 simple_chassis_controller(全程 CLion + catkin-tools);选做项:创建包与版本管理、PID 调速、逆运动学、正运动学里程计、tf 世界坐标系控制、特色功能(键盘/加速度/小陀螺/功率控制/自锁)。完整细则与对应实现见 [docs/requirements.md](docs/requirements.md) 与控制器 README 的「与考核要求的对应」。
 
 ## 目录结构
 
 ```
 dx_final/
+├── docs/                           # 项目需求、故障排查和调试记录
 ├── src/
 │   ├── sentry_chassis_controller/   # 本仓库的控制器插件 + 键盘节点(核心作业)
 │   ├── rm_control/                  # rm-controls 官方仓库(子模块)
@@ -43,7 +46,9 @@ dx_final/
 ```bash
 source /opt/ros/noetic/setup.bash
 cd <仓库根目录>
-rosdep install --from-paths dx_final/src --ignore-src -r -y
+# 只初始化本项目的子模块
+git submodule update --init --recursive -- dx_final/src/rm_control dx_final/src/rm_description_for_task
+rosdep install --from-paths dx_final/src --ignore-src --rosdistro noetic -y
 ```
 
 ```bash
@@ -54,7 +59,7 @@ catkin build
 source devel/setup.bash
 ```
 
-构建产物共 11 个包;`build/ devel/ logs/` 已 gitignore。
+依赖与包列表以 `catkin list` 为准;`build/ devel/ logs/` 已 gitignore。
 
 ## 启动底盘仿真
 
@@ -125,7 +130,7 @@ rostopic pub -r 10 /cmd_vel geometry_msgs/Twist "linear: {x: 0.3}"   # 车开始
 2. 在 `rqt_reconfigure` 中在线调 8 个 PID 与加速度限制;
 3. `rqt_plot` / PlotJuggler 观察 `/debug/*_wheel/target`(期望)与 `actual`(实际)的跟踪曲线;
 4. 效果满意后把参数抄回 `config/chassis_params.yaml`,重启 launch 验证可复现;
-5. 详细方法与指标含义见 [工具与调试](../docs/02-工具与调试.md),命令速查见 [常用命令速查](../docs/04-常用命令速查.md)。
+5. 详细方法与命令见本项目的[调试与记录](docs/调试与记录.md)。
 
 ## 考核项对照(实现位置见控制器 README)
 
@@ -140,16 +145,16 @@ rostopic pub -r 10 /cmd_vel geometry_msgs/Twist "linear: {x: 0.3}"   # 车开始
 ## 学习资料
 
 - 控制器原理讲解:[sentry_chassis_controller README](src/sentry_chassis_controller/README.md)
-- 控制理论入门:[docs/assets/Control_Theory_Note_cn.pdf](../docs/assets/Control_Theory_Note_cn.pdf)
-- 考核要求:[docs/requirements.md](../docs/requirements.md)
+- 调参与录包：[调试与记录](docs/调试与记录.md)
+- 考核要求:[docs/requirements.md](docs/requirements.md)
 
 ## 故障排查
 
 - 两个外部仓库是固定提交的子模块,detached HEAD 正常,不要切分支;
 - launch 找不到 Gazebo 插件:确认子模块已初始化,并重新 `catkin build`;
 - Gazebo Classic 弃用警告属上游提示,不影响本项目在 Noetic 上运行;
-- 更多见 [docs/03-常见问题.md](../docs/03-常见问题.md) 的 dx_final 一节。
+- 更多见本项目的[故障排查](docs/故障排查.md)。
 
 ## 提交要求提醒
 
-考核对版本管理有明确要求(合理的 commit、清晰的 message、冲突处理、分工可追溯),提交前对照 [docs/requirements.md](../docs/requirements.md) 的「完善的版本管理」一节自查。
+考核对版本管理有明确要求(合理的 commit、清晰的 message、冲突处理、分工可追溯),提交前对照 [docs/requirements.md](docs/requirements.md) 的「完善的版本管理」一节自查。

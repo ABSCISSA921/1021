@@ -1,0 +1,17 @@
+<launch>
+  <arg name="namespace" default="basics"/>
+  <arg name="topic" default="counter"/>
+  <arg name="rate" default="2.0"/>
+  <arg name="label" default="hello_ros"/>
+  <group ns="$(arg namespace)">
+    <node pkg="ros_basics" type="talker.py" name="talker" output="screen">
+      <rosparam command="load" file="$(find ros_basics)/config/talker.yaml"/>
+      <param name="rate" value="$(arg rate)" type="double"/>
+      <param name="label" value="$(arg label)" type="str"/>
+      <remap from="counter" to="$(arg topic)"/>
+    </node>
+    <node pkg="ros_basics" type="listener.py" name="listener" output="screen">
+      <remap from="counter" to="$(arg topic)"/>
+    </node>
+  </group>
+</launch>

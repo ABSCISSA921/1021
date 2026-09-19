@@ -17,3 +17,8 @@
 # Local ROS runtime files
 .ros/
 *.bag
+
+# Python and temporary ROS output
+__pycache__/
+*.py[cod]
+*.bag.active

@@ -1,0 +1,5 @@
+# Use a wider result so the sum of any two valid inputs is representable.
+int32 a
+int32 b
+---
+int64 sum
