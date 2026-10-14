@@ -112,8 +112,8 @@ roslaunch pkg file.launch x:=1.5
 
 ## 8. 时间与坐标系约定
 
-- **ROS 时间** `ros::Time::now()`:仿真中必须用仿真的 `/clock`(即 `use_sim_time=true`),否则时间会错乱。通信基础不启动仿真，应使用系统时间；仿真实验需要核对 /use_sim_time 和 /clock。
-- **坐标系**:世界 `world/map/odom` → 车体 `base_link/base_footprint` → 部件 `wheel_link`。发布 TF 时父子关系要构成**一棵树**,不能有环。
+- **ROS 时间** `ros::Time::now()`：仿真实验设置 `/use_sim_time=true`，并由 `/clock` 提供统一时间；通信基础实验使用系统时间。
+- **坐标系**:世界 `world/map/odom` → 车体 `base_link/base_footprint` → 部件 `wheel_link`。TF 的父子关系构成**一棵无环树**。
 
 ## 9. 推荐的系统学习方法
 

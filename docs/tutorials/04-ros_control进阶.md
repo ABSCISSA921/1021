@@ -1,6 +1,8 @@
 # 04 · ros_control 框架与控制器进阶
 
-本专题阅读进阶工作区的 `ros_controllers`、`control_toolbox`，以基础工作区的 DiffBot 运行实验。两者分别构建、在不同终端使用，不需要其他项目代码。
+本专题提供框架解释。首次动手建议从进阶工作区的 [control_lab](../../ros1_advanced_ws/src/control_lab/README.md) 入手：单关节 effort PID 和差速底盘各自配有完整 URDF、transmission、控制器 YAML、Gazebo launch 与验收步骤。
+
+也可用下文保留的基础工作区 DiffBot 实验阅读旧示例；两个工作区分别构建，不互相 overlay。
 
 ## 学习目标
 
@@ -8,6 +10,16 @@
 2. 对照 URDF 与 YAML 找到控制器要求的关节名及接口。
 3. 理解速度指令与力矩指令的区别，以及 PID 所在的位置。
 4. 能沿 pluginlib 声明找到控制器实现。
+
+## 推荐项目路线
+
+1. 在 control_lab 中把关节指令从 0 改为非零角度，观察 set_point、process_value 与 command，理解位置误差如何变成力矩。
+2. 对照 URDF 与控制器 YAML，找到 joint、hardwareInterface、transmission 和 plugin 的对应关系。
+3. 切换到移动底盘，观察 Twist 如何变成左右轮速及里程计。
+4. 接入[导航与定位项目](07-导航与定位.md)，让同一台底盘执行规划器的指令。
+5. 阅读[开源项目指南](../projects/README.md)中的 RRBot 与 Jackal，对照不同机器人的模型和控制配置。
+
+完整安装、构建和启动命令集中在 [control_lab 入手指南](../../ros1_advanced_ws/src/control_lab/README.md)，避免多个入口的参数不一致。
 
 ## 准备
 
@@ -73,7 +85,7 @@ pid.initPid(p, i, d, i_max, i_min);
 double effort = pid.computeCommand(target_velocity - measured_velocity, dt);
 ```
 
-这里是逻辑片段，完整实现还要定义增益、时间间隔、句柄、限幅和生命周期。`dt` 必须为有效的正时间间隔；积分限幅不等于最终输出力矩限幅。是否重置积分由控制器启停与状态切换策略决定，不应在每次更新时无条件 reset。
+这段示例展示 PID 更新逻辑。完整实现还需定义增益、时间间隔、句柄、限幅和生命周期：`dt` 取有效的正时间间隔，积分项与最终输出力矩分别限幅，积分重置按控制器启停和状态切换策略执行。
 
 DiffBot 的 `gazebo_ros_control/pid_gains` 是仿真硬件层配置，与上层 diff_drive_controller 分属不同层。追踪接口比看到配置中有“PID”就推断计算位置更可靠。
 

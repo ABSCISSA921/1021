@@ -1,0 +1,67 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 32; 32; 32
+    Fixed Frame: odom
+    Frame Rate: 30
+  Displays:
+    - Class: rviz/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+    - Class: rviz/RobotModel
+      Name: Robot
+      Enabled: true
+      Robot Description: robot_description
+    - Class: rviz/LaserScan
+      Name: Laser
+      Enabled: true
+      Topic: /scan
+      Size (m): 0.025
+    - Class: rviz/Odometry
+      Name: Wheel odometry
+      Enabled: true
+      Topic: /diff_drive_controller/odom
+      Keep: 100
+      Position Tolerance: 0.05
+      Shape:
+        Color: 255; 170; 0
+        Head Length: 0.08
+        Head Radius: 0.04
+        Shaft Length: 0.20
+        Shaft Radius: 0.015
+        Value: Arrow
+      Covariance:
+        Value: false
+    - Class: rviz/Odometry
+      Name: Filtered odometry
+      Enabled: true
+      Topic: /odometry/filtered
+      Keep: 100
+      Position Tolerance: 0.05
+      Shape:
+        Color: 0; 220; 255
+        Head Length: 0.08
+        Head Radius: 0.04
+        Shaft Length: 0.20
+        Shaft Radius: 0.015
+        Value: Arrow
+      Covariance:
+        Value: false
+    - Class: rviz/TF
+      Name: TF
+      Enabled: true
+  Tools:
+    - Class: rviz/Interact
+    - Class: rviz/MoveCamera
+  Views:
+    Current:
+      Class: rviz/TopDownOrtho
+      Scale: 70
+      Target Frame: odom
+Window Geometry:
+  Width: 1200
+  Height: 800

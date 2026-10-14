@@ -1,124 +1,101 @@
-# 03 · SLAM 建图教程(gmapping)
+# 03 · SLAM 建图：从激光到可重复使用的地图
 
-> 对应工作区:`ros1_advanced_ws`,子模块 `slam_gmapping`(ros-perception/slam_gmapping,melodic-devel 分支即 Noetic 实际发布分支,固定提交 `eec8606`)。
-
-gmapping 是经典的**2D 激光 SLAM**(粒子滤波),轻量、依赖少,与 TurtleBot3 仿真现成对接,是入门建图的最佳选择。
+本课使用 [navigation_lab](../../ros1_advanced_ws/src/navigation_lab/README.md) 的 gmapping 配置，以及 [control_lab](../../ros1_advanced_ws/src/control_lab/README.md) 的带激光差速底盘。首次学习按包内指南完成安装、构建和传感器验证。
 
 ## 学习目标
 
-1. 理解建图所需的传感器与 TF 前提;
-2. 跑通「建图 → 存图 → 加载导航」完整流程;
-3. 认识 gmapping 的关键参数(粒子数、更新距离);
-4. 了解 map / odom / base_link 三者的职责分工。
+1. 找到建图依赖的激光数据、机器人运动估计与 TF。
+2. 通过遥控探索生成地图，保存 YAML/PGM。
+3. 关闭 SLAM，使用保存地图和 AMCL 完成一次导航。
+4. 区分地图、里程计、定位和规划的职责。
 
-## 前置依赖
+## 运行入口
+
+在仓库根目录的新终端，已完成项目构建后：
 
 ```bash
 source /opt/ros/noetic/setup.bash
-cd <仓库根目录>
-rosdep install --from-paths ros1_advanced_ws/src --ignore-src -r -y
-cd ros1_advanced_ws && catkin build slam_gmapping && source devel/setup.bash
+source ros1_advanced_ws/devel/setup.bash
+roslaunch navigation_lab slam.launch
 ```
 
-> `slam_gmapping` 依赖 `openslam_gmapping`(apt 包 `ros-noetic-openslam-gmapping`),rosdep 会自动装。
+该 launch 包含机器人仿真和建图节点，不需要另起一次 control_lab 仿真。无桌面环境可传 `gui:=false rviz:=false`。遥控、保存地图和重新加载的完整命令见 [navigation_lab 入手指南](../../ros1_advanced_ws/src/navigation_lab/README.md)。
 
-## 完整流程
+若希望阅读 gmapping 源码，可另行初始化进阶工作区的 slam_gmapping 子模块。目录名与包名不同：算法节点位于 `gmapping` 包，运行命令是 `rosrun gmapping slam_gmapping`。`slam.launch` 已启动建图节点，阅读源码时可沿用该入口。
 
-### 1. 启动 TurtleBot3 仿真
+## 必要的数据链路
 
-```bash
-export TURTLEBOT3_MODEL=burger
-roslaunch turtlebot3_gazebo turtlebot3_house.launch
+```text
+/scan + laser 相对 base_footprint 的变换
+                    +
+       odom → base_footprint 的运动估计
+                    ↓
+                gmapping
+                    ↓
+           /map + map → odom
 ```
 
-### 2. 启动 gmapping
+本项目的激光与 IMU 安装位置在 URDF 中；odom TF 默认由 EKF 发布。仿真各节点使用 `/use_sim_time=true`，Gazebo 提供 `/clock`。
 
-```bash
-rosrun gmapping slam_gmapping scan:=scan
-```
-
-- `slam_gmapping` 节点订阅 `/scan` 与 `/tf`,发布 `/map`(占据栅格地图)、`/map_metadata` 与 `map → odom` 的 TF;
-- 若报 `Timed out waiting for transform`,说明 `odom → base_link` 还没就绪——等仿真完全起来,或先 `rostopic echo /odom` 确认里程计在发。
-
-### 3. 键盘遥控建图
-
-```bash
-rosrun turtlebot3_teleop turtlebot3_teleop_key
-```
-
-开慢一点、多转几圈、把每个房间都扫到,观察 RViz:
-
-```bash
-rosrun rviz rviz -d $(rospack find turtlebot3_slam)/rviz/turtlebot3_slam.rviz
-```
-
-### 4. 保存地图
-
-```bash
-rosrun map_server map_saver -f ~/map/house
-# 生成 house.pgm(图像)与 house.yaml(元数据:分辨率、原点、占用阈值)
-```
-
-### 5. 加载地图(脱离 SLAM)
-
-```bash
-roslaunch turtlebot3_gazebo turtlebot3_house.launch
-rosrun map_server map_server ~/map/house.yaml
-```
-
-此时 `/map` 由 map_server 发布,`map → odom` 由 **AMCL 定位**提供。若还想看定位效果:
-
-```bash
-roslaunch turtlebot3_navigation amcl.launch initial_pose_x:=0 initial_pose_y:=0
-```
-
-## 核心概念
-
-### 1. 三个坐标系的分工(REP 105)
-
-| 坐标系 | 谁发布变换 | 含义 |
+| 变换 / 数据 | 发布者 | 作用 |
 | --- | --- | --- |
-| `map` | gmapping / map_server+AMCL | 世界固定系,漂移不累积 |
-| `odom` | 里程计(机器人) | 连续平滑,但**会漂移** |
-| `base_link` | robot_state_publisher | 机器人本体 |
+| map → odom | 建图时 gmapping；加载地图定位时 AMCL | 将局部运动估计修正到地图坐标 |
+| odom → base_footprint | EKF 或 diff_drive_controller，二选一 | 连续局部运动估计，仍可能漂移 |
+| base_footprint → base_link → laser | robot_state_publisher | 机器人内部的几何关系 |
+| /map | gmapping 或 map_server | 占据栅格数据；机器人位姿由定位节点提供 |
 
-- `map → odom`:定位结果,把「漂移的 odom」修正回「不漂移的 map」;
-- `odom → base_link`:里程计原始估计;
-- SLAM 的本质就是**估计 map → odom 的修正变换**。
+每条 TF 选择一个发布者：建图时由 gmapping 发布 `map → odom`，导航时由 AMCL 发布；`odom → base_footprint` 根据 EKF 开关选择对应来源。
 
-### 2. gmapping 关键参数
+## 建图时观察什么
+
+下面的命令依次运行；`rostopic hz` 和 `tf_echo` 持续输出，观察后按 `Ctrl+C` 再运行下一条。
 
 ```bash
-# 常用调参(动态参数,rqt_reconfigure 也可)
-rosrun dynamic_reconfigure dynparam set /slam_gmapping linearUpdate 0.5   # 平移多少米处理一帧
-rosrun dynamic_reconfigure dynparam set /slam_gmapping angularUpdate 0.2  # 旋转多少弧度处理一帧
-rosrun dynamic_reconfigure dynparam set /slam_gmapping particles 80       # 粒子数(精度/算力权衡)
+rostopic hz /scan
+rostopic echo /scan/header -n 1
+rostopic echo /odometry/filtered/header -n 1
+rostopic echo /map/info -n 1
+rosrun tf tf_echo odom base_footprint
+rosrun tf tf_echo map odom
 ```
 
-- `particles` 太小地图易错位,太大 CPU 吃紧;
-- 环境特征少(长走廊)时可适当提高粒子数并降低更新阈值。
+慢速转动以观察周围墙面，然后沿安全路线移动。RViz 中应能看到激光、地图和机器人位姿相互对齐。地图缺块可能只是尚未探索；重复墙面、明显拉伸或运动方向错误则需要检查时间、TF、轮径和里程计。
 
-### 3. 地图格式
+## 保存与重新定位
 
-`house.yaml` 里的 `resolution`(米/像素)、`origin`(左下角像素的世界坐标)、`negate` 与 `occupied_thresh` 决定了 pgm 图像如何映射为占据栅格。看懂它,才能自己动手改地图。
+map_saver 的输出前缀指定文件保存路径。先创建存放目录，为本次实验使用新的文件名。地图通常由两部分组成：
 
-## 练习任务
+- PGM：像素占据值。
+- YAML：图像相对路径、米/像素分辨率、地图原点和占据阈值。
 
-1. 用 `wpr_simulation` 的场景(本仓库已有子模块)跑一遍 gmapping,对比两个环境的效果;
-2. 把建图结果喂给 `turtlebot3_navigation` 的 move_base,实现「给目标点自动导航」(需要 apt 装 `ros-noetic-turtlebot3-navigation`,属于下一阶段内容);
-3. 录制建图过程的 bag,离线用 `rosbag play` 重放给 gmapping,验证可复现性。
+完成保存后先关闭 slam.launch，再运行 navigation.launch 并把 `map_file` 指向新 YAML。这时 map_server 提供地图，AMCL 根据激光和里程计定位。必要时在 RViz 用 2D Pose Estimate 设置初值。
 
-## 延伸阅读
+本项目附带的教学地图由场景几何生成。它适合先验证导航链路；独立完成本课应保留自己探索得到的地图与建图记录。
 
-- [gmapping wiki](http://wiki.ros.org/gmapping)
-- [GMapping 原始论文(OpenSLAM)](https://openslam-org.github.io/gmapping.html)
+## gmapping 参数学习
+
+参数集中在 [gmapping.yaml](../../ros1_advanced_ws/src/navigation_lab/config/gmapping.yaml)，修改后重新启动节点。
+
+| 参数 | 观察方向 |
+| --- | --- |
+| linearUpdate / angularUpdate | 累计运动到什么程度处理新扫描 |
+| particles | 粒子数量与计算量、估计稳定性的关系 |
+| delta | 地图分辨率与内存、细节的关系 |
+| maxUrange | 参与建图的有效激光范围 |
+
+这些参数通过 launch 加载，修改后重启 gmapping，使新配置生效。
+
+## 验收与扩展
+
+- 保存一份建图结果，记录场景、轮径、控制器参数、地图分辨率和行驶路线。
+- 用自己的地图启动 AMCL，完成一次返回 SUCCEEDED 的导航任务。
+- 固定其余参数，每次调整一个参数，比较相同路线的地图效果。
+- 用 bag 重放建图输入时记录 /scan、/tf、/tf_static 等所需话题；独立启动回放 Master，设置仿真时间并使用 `rosbag play --clock`，停止其他时钟和原始传感器发布者。
+
+继续阅读[导航与定位](07-导航与定位.md)，或按 [TurtleBot3 开源指南](../projects/README.md)在另一套模型上复现实验。
+
+## 原始资料
+
+- [slam_gmapping ROS 1 源码](https://github.com/ros-perception/slam_gmapping/tree/melodic-devel)
+- [OpenSLAM GMapping](https://openslam-org.github.io/gmapping.html)
 - [REP 105 坐标系约定](https://www.ros.org/reps/rep-0105.html)
-
-## 经典开源项目
-
-- [ros-perception/slam_gmapping](https://github.com/ros-perception/slam_gmapping):本教程子模块源,2D 激光粒子滤波建图;
-- [cartographer-project/cartographer_ros](https://github.com/cartographer-project/cartographer_ros):Google 出品,图优化 2D/3D SLAM,精度高、资源占用大;
-- [tu-darmstadt-ros-pkg/hector_slam](https://github.com/tu-darmstadt-ros-pkg/hector_slam):无需里程计即可建图,适合手持/无人机雷达;
-- [introlab/rtabmap](https://github.com/introlab/rtabmap):RGB-D 视觉 SLAM,带回环检测与稠密建图;
-- [UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3):视觉特征 SLAM 的学术经典;
-- [hku-mars/FAST_LIO](https://github.com/hku-mars/FAST_LIO):激光-惯性紧耦合,高速运动下的主流方案。

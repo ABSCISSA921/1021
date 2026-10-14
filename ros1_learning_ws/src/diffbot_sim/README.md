@@ -39,7 +39,7 @@ diffbot_sim/
 | `diffbot_controller` | `diff_drive_controller/DiffDriveController` | 差速底盘:订阅 `/diffbot_controller/cmd_vel`,发布里程计 |
 | `turret_controller` | `velocity_controllers/JointVelocityController` | 云台速度环(订阅 `/turret_controller/command`) |
 
-注意 `diffbot_controller` 的名字空间订阅(`/diffbot_controller/cmd_vel`)与常见 `/cmd_vel` 不同,插件正是把用户 `/cmd_vel` 转发到它。
+`diffbot_controller` 订阅 `/diffbot_controller/cmd_vel`，插件将用户发布到 `/cmd_vel` 的命令转发到该话题。
 
 ## 插件代码导读(`src/chassis_follower_plugin.cpp`)
 

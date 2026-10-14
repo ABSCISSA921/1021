@@ -37,7 +37,7 @@ roslaunch urdf_tutorial display.launch model:=urdf/08-macroed.urdf.xacro
   <visual>      <!-- 显示用:几何 + 材质 -->
     <geometry><box size="0.5 0.3 0.2"/></geometry>
   </visual>
-  <collision>   <!-- 物理碰撞用:必须简单几何,否则仿真炸 -->
+  <collision>   <!-- 物理碰撞使用简单几何体，降低计算开销 -->
     <geometry><box size="0.5 0.3 0.2"/></geometry>
   </collision>
   <inertial>    <!-- 惯性参数:质量 + 惯性矩阵 -->

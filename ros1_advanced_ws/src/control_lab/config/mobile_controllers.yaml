@@ -1,0 +1,34 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+diff_drive_controller:
+  type: diff_drive_controller/DiffDriveController
+  left_wheel: left_wheel_joint
+  right_wheel: right_wheel_joint
+  wheel_separation: 0.36
+  wheel_radius: 0.08
+  publish_rate: 50
+  odom_frame_id: odom
+  base_frame_id: base_footprint
+  enable_odom_tf: true
+  # Use encoder feedback; this must remain false for localization exercises.
+  open_loop: false
+  cmd_vel_timeout: 0.5
+  velocity_rolling_window_size: 10
+  pose_covariance_diagonal: [0.02, 0.02, 1000000.0, 1000000.0, 1000000.0, 0.05]
+  twist_covariance_diagonal: [0.02, 0.02, 1000000.0, 1000000.0, 1000000.0, 0.05]
+  linear:
+    x:
+      has_velocity_limits: true
+      max_velocity: 0.5
+      min_velocity: -0.3
+      has_acceleration_limits: true
+      max_acceleration: 0.5
+      min_acceleration: -0.5
+  angular:
+    z:
+      has_velocity_limits: true
+      max_velocity: 1.0
+      has_acceleration_limits: true
+      max_acceleration: 1.5

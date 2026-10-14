@@ -1,0 +1,19 @@
+<launch>
+  <arg name="gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_ekf" default="true"/>
+  <arg name="world" default="$(find control_lab)/worlds/learning_room.world"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <include file="$(find control_lab)/launch/mobile_base.launch">
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="world" value="$(arg world)"/>
+    <arg name="enable_odom_tf" value="$(eval not arg('use_ekf'))"/>
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+  <include if="$(arg use_ekf)" file="$(find navigation_lab)/launch/ekf.launch"/>
+</launch>

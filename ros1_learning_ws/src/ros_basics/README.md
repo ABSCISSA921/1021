@@ -35,7 +35,7 @@ rostopic hz /basics/counter
 
 预期：`/basics/talker` 发布、`/basics/listener` 订阅；`count` 递增，`label` 为 `hello_ros`，频率约 2 Hz。刚订阅时计数不一定从 0 开始，因为话题不保存订阅前的历史消息。
 
-阅读顺序：[Counter.msg](msg/Counter.msg) → [talker.py](scripts/talker.py) → [listener.py](scripts/listener.py) → [topics.launch](launch/topics.launch)。消息定义经 CMake 生成 Python 类型；不要手动编辑 `devel/` 内的生成文件。
+阅读顺序：[Counter.msg](msg/Counter.msg) → [talker.py](scripts/talker.py) → [listener.py](scripts/listener.py) → [topics.launch](launch/topics.launch)。消息定义经 CMake 生成 Python 类型；修改 `.msg` 源文件后重新构建即可更新 `devel/` 内的生成文件。
 
 ## 2. 参数、命名空间和 remap
 
@@ -55,7 +55,7 @@ rostopic hz /robot_a/telemetry
 
 预期：消息位于 `/robot_a/telemetry`，频率约 5 Hz。源代码中的 `counter` 是相对名，`~rate` 是节点私有参数；`group ns` 和 `remap` 让代码无需写死机器人名称。
 
-参数加载顺序是 YAML → launch 中的 param；launch 参数会覆盖 YAML 同名值。`rate` 范围为 0.1～100 Hz，只在启动时读取。`rosparam set /robot_a/talker/rate 8` 只改变参数服务器上的值，**不会让当前发布循环自动变成 8 Hz**。停止后用 `rate:=8` 重启才能改变行为。这与 dynamic_reconfigure 的回调更新不同。
+参数加载顺序是 YAML → launch 中的 param；launch 参数会覆盖 YAML 同名值。`rate` 范围为 0.1～100 Hz，只在启动时读取。执行 `rosparam set /robot_a/talker/rate 8` 后，参数服务器的值变为 8，当前发布频率保持原值。停止节点并用 `rate:=8` 重启后，新频率生效。这与 dynamic_reconfigure 的回调更新不同。
 
 练习：同时启动 `robot_a` 和 `robot_b`，各用不同频率；用 `rostopic info` 证明发布订阅关系互不串线。
 
@@ -96,7 +96,7 @@ rosrun ros_basics countdown_client.py __ns:=/basics _start:=3
 rosrun ros_basics countdown_client.py __ns:=/basics _start:=10 _cancel_after:=2
 ```
 
-预期：持续打印 `remaining`；正常结果为 `state=3, completed=True`（SUCCEEDED），运行中取消通常为 `state=2, completed=False`（PREEMPTED）。客户端使用 Action API 发取消请求，不能用杀进程代替协议中的取消。
+预期：持续打印 `remaining`；正常结果为 `state=3, completed=True`（SUCCEEDED），运行中取消通常为 `state=2, completed=False`（PREEMPTED）。客户端通过 Action API 发出取消请求，并读取服务端返回的任务状态。
 
 `start` 接受 0～60；0 立即完成，非法目标由服务端 ABORTED。服务端每约 50 ms 检查取消；倒计时采用墙上时间，不受仿真暂停影响。客户端等待 API 仍使用 ROS 时间，因此本实验要求 `/use_sim_time=false`。
 

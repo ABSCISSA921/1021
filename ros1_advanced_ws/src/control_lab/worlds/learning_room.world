@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="learning_room">
+    <gravity>0 0 -9.81</gravity>
+    <physics name="ode" type="ode">
+      <max_step_size>0.001</max_step_size><real_time_update_rate>1000</real_time_update_rate>
+      <ode><solver><type>quick</type><iters>50</iters></solver></ode>
+    </physics>
+    <scene><ambient>0.6 0.6 0.6 1</ambient><background>0.85 0.9 0.95 1</background></scene>
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows><pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse><specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <!-- All geometry is inline: no Gazebo model download is required. -->
+    <model name="ground">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="collision"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry></collision>
+        <visual name="visual"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="east_wall"><static>true</static><pose>4.05 0 0.5 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>0.1 8.2 1</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.1 8.2 1</size></box></geometry><material><ambient>0.8 0.8 0.85 1</ambient><diffuse>0.8 0.8 0.85 1</diffuse></material></visual>
+    </link></model>
+    <model name="west_wall"><static>true</static><pose>-4.05 0 0.5 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>0.1 8.2 1</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.1 8.2 1</size></box></geometry><material><ambient>0.8 0.8 0.85 1</ambient><diffuse>0.8 0.8 0.85 1</diffuse></material></visual>
+    </link></model>
+    <model name="north_wall"><static>true</static><pose>0 4.05 0.5 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>8 0.1 1</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>8 0.1 1</size></box></geometry><material><ambient>0.8 0.8 0.85 1</ambient><diffuse>0.8 0.8 0.85 1</diffuse></material></visual>
+    </link></model>
+    <model name="south_wall"><static>true</static><pose>0 -4.05 0.5 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>8 0.1 1</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>8 0.1 1</size></box></geometry><material><ambient>0.8 0.8 0.85 1</ambient><diffuse>0.8 0.8 0.85 1</diffuse></material></visual>
+    </link></model>
+    <model name="box1"><static>true</static><pose>1.25 0.85 0.4 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>0.7 1.0 0.8</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.7 1.0 0.8</size></box></geometry><material><ambient>0.8 0.35 0.15 1</ambient><diffuse>0.8 0.35 0.15 1</diffuse></material></visual>
+    </link></model>
+    <model name="box2"><static>true</static><pose>-1.5 -1.1 0.4 0 0 0</pose><link name="link">
+      <collision name="collision"><geometry><box><size>0.6 1.0 0.8</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.6 1.0 0.8</size></box></geometry><material><ambient>0.25 0.65 0.35 1</ambient><diffuse>0.25 0.65 0.35 1</diffuse></material></visual>
+    </link></model>
+    <gui><camera name="overview"><pose>7 -8 8 0 0.6 2.25</pose></camera></gui>
+  </world>
+</sdf>

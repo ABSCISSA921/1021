@@ -28,7 +28,7 @@ rosrun turtlebot3_teleop turtlebot3_teleop_key
 | 参数 | 默认 | 说明 |
 | --- | --- | --- |
 | `gui` | `true` | Gazebo GUI 开关 |
-| `model` | `$TURTLEBOT3_MODEL` | 车型,务必先 export 环境变量 |
+| `model` | `$TURTLEBOT3_MODEL` | 车型，启动前 export 环境变量 |
 | `first_tb3` / `second_tb3` | `tb3_0` / `tb3_1` | 两台车的命名空间 |
 | `first_tb3_x/y/z_pos`、`first_tb3_yaw` | -2.0 / 0.0 / 0.0 / 1.57 | 领航车初始位姿 |
 | `second_tb3_*` | -2.0 / -0.5 / 0.0 / 1.57 | 跟随车初始位姿 |
@@ -64,7 +64,7 @@ graph LR
 
 1. **tf2 Buffer + TransformListener**:listener 负责把 TF 数据填进 buffer;`lookupTransform(target, source, ros::Time(0), ros::Duration(0.5))` 查询「source 在 target 坐标系下的位姿」,`Time(0)` 表示最新,超时 0.5s;
 2. **广播 TF 与查询 TF 在同一节点**:两个 odom 回调里各自广播 `world → tb3_x/base_footprint`,主循环再查两车相对位姿;
-3. **异常处理**:tf 查询失败(`TransformException`)时输出警告并发布零速度,保证安全;
+3. **异常处理**:tf 查询失败(`TransformException`)时记录异常并发布零速度，使跟随节点在缺少位姿信息时停止发送运动目标;
 4. **Manhattan 距离**:`|dx| + |dy|` 作为距离误差,对差速小车比欧氏距离更贴合「先转向再前进」的行为。
 
 ## 练习任务(动手改)

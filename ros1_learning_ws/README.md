@@ -57,7 +57,7 @@ rostopic echo /scan -n 1
 roslaunch ros_pkg v_node.launch
 ```
 
-本节点含固定目标坐标，运行结果依赖初始位姿和场景，不能保证任意场景都完成全部状态。记录状态转换，并结合[包文档](src/ros_pkg/README.md)解释原因。DiffBot 不提供 /scan，不能直接用于雷达停车练习。
+节点使用固定目标坐标，运行前核对场景初始位姿，实验中记录状态转换并结合[包文档](src/ros_pkg/README.md)解释结果。雷达停车练习需要 `/scan`，可使用 WPR 或 TurtleBot3；DiffBot 未配备激光雷达。
 
 ### TurtleBot3 多机跟随
 
@@ -81,7 +81,7 @@ roslaunch diffbot_sim diffbot_gazebo.launch
 rostopic pub -r 10 /cmd_vel geometry_msgs/Twist "linear: {x: 0.3} angular: {z: 0.5}"
 ```
 
-`/cmd_vel` 先由 Gazebo 插件接收，插件再输出到底盘和云台；底盘控制话题是 `/diffbot_controller/cmd_vel`，里程计在 `/diffbot_controller/odom`。用 `rostopic info` 核实链路，不要同时向插件输入和控制器输入发送相互竞争的命令。
+`/cmd_vel` 先由 Gazebo 插件接收，插件再输出到底盘和云台；底盘控制话题是 `/diffbot_controller/cmd_vel`，里程计在 `/diffbot_controller/odom`。用 `rostopic info` 核实链路，统一向插件的 `/cmd_vel` 输入发送命令。
 
 ## 下一步
 

@@ -1,0 +1,6 @@
+<launch>
+  <!-- Caller must disable the diff-drive controller's odom TF. -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" output="screen">
+    <rosparam command="load" file="$(find navigation_lab)/config/ekf.yaml"/>
+  </node>
+</launch>

@@ -1,0 +1,41 @@
+<launch>
+  <arg name="map_file" default="$(find navigation_lab)/maps/learning_room.yaml"/>
+  <arg name="gui" default="true"/>
+  <arg name="rviz" default="true"/>
+  <arg name="use_ekf" default="true"/>
+  <arg name="start_sim" default="true"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <!-- An explicit initial estimate, never a live Gazebo ground-truth input. -->
+  <arg name="initial_x" default="$(arg x)"/>
+  <arg name="initial_y" default="$(arg y)"/>
+  <arg name="initial_yaw" default="$(arg yaw)"/>
+  <arg name="odom_topic" default="$(eval '/odometry/filtered' if arg('use_ekf') else '/diff_drive_controller/odom')"/>
+  <include if="$(arg start_sim)" file="$(find navigation_lab)/launch/simulation.launch">
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="use_ekf" value="$(arg use_ekf)"/>
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+  <node pkg="map_server" type="map_server" name="map_server" args="&quot;$(arg map_file)&quot;" output="screen"/>
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <rosparam command="load" file="$(find navigation_lab)/config/amcl.yaml"/>
+    <param name="initial_pose_x" value="$(arg initial_x)"/>
+    <param name="initial_pose_y" value="$(arg initial_y)"/>
+    <param name="initial_pose_a" value="$(arg initial_yaw)"/>
+    <remap from="scan" to="/scan"/>
+  </node>
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <rosparam command="load" file="$(find navigation_lab)/config/move_base.yaml"/>
+    <rosparam command="load" file="$(find navigation_lab)/config/costmap_common.yaml" ns="global_costmap"/>
+    <rosparam command="load" file="$(find navigation_lab)/config/costmap_common.yaml" ns="local_costmap"/>
+    <rosparam command="load" file="$(find navigation_lab)/config/global_costmap.yaml" ns="global_costmap"/>
+    <rosparam command="load" file="$(find navigation_lab)/config/local_costmap.yaml" ns="local_costmap"/>
+    <rosparam command="load" file="$(find navigation_lab)/config/dwa.yaml"/>
+    <param name="DWAPlannerROS/odom_topic" value="$(arg odom_topic)"/>
+    <remap from="cmd_vel" to="/diff_drive_controller/cmd_vel"/>
+  </node>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find navigation_lab)/rviz/navigation.rviz"/>
+</launch>

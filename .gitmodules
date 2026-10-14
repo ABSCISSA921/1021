@@ -47,3 +47,6 @@
 	path = ros1_advanced_ws/src/usb_cam
 	url = https://github.com/ros-drivers/usb_cam.git
 	branch = master
+[submodule "rm_legged_balance"]
+	path = rm_legged_balance
+	url = https://github.com/ABSCISSA921/rm_legged_balance.git

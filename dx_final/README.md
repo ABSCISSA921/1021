@@ -150,7 +150,7 @@ rostopic pub -r 10 /cmd_vel geometry_msgs/Twist "linear: {x: 0.3}"   # 车开始
 
 ## 故障排查
 
-- 两个外部仓库是固定提交的子模块,detached HEAD 正常,不要切分支;
+- 两个外部仓库通过子模块固定提交，日常使用保持 detached HEAD；升级依赖时单独记录版本与验证结果;
 - launch 找不到 Gazebo 插件:确认子模块已初始化,并重新 `catkin build`;
 - Gazebo Classic 弃用警告属上游提示,不影响本项目在 Noetic 上运行;
 - 更多见本项目的[故障排查](docs/故障排查.md)。

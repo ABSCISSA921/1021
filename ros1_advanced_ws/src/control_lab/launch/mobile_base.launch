@@ -1,0 +1,25 @@
+<launch>
+  <arg name="gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="world" default="$(find control_lab)/worlds/learning_room.world"/>
+  <arg name="enable_odom_tf" default="true"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="true"/>
+  </include>
+
+  <param name="robot_description" command="$(find xacro)/xacro '$(find control_lab)/urdf/mobile_base.urdf.xacro'"/>
+  <rosparam command="load" file="$(find control_lab)/config/mobile_controllers.yaml"/>
+  <!-- The EKF launch turns this off, so only one node owns odom -> base_footprint. -->
+  <param name="diff_drive_controller/enable_odom_tf" value="$(arg enable_odom_tf)" type="bool"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node name="spawn_mobile_base" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-urdf -param robot_description -model control_lab_mobile -x $(arg x) -y $(arg y) -z 0.01 -Y $(arg yaw)"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen"
+        args="joint_state_controller diff_drive_controller --timeout 90"/>
+</launch>

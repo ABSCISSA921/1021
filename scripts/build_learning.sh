@@ -3,7 +3,7 @@
 set -eo pipefail
 repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 usage() {
-  echo "Usage: bash scripts/build_learning.sh basics | simulation [package ...] | advanced [package ...]"
+  echo "Usage: bash scripts/build_learning.sh basics | projects | simulation [package ...] | advanced [package ...]"
 }
 target="${1:-basics}"
 if [[ "$target" == "-h" || "$target" == "--help" ]]; then usage; exit 0; fi
@@ -13,6 +13,11 @@ case "$target" in
     if [[ $# -ne 0 ]]; then usage >&2; exit 2; fi
     workspace=ros1_learning_ws
     packages=(ros_basics)
+    ;;
+  projects)
+    if [[ $# -ne 0 ]]; then usage >&2; exit 2; fi
+    workspace=ros1_advanced_ws
+    packages=(control_lab navigation_lab)
     ;;
   simulation) workspace=ros1_learning_ws; packages=("$@") ;;
   advanced) workspace=ros1_advanced_ws; packages=("$@") ;;

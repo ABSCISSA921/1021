@@ -11,6 +11,8 @@
 | [04 常用命令速查](04-常用命令速查.md) | 日常查询与运行命令 |
 | [05 学习路线与实验](05-学习路线与实验.md) | 分阶段练习、验收和综合任务 |
 | [06 仓库维护约定](06-仓库维护约定.md) | 内容边界、包结构、依赖和检查 |
+| [07 项目验证记录](07-项目验证记录.md) | 控制、导航、建图的实际运行结果与复验命令 |
+| [开源项目入手指南](projects/README.md) | RRBot、Jackal、TurtleBot3、robot_localization 的分支、运行与源码入口 |
 | [实验记录模板](templates/实验记录.md) | 记录操作、结果与问题 |
 
 ## 专题与代码入口
@@ -24,7 +26,8 @@
 | tf2 | [01 坐标变换](tutorials/01-tf2坐标变换.md) | `turtle_tf2` |
 | URDF/xacro | [02 建模](tutorials/02-URDF建模.md) | `urdf_tutorial` |
 | SLAM | [03 建图](tutorials/03-SLAM建图.md) | `gmapping` |
-| ros_control | [04 控制框架](tutorials/04-ros_control进阶.md) | `ros_controllers`、`control_toolbox` |
+| ros_control | [04 控制框架](tutorials/04-ros_control进阶.md) / [项目指南](../ros1_advanced_ws/src/control_lab/README.md) | `control_lab`、`ros_controllers`、`control_toolbox` |
+| 导航与定位 | [07 项目路线](tutorials/07-导航与定位.md) / [入手指南](../ros1_advanced_ws/src/navigation_lab/README.md) | `navigation_lab`、AMCL、move_base、EKF |
 | MoveIt | [05 机械臂](tutorials/05-MoveIt机械臂.md) | `panda_moveit_config` |
 | 视觉 | [06 图像处理](tutorials/06-视觉处理.md) | `usb_cam`、`vision_demo` |
 

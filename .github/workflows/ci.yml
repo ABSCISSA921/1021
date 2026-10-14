@@ -43,6 +43,10 @@ jobs:
             workspace: ros1_learning_ws
             sources: ros1_learning_ws/src/ros_basics
             extra_apt: ""
+          - target: projects
+            workspace: ros1_advanced_ws
+            sources: "ros1_advanced_ws/src/control_lab ros1_advanced_ws/src/navigation_lab"
+            extra_apt: ""
           - target: simulation
             workspace: ros1_learning_ws
             sources: ros1_learning_ws/src
@@ -62,7 +66,7 @@ jobs:
         with:
           submodules: false
       - name: Initialize selected learning dependencies
-        if: matrix.target != 'basics'
+        if: matrix.target == 'simulation' || matrix.target == 'advanced'
         run: git submodule update --init --recursive -- ${{ matrix.workspace }}/src
       - name: Install ROS dependencies
         run: |
@@ -84,3 +88,12 @@ jobs:
           cd ros1_learning_ws
           catkin run_tests ros_basics --no-deps --no-status
           catkin_test_results build/ros_basics
+      - name: Validate URDF and navigation configuration/client
+        if: matrix.target == 'projects'
+        run: |
+          source ros1_advanced_ws/devel/setup.bash
+          rosrun xacro xacro ros1_advanced_ws/src/control_lab/urdf/one_joint_arm.urdf.xacro > /tmp/control_arm.urdf
+          rosrun xacro xacro ros1_advanced_ws/src/control_lab/urdf/mobile_base.urdf.xacro > /tmp/control_mobile.urdf
+          cd ros1_advanced_ws
+          catkin run_tests navigation_lab --no-deps --no-status
+          catkin_test_results build/navigation_lab

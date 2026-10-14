@@ -10,7 +10,7 @@
 
 ## 运行
 
-需要提供 /odom、/scan 并订阅 /cmd_vel 的仿真，例如 WPR 或 TurtleBot3。现有 DiffBot 没有激光雷达，不能直接用于此练习。节点内目标点为固定坐标，需核对场景初始位姿。
+需要提供 /odom、/scan 并订阅 /cmd_vel 的仿真，例如 WPR 或 TurtleBot3。该练习需要激光数据，现有 DiffBot 未配备激光雷达。节点内目标点为固定坐标，需核对场景初始位姿。
 
 ```bash
 # 终端 1:启动仿真(二选一)
