@@ -31,6 +31,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           submodules: false
+      # checkout uses a temporary HOME; persist trust for subsequent container steps.
+      - name: Trust checked-out repository in container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Initialize project dependencies
         run: git submodule update --init --recursive -- dx_final/src/rm_control dx_final/src/rm_description_for_task
       - name: Install project dependencies

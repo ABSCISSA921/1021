@@ -65,6 +65,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           submodules: false
+      # checkout uses a temporary HOME; persist trust for subsequent container steps.
+      - name: Trust checked-out repository in container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Initialize selected learning dependencies
         if: matrix.target == 'simulation' || matrix.target == 'advanced'
         run: git submodule update --init --recursive -- ${{ matrix.workspace }}/src
